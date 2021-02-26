@@ -33,6 +33,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { HttpClientModule } from "@angular/common/http";
 import { MatSortModule } from "@angular/material/sort";
+import { SoldListingsTableComponent } from './user-listings/sold-listings-table/sold-listings-table.component';
+import { ActiveListingsTableComponent } from './user-listings/active-listings-table/active-listings-table.component';
 
 @NgModule({
 	declarations: [
@@ -46,7 +48,9 @@ import { MatSortModule } from "@angular/material/sort";
 		UserListingsComponent,
 		UserWalletComponent,
 		UserSavedListingsComponent,
-		SavedListingsTableComponent
+		SavedListingsTableComponent,
+		SoldListingsTableComponent,
+		ActiveListingsTableComponent
 	],
 	imports: [
 		BrowserModule,
