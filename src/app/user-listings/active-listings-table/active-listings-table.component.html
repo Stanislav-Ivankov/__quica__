@@ -3,17 +3,15 @@
 <mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
 
 <table mat-table [dataSource]="tableData" matSort matSortActive="Price" matSortDirection="asc">
-	<tr mat-header-row *matHeaderRowDef="activeListingsColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: activeListingsColumns;"></tr>
 
-	<ng-container matColumnDef="Listing Name">
-		<th mat-header-cell *matHeaderCellDef>Status</th>
-		<td mat-cell *matCellDef="let row">{{ row.number }}</td>
-	</ng-container>
+	<ng-container matColumnDef="Select">
+		<th mat-header-cell *matHeaderCellDef>
+			<mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && areAllRowsSelected()" [indeterminate]="selection.hasValue() && !areAllRowsSelected()" color="primary">Listing Name</mat-checkbox>
+		</th>
 
-	<ng-container matColumnDef="Status">
-		<th mat-header-cell *matHeaderCellDef>Status</th>
-		<td mat-cell *matCellDef="let row">{{ row.number }}</td>
+		<td mat-cell *matCellDef="let row">
+			<mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)" color="primary">{{ row.created_at | date }}</mat-checkbox>
+		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Price">
@@ -31,12 +29,32 @@
 		<td mat-cell *matCellDef="let row">{{ row.created_at | date }}</td>
 	</ng-container>
 
-	<ng-container matColumnDef="Use Template">
-		<th mat-header-cell *matHeaderCellDef>Templates For New Listing</th>
-		<td mat-cell *matCellDef="let element">
-			<button (click)="useTemplate(element)" mat-raised-button color="primary">Use Template</button>
+	<ng-container matColumnDef="Action">
+		<th mat-header-cell *matHeaderCellDef>Action</th>
+		<td mat-cell *matCellDef="let row">
+			<button (click)="removeListing(row)" mat-raised-button color="primary">Action</button>
 		</td>
 	</ng-container>
+
+	<ng-container matColumnDef="Edit Listing">
+		<th mat-header-cell *matHeaderCellDef>Edit Listing</th>
+		<td mat-cell *matCellDef="let row">
+			<button (click)="removeListing(row)" mat-raised-button color="primary">Edit</button>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Remove All">
+		<th mat-header-cell *matHeaderCellDef>
+			<button (click)="removeSelectedListings()" mat-raised-button color="warn">Remove All</button>
+		</th>
+		<td mat-cell *matCellDef="let element">
+			<button (click)="removeListing(element)" mat-raised-button color="primary">Remove</button>
+		</td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+
 </table>
 
 <mat-paginator [length]="totalResults" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons="true"></mat-paginator>

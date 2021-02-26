@@ -23,7 +23,7 @@ export class ActiveListingsTableComponent implements AfterViewInit {
 	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
-	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
+	tableColumns: string[] = ["Select", 'Price', 'Comission', 'Times Shared', "Action", "Edit Listing", "Remove All"];
 
 	// Referentials
 	fetchPipeline: Subscription = new Subscription();
@@ -36,8 +36,6 @@ export class ActiveListingsTableComponent implements AfterViewInit {
 
 	@ViewChild(MatSort)
 	sort!: MatSort;
-
-	activeListingsColumns: string[] = ["Listing Name", "Price", "Comission", "Times Shared", "Use Template"];
 
 	constructor(private _httpService: HttpClient) { }
 
@@ -75,7 +73,24 @@ export class ActiveListingsTableComponent implements AfterViewInit {
 		this.selection = new SelectionModel<IUserSavedListing>(true, []);
 	}
 
-	useTemplate(row: IUserSavedListing) {
+	public areAllRowsSelected(): boolean {
+		return this.selection.selected.length === this.tableData.data.length;
+	}
+
+	public masterToggle(): void {
+		this.areAllRowsSelected() ? this.selection.clear() : this.tableData.data.forEach((row: IUserSavedListing) => this.selection.select(row));
+	}
+
+	public removeListing(row: IUserSavedListing): void {
 		console.log(row);
+		this.fetchPipeline.unsubscribe();
+		this.fetchSavedListings();
+	}
+
+	public removeSelectedListings(): void {
+		console.log(this.selection.selected);
+		this.fetchPipeline.unsubscribe();
+		this.fetchSavedListings();
+		this.selection = new SelectionModel<IUserSavedListing>(true, []);
 	}
 }
