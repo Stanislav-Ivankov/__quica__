@@ -14,6 +14,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserListingsComponent } from './user-listings/user-listings.component';
 import { UserWalletComponent } from './user-wallet/user-wallet.component';
 import { UserSavedListingsComponent } from './user-saved-listings/user-saved-listings.component';
+import { SavedListingsTableComponent } from './user-saved-listings/saved-listings-table/saved-listings-table.component';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -44,7 +45,8 @@ import { MatSortModule } from "@angular/material/sort";
 		UserProfileComponent,
 		UserListingsComponent,
 		UserWalletComponent,
-		UserSavedListingsComponent
+		UserSavedListingsComponent,
+		SavedListingsTableComponent
 	],
 	imports: [
 		BrowserModule,
