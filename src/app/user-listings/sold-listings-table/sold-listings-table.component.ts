@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -18,7 +18,7 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 	templateUrl: './sold-listings-table.component.html',
 	styleUrls: ['./sold-listings-table.component.scss']
 })
-export class SoldListingsTableComponent implements AfterViewInit {
+export class SoldListingsTableComponent implements AfterViewInit, OnDestroy {
 
 	// Primitives
 	isLoading: boolean = true;
@@ -44,6 +44,10 @@ export class SoldListingsTableComponent implements AfterViewInit {
 	ngAfterViewInit(): void {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 		this.fetchSavedListings();
+	}
+
+	ngOnDestroy(): void {
+		this.fetchPipeline.unsubscribe();
 	}
 
 	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
