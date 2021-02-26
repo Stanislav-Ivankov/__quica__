@@ -1,0 +1,52 @@
+.Header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12.5px 12.5px 100px 12.5px;
+	background-color: #F5F8F1;
+
+	&__Logo-Wrapper {
+		width: 192px;
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	&__Input-Wrapper {
+		width: 40%;
+		margin: 0px 12.5px;
+
+		mat-form-field {
+			width: 100%;
+		}
+	}
+
+	&__Log-In-Wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		button {
+			width: 100px;
+
+			&:nth-of-type(2){
+				margin: 0px 12.5px;
+			}
+		}
+	}
+
+	&__Logged-In-Wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		cursor: pointer;
+
+		img {
+			width: 64px;
+			margin: 0px 12.5px;
+			border-radius: 100%;
+		}
+	}
+}

@@ -1,0 +1,49 @@
+.User-Settings {
+	padding-bottom: 50px;
+	background-color: #F5F8F1;
+
+	h1 {
+		width: 50%;
+		margin: 0 auto;
+		padding-bottom: 50px;
+		text-align: center;
+		font-size: 42px;
+	}
+
+	h3 {
+		width: 50%;
+		margin: 0 auto;
+		padding-bottom: 50px;
+		text-align: center;
+		font-size: 24px;
+	}
+
+	&__Form {
+		width: 50%;
+		margin: 0 auto;
+		text-align: center;
+		font-size: 18px;
+
+		&--Submit-Button, &--Delete-Button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			button {
+				width: 200px;
+				margin: 12.5px;
+			}
+
+			aside {
+				width: 36px;
+				height: 36px;
+			}
+		}
+
+		mat-checkbox {
+			display: block;
+			margin-bottom: 25px;
+			text-align: justify;
+		}
+	}
+}

@@ -1,0 +1,62 @@
+<header class="Header">
+	<section class="Header__Logo-Wrapper">
+		<img src="../../assets/Quica Header Logo.svg" alt="Quica-Header-Logo" draggable="false">
+	</section>
+
+	<section class="Header__Input-Wrapper">
+		<mat-form-field>
+			<mat-label>Search Quica</mat-label>
+			<mat-icon matPrefix>search</mat-icon>
+			<input type="text" matInput>
+		  </mat-form-field>
+	</section>
+
+	<section class="Header__Log-In-Wrapper">
+		<button routerLink="/about" mat-raised-button color="primary">About</button>
+		<button mat-raised-button color="primary">Sell</button>
+		<button *ngIf="!isLogged; else LOGGED_IN_TEMPLATE" mat-raised-button color="primary">Log In</button>
+	</section>
+</header>
+
+
+
+<!-- TEMPLATES -->
+<ng-template #LOGGED_IN_TEMPLATE>
+	<section class="Header__Logged-In-Wrapper" [matMenuTriggerFor]="menu">
+		<img src="../../assets/Profile Picture.svg" alt="User Profile Picture" draggable="false">
+		<span>John Smith</span>
+		<mat-icon>arrow_drop_down</mat-icon>
+	</section>
+
+	<mat-menu #menu="matMenu">
+		<button routerLink="/user-profile" mat-menu-item>
+			<mat-icon>person</mat-icon>
+			<span>Profile</span>
+		</button>
+
+		<button routerLink="/user-listings" mat-menu-item>
+			<mat-icon>list</mat-icon>
+			<span>Manage My Listings</span>
+		</button>
+
+		<button routerLink="/user-settings" mat-menu-item>
+			<mat-icon>build</mat-icon>
+			<span>Settings</span>
+		</button>
+
+		<button routerLink="/user-wallet" mat-menu-item>
+			<mat-icon>account_balance_wallet</mat-icon>
+			<span>Quica Wallet</span>
+		</button>
+
+		<button routerLink="/user-saved-listings" mat-menu-item>
+			<mat-icon>favorite_border</mat-icon>
+			<span>Saved Listings</span>
+		</button>
+
+		<button mat-menu-item>
+			<mat-icon>logout</mat-icon>
+			<span>Log Out</span>
+		</button>
+	</mat-menu>
+</ng-template>

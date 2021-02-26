@@ -1,0 +1,30 @@
+.User-Saved-Listings {
+	padding-bottom: 50px;
+	background-color: #F5F8F1;
+
+	h1 {
+		width: 75%;
+		margin: 0 auto;
+		padding-bottom: 50px;
+		text-align: center;
+		font-size: 42px;
+	}
+
+	&__Saved {
+		width: 75%;
+		margin: 0 auto;
+
+		table, mat-paginator {
+			width: 100%;
+			margin: 0 auto;
+			box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 24%), 0px 4px 5px 0px rgb(0 0 0 / 16%), 0px 1px 10px 0px rgb(0 0 0 / 16%);
+
+			th, td {
+
+				&:not(:first-of-type) {
+					text-align: center;
+				}
+			}
+		}
+	}
+}

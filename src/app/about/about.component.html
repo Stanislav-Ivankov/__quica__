@@ -1,0 +1,37 @@
+<main class="About">
+	<h1>About Quica</h1>
+
+	<video controls preload="auto">
+		<source type="video/mp4" src="../../assets/Sample Video.mp4">
+	</video>
+
+	<section *ngFor="let content of userInformation; index as _Index" class="About__User-Information">
+		<h3>{{ content.title | titlecase }}</h3>
+
+		<mat-list>
+			<section>
+				<mat-list-item *ngFor="let content of content.information; index as _Index">
+					<mat-chip-list>
+						<mat-chip color="primary" selected>{{ _Index + 1 }}</mat-chip>
+					</mat-chip-list>
+					<span>{{ content | titlecase }}</span>
+				</mat-list-item>
+			</section>
+
+			<aside>
+				<img [src]="content.imageURL" [alt]="_Index" draggable="false">
+			</aside>
+		</mat-list>
+	</section>
+
+	<section class="About__FAQ">
+		<h3>FAQ</h3>
+
+		<mat-expansion-panel *ngFor="let content of FAQs" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+			<mat-expansion-panel-header>
+				<mat-panel-title class="About__FAQ--Question">Q: {{ content.question | titlecase }}</mat-panel-title>
+			</mat-expansion-panel-header>
+			<p class="About__FAQ--Answer">A: {{ content.answer | titlecase }}</p>
+		</mat-expansion-panel>
+	</section>
+</main>

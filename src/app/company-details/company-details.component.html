@@ -1,0 +1,32 @@
+<main class="Company-Details">
+	<h1>About Quica</h1>
+
+	<h3>Company Details</h3>
+
+	<mat-list class="Company-Details__List">
+		<mat-list-item>
+			<mat-icon mat-list-icon>email</mat-icon>
+			<span mat-line>{{ companyDetails.email }}</span>
+		</mat-list-item>
+
+		<mat-list-item>
+			<mat-icon mat-list-icon>room</mat-icon>
+			<span mat-line>{{ companyDetails.address }}</span>
+		</mat-list-item>
+
+		<mat-list-item>
+			<mat-icon mat-list-icon>pin</mat-icon>
+			<span mat-line>{{ companyDetails.taxNumber }}</span>
+		</mat-list-item>
+
+		<mat-list-item>
+			<mat-icon mat-list-icon>dialpad</mat-icon>
+			<span mat-line>{{ companyDetails.companyRegistryNumber }}</span>
+		</mat-list-item>
+
+		<mat-list-item *ngFor="let legalInformation of companyDetails.otherLegalInformation">
+			<mat-icon mat-list-icon>info</mat-icon>
+			<span mat-line>{{ legalInformation }}</span>
+		</mat-list-item>
+	</mat-list>
+</main>

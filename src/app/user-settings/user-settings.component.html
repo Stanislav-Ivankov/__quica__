@@ -1,0 +1,26 @@
+<main class="User-Settings">
+	<h1>Settings</h1>
+
+	<h3>I Would Like To Receive Email Notifications For :</h3>
+
+	<form [formGroup]="userSettingsForms" (ngSubmit)="saveUserSettingsHandler() " class="User-Settings__Form">
+		<mat-checkbox formControlName="newSharesOfMyListings" color="primary">New Shares Of My Listings</mat-checkbox>
+		<mat-checkbox formControlName="marketingEmails" color="primary">Marketing Emails</mat-checkbox>
+		<mat-checkbox formControlName="generalNewsAndProductAnnouncements" color="primary">General News And Product Announcements</mat-checkbox>
+		<mat-checkbox formControlName="newListingInAChosenCategory" color="primary">New Listing ( In A Chosen Category )</mat-checkbox>
+
+		<section class="User-Settings__Form--Submit-Button">
+			<button type="submit" mat-raised-button color="primary">Save Settings</button>
+			<aside>
+				<mat-spinner diameter="36" color="primary"></mat-spinner>
+			</aside>
+		</section>
+
+		<section class="User-Settings__Form--Delete-Button">
+			<button (click)="deleteUserAccountHandler()" type="button" mat-raised-button color="warn">DELETE MY ACCOUNT</button>
+			<aside>
+				<mat-spinner diameter="36" color="warn"></mat-spinner>
+			</aside>
+		</section>
+	</form>
+</main>

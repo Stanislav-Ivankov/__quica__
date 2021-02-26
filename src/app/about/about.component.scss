@@ -1,0 +1,73 @@
+.About {
+	padding-bottom: 50px;
+	background-color: #F5F8F1;
+
+	h1 {
+		width: 75%;
+		margin: 0 auto;
+		padding-bottom: 50px;
+		text-align: center;
+		font-size: 42px;
+	}
+
+	video {
+		display: block;
+		width: 50%;
+		margin: 0 auto 100px auto;
+	}
+
+	&__User-Information {
+		width: 75%;
+		margin: 0 auto;
+
+		h3 {
+			width: 75%;
+			font-size: 24px;
+		}
+
+		mat-list {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-bottom: 50px;
+
+			mat-chip {
+				margin-right: 25px;
+			}
+
+			img {
+				width: 192px;
+				height: 192px;
+				border-radius: 100%;
+			}
+		}
+	}
+
+	&__FAQ {
+		width: 50%;
+		margin: 0 auto;
+
+		h3 {
+			padding-bottom: 12.5px;
+			text-align: center;
+			font-size: 24px;
+		}
+
+		&--Question {
+			font-size: 16px;
+			font-weight: 500;
+		}
+
+		&--Answer {
+			font-size: 16px;
+		}
+
+		mat-expansion-panel {
+			margin-bottom: 12.5px;
+
+			&:last-of-type {
+				margin-bottom: 0px;
+			}
+		}
+	}
+}
