@@ -25,7 +25,7 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
 
 	// Referentials
-	fetchSavedListingsSubscription: Subscription = new Subscription();
+	fetchSavedListingsSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
 
@@ -38,7 +38,7 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient) { }
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this._matPaginatorService.firstPageLabel = "First Page";
 		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
@@ -52,7 +52,7 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 	}
 
 	ngOnDestroy(): void {
-		this.fetchSavedListingsSubscription.unsubscribe();
+		this.fetchSavedListingsSubscription$.unsubscribe();
 	}
 
 	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
@@ -60,26 +60,23 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 	}
 
 	private fetchSavedListings() {
-		this.fetchSavedListingsSubscription = merge(this.sort.sortChange, this.paginator.page)
-			.pipe(
-				startWith({}), 
-				switchMap(() => {
-					this.isLoading = true;
-					return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
-				}),
-				map((data: IUserSavedListing[] | any) => {			  
-					this.isLoading = false;
-					this.totalResults = data.total_count;
-					return data.items;
-				}),
-				catchError(() => {
-					this.isLoading = false;
-					return EMPTY;
-				})
-			)
-			.subscribe((data: IUserSavedListing[]) => {
-				this.tableData =  new MatTableDataSource<IUserSavedListing>(data);
+		this.fetchSavedListingsSubscription$ = merge(this.sort.sortChange, this.paginator.page).pipe(
+			startWith({}), 
+			switchMap(() => {
+				this.isLoading = true;
+				return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+			}),
+			map((payload: IUserSavedListing[] | any) => {
+				this.totalResults = payload.total_count;
+				return payload.items;
+			}),
+			catchError(() => {
+				this.isLoading = false;
+				return EMPTY;
+			})).subscribe((payload: IUserSavedListing[]) => {
+				this.tableData =  new MatTableDataSource<IUserSavedListing>(payload);
 				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+				this.isLoading = false;
 			});
 	}
 
@@ -91,15 +88,13 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 		this.areAllRowsSelected() ? this.selection.clear() : this.tableData.data.forEach((row: IUserSavedListing) => this.selection.select(row));
 	}
 
-	public removeListing(row: IUserSavedListing): void {
-		console.log(row);
-		this.fetchSavedListingsSubscription.unsubscribe();
+	public removeListing(): void {
+		this.fetchSavedListingsSubscription$.unsubscribe();
 		this.fetchSavedListings();
 	}
 
 	public removeSelectedListings(): void {
-		console.log(this.selection.selected);
-		this.fetchSavedListingsSubscription.unsubscribe();
+		this.fetchSavedListingsSubscription$.unsubscribe();
 		this.fetchSavedListings();
 	}
 }

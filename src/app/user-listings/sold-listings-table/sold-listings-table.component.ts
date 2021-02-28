@@ -32,11 +32,6 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	totalResults: number = 0;
 	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
 
-	sortBy: string = "";
-	orderBy: string = "";
-	page: number = Number.NaN;
-	pageSize: number = Number.NaN;
-
 	// Referentials
 	fetchSoldListingsSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
@@ -70,8 +65,6 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 			this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
 				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
 				this.selection = new SelectionModel<IUserSavedListing>(true, []);
-
-				this._sharedService.refreshNotification.unsubscribe();
 				this.isLoading = false;
 			});
 		});
@@ -93,16 +86,16 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 				this.isLoading = true;
 				return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((data: IUserSavedListing[] | any) => {
-				this.totalResults = data.total_count;
-				return data.items;
+			map((payload: IUserSavedListing[] | any) => {
+				this.totalResults = payload.total_count;
+				return payload.items;
 			}),
 			catchError(() => {
 				this.isLoading = true;
 				return EMPTY;
 			})
-		).subscribe((data: IUserSavedListing[]) => {
-			this.tableData = new MatTableDataSource<IUserSavedListing>(data);
+		).subscribe((payload: IUserSavedListing[]) => {
+			this.tableData = new MatTableDataSource<IUserSavedListing>(payload);
 			this.selection = new SelectionModel<IUserSavedListing>(true, []);
 			this.isLoading = false;
 		});

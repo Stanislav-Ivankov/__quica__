@@ -82,8 +82,8 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 				this.isLoading = true;
 				return EMPTY;
 			})
-		).subscribe((data: IUserSavedListing[]) => {
-			this.tableData = new MatTableDataSource<IUserSavedListing>(data);
+		).subscribe((payload: IUserSavedListing[]) => {
+			this.tableData = new MatTableDataSource<IUserSavedListing>(payload);
 			this.selection = new SelectionModel<IUserSavedListing>(true, []);
 			this.isLoading = false;
 		});
