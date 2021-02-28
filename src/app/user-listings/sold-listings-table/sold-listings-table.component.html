@@ -1,40 +1,42 @@
 <h3>Sold</h3>
 
-<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
+<section class="Table-Loader">
+	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
+</section>
 
-<table mat-table [dataSource]="tableData" matSort matSortActive="Price" matSortDirection="asc">
-	<tr mat-header-row *matHeaderRowDef="activeListingsColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: activeListingsColumns;"></tr>
+<table mat-table [dataSource]="ELEMENT_DATA" matSort matSortActive="Price" matSortDirection="asc">
+	<tr mat-header-row *matHeaderRowDef="soldListingsColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: soldListingsColumns;"></tr>
 
 	<ng-container matColumnDef="Listing Name">
 		<th mat-header-cell *matHeaderCellDef>Status</th>
-		<td mat-cell *matCellDef="let row">{{ row.number }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Status">
 		<th mat-header-cell *matHeaderCellDef>Status</th>
-		<td mat-cell *matCellDef="let row">{{ row.number }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.listingName }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Price">
 		<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Price</th>
-		<td mat-cell *matCellDef="let row">{{ row.title }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.price }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Comission">
 		<th mat-header-cell *matHeaderCellDef>Comission</th>
-		<td mat-cell *matCellDef="let row">{{ row.state }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.status }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Times Shared">
 		<th mat-header-cell *matHeaderCellDef>Times Shared</th>
-		<td mat-cell *matCellDef="let row">{{ row.created_at | date }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.timesShared | date }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Use Template">
 		<th mat-header-cell *matHeaderCellDef>Templates For New Listing</th>
 		<td mat-cell *matCellDef="let element">
-			<button (click)="useTemplate(element)" mat-raised-button color="primary">Use Template</button>
+			<button (click)="useTemplate()" mat-raised-button color="primary">Use Template</button>
 		</td>
 	</ng-container>
 </table>

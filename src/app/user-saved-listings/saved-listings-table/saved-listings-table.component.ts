@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -7,7 +7,7 @@ import { map, startWith, switchMap, catchError } from 'rxjs/operators';
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 import { IUserSavedListing } from "../../models/user-saved-listing";
@@ -17,7 +17,7 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 	templateUrl: './saved-listings-table.component.html',
 	styleUrls: ['./saved-listings-table.component.scss']
 })
-export class SavedListingsTableComponent implements AfterViewInit, OnDestroy {
+export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	// Primitives
 	isLoading: boolean = true;
@@ -25,7 +25,7 @@ export class SavedListingsTableComponent implements AfterViewInit, OnDestroy {
 	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
 
 	// Referentials
-	fetchPipeline: Subscription = new Subscription();
+	fetchSavedListingsSubscription: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
 
@@ -36,7 +36,15 @@ export class SavedListingsTableComponent implements AfterViewInit, OnDestroy {
 	@ViewChild(MatSort)
 	sort!: MatSort;
 
-	constructor(private _httpService: HttpClient) { }
+	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient) { }
+
+	ngOnInit() {
+		this._matPaginatorService.firstPageLabel = "First Page";
+		this._matPaginatorService.nextPageLabel = "Next Page";
+		this._matPaginatorService.previousPageLabel = "Previous Page"
+		this._matPaginatorService.lastPageLabel = "Last Page";
+		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
+	}
 
 	ngAfterViewInit(): void {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -44,7 +52,7 @@ export class SavedListingsTableComponent implements AfterViewInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.fetchPipeline.unsubscribe();
+		this.fetchSavedListingsSubscription.unsubscribe();
 	}
 
 	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
@@ -52,9 +60,9 @@ export class SavedListingsTableComponent implements AfterViewInit, OnDestroy {
 	}
 
 	private fetchSavedListings() {
-		this.fetchPipeline = merge(this.sort.sortChange, this.paginator.page)
+		this.fetchSavedListingsSubscription = merge(this.sort.sortChange, this.paginator.page)
 			.pipe(
-				startWith({ }), 
+				startWith({}), 
 				switchMap(() => {
 					this.isLoading = true;
 					return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
@@ -70,10 +78,9 @@ export class SavedListingsTableComponent implements AfterViewInit, OnDestroy {
 				})
 			)
 			.subscribe((data: IUserSavedListing[]) => {
-				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
+				this.tableData =  new MatTableDataSource<IUserSavedListing>(data);
+				this.selection = new SelectionModel<IUserSavedListing>(true, []);
 			});
-
-		this.selection = new SelectionModel<IUserSavedListing>(true, []);
 	}
 
 	public areAllRowsSelected(): boolean {
@@ -86,14 +93,13 @@ export class SavedListingsTableComponent implements AfterViewInit, OnDestroy {
 
 	public removeListing(row: IUserSavedListing): void {
 		console.log(row);
-		this.fetchPipeline.unsubscribe();
+		this.fetchSavedListingsSubscription.unsubscribe();
 		this.fetchSavedListings();
 	}
 
 	public removeSelectedListings(): void {
 		console.log(this.selection.selected);
-		this.fetchPipeline.unsubscribe();
+		this.fetchSavedListingsSubscription.unsubscribe();
 		this.fetchSavedListings();
-		this.selection = new SelectionModel<IUserSavedListing>(true, []);
 	}
 }

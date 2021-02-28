@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -8,8 +8,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { merge, Observable, EMPTY, Subscription } from 'rxjs';
 import { map, startWith, switchMap, catchError } from 'rxjs/operators';
 
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+
+import { SharedService } from "../../services/shared.service";
 
 import { IUserSavedListing } from "../../models/user-saved-listing";
 
@@ -18,36 +20,66 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 	templateUrl: './sold-listings-table.component.html',
 	styleUrls: ['./sold-listings-table.component.scss']
 })
-export class SoldListingsTableComponent implements AfterViewInit, OnDestroy {
+export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
+	ELEMENT_DATA: IUserSavedListing[] = [
+		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 },
+		{ comission: 2, listingName: 'Helium', price: 4.0026, status: 'He', timesShared: 12 },
+		{ comission: 3, listingName: 'Lithium', price: 6.941, status: 'Li', timesShared: 12 }
+	];
 
 	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
 	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
 
+	sortBy: string = "";
+	orderBy: string = "";
+	page: number = Number.NaN;
+	pageSize: number = Number.NaN;
+
 	// Referentials
-	fetchPipeline: Subscription = new Subscription();
+	fetchSoldListingsSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
 
 	// Decorators
-	@ViewChild(MatPaginator)
-	paginator!: MatPaginator;
-
 	@ViewChild(MatSort)
 	sort!: MatSort;
 
-	activeListingsColumns: string[] = ["Listing Name", "Price", "Comission", "Times Shared", "Use Template"];
+	@ViewChild(MatPaginator)
+	paginator!: MatPaginator;
 
-	constructor(private _httpService: HttpClient) { }
+	soldListingsColumns: string[] = ["Listing Name", "Price", "Comission", "Times Shared", "Use Template"];
+
+	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
+
+	ngOnInit() {
+		this._matPaginatorService.firstPageLabel = "First Page";
+		this._matPaginatorService.nextPageLabel = "Next Page";
+		this._matPaginatorService.previousPageLabel = "Previous Page"
+		this._matPaginatorService.lastPageLabel = "Last Page";
+		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
+	}
 
 	ngAfterViewInit(): void {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 		this.fetchSavedListings();
+
+		this._sharedService.refreshNotification.subscribe(() => {
+			this.isLoading = true;
+			this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
+				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
+				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+
+				this._sharedService.refreshNotification.unsubscribe();
+				this.isLoading = false;
+			});
+		});
 	}
 
 	ngOnDestroy(): void {
-		this.fetchPipeline.unsubscribe();
+		this.fetchSoldListingsSubscription$.unsubscribe();
+		this._sharedService.refreshNotification.unsubscribe();
 	}
 
 	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
@@ -55,31 +87,26 @@ export class SoldListingsTableComponent implements AfterViewInit, OnDestroy {
 	}
 
 	private fetchSavedListings() {
-		this.fetchPipeline = merge(this.sort.sortChange, this.paginator.page)
-			.pipe(
-				startWith({ }), 
-				switchMap(() => {
-					this.isLoading = true;
-					return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
-				}),
-				map((data: IUserSavedListing[] | any) => {			  
-					this.isLoading = false;
-					this.totalResults = data.total_count;
-					return data.items;
-				}),
-				catchError(() => {
-					this.isLoading = false;
-					return EMPTY;
-				})
-			)
-			.subscribe((data: IUserSavedListing[]) => {
-				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
-			});
-
-		this.selection = new SelectionModel<IUserSavedListing>(true, []);
+		this.fetchSoldListingsSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
+			startWith({}),
+			switchMap(() => {
+				this.isLoading = true;
+				return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+			}),
+			map((data: IUserSavedListing[] | any) => {
+				this.totalResults = data.total_count;
+				return data.items;
+			}),
+			catchError(() => {
+				this.isLoading = true;
+				return EMPTY;
+			})
+		).subscribe((data: IUserSavedListing[]) => {
+			this.tableData = new MatTableDataSource<IUserSavedListing>(data);
+			this.selection = new SelectionModel<IUserSavedListing>(true, []);
+			this.isLoading = false;
+		});
 	}
 
-	useTemplate(row: IUserSavedListing) {
-		console.log(row);
-	}
+	useTemplate() { }
 }

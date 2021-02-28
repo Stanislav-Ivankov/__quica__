@@ -1,4 +1,6 @@
-<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
+<section class="Table-Loader">
+	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
+</section>
 
 <table mat-table [dataSource]="tableData" matSort matSortActive="Price" matSortDirection="asc">
 
