@@ -33,6 +33,7 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	tableColumns: string[] = ["Select", 'Price', 'Comission', 'Times Shared', "Action", "Edit Listing", "Remove All"];
 
 	// Referentials
+	readyToRefreshSubscription$: Subscription = new Subscription();
 	fetchActiveListingsSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
@@ -56,18 +57,19 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 
 	ngAfterViewInit(): void {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.fetchSavedListings();
+		this.fetchActiveListings();
 	}
 
 	ngOnDestroy(): void {
 		this.fetchActiveListingsSubscription$.unsubscribe();
+		this.readyToRefreshSubscription$.unsubscribe();
 	}
 
 	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
 		return this._httpService.get<IUserSavedListing[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private fetchSavedListings(): void {
+	private fetchActiveListings() {
 		this.fetchActiveListingsSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}), 
 			switchMap(() => {
@@ -86,6 +88,8 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 			this.tableData = new MatTableDataSource<IUserSavedListing>(payload);
 			this.selection = new SelectionModel<IUserSavedListing>(true, []);
 			this.isLoading = false;
+
+			this._sharedService.readyToRefresh.emit(true);
 		});
 	}
 
@@ -99,23 +103,32 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 
 	public action(): void {
 		this.fetchActiveListingsSubscription$.unsubscribe();
-		this.fetchSavedListings();
+		this.fetchActiveListings();
 
-		this._sharedService.refreshNotification.next();
+		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
+			this._sharedService.refreshNotification.next();
+			this.readyToRefreshSubscription$.unsubscribe();
+		});
 	}
 
 	public editListing(): void {
 		this.fetchActiveListingsSubscription$.unsubscribe();
-		this.fetchSavedListings();
+		this.fetchActiveListings();
 
-		this._sharedService.refreshNotification.next();
+		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
+			this._sharedService.refreshNotification.next();
+			this.readyToRefreshSubscription$.unsubscribe();
+		});
 	}
 
 	public removeListing(): void {
 		this.fetchActiveListingsSubscription$.unsubscribe();
-		this.fetchSavedListings();
+		this.fetchActiveListings();
 
-		this._sharedService.refreshNotification.next();
+		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
+			this._sharedService.refreshNotification.next();
+			this.readyToRefreshSubscription$.unsubscribe();
+		});
 	}
 
 	public removeSelectedListings(): void {
@@ -124,7 +137,11 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 		}
 
 		this.fetchActiveListingsSubscription$.unsubscribe();
-		this.fetchSavedListings();
-		this._sharedService.refreshNotification.next();
+		this.fetchActiveListings();
+
+		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
+			this._sharedService.refreshNotification.next();
+			this.readyToRefreshSubscription$.unsubscribe();
+		});
 	}
 }

@@ -1,0 +1,65 @@
+<h3>Items I Shared, Waiting For Approval And Payment</h3>
+
+<p>These Are The Listings That You Shared And Have Been Sold. As Soon As The Seller Pays The Comission You Are Ready To Ask For A Transfer For Your Share.</p>
+
+<section class="Table-Loader">
+	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
+</section>
+
+<table mat-table [dataSource]="ELEMENT_DATA">
+
+	<ng-container matColumnDef="Select">
+		<th mat-header-cell *matHeaderCellDef>
+			<mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && areAllRowsSelected()" [indeterminate]="selection.hasValue() && !areAllRowsSelected()" color="primary">ID</mat-checkbox>
+		</th>
+
+		<td mat-cell *matCellDef="let row">
+			<mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)" color="primary">{{ row.created_at | date }}</mat-checkbox>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Listing Name">
+		<th mat-header-cell *matHeaderCellDef>Listing Name</th>
+		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Comission">
+		<th mat-header-cell *matHeaderCellDef>Comission</th>
+		<td mat-cell *matCellDef="let row">{{ row.listingName }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="How Many Between Me And The Buyer ?">
+		<th mat-header-cell *matHeaderCellDef>How Many Between Me And The Buyer ?</th>
+		<td mat-cell *matCellDef="let row">{{ row.price | date }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Price">
+		<th mat-header-cell *matHeaderCellDef>Price</th>
+		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Date">
+		<th mat-header-cell *matHeaderCellDef>Date</th>
+		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Status">
+		<th mat-header-cell *matHeaderCellDef>Status</th>
+		<td mat-cell *matCellDef="let row">{{ row.price }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Ask For Payment For Selected">
+		<th mat-header-cell *matHeaderCellDef>
+			<button (click)="removeSelectedListings()" mat-raised-button color="warn">Ask For Payment For Selected</button>
+		</th>
+		<td mat-cell *matCellDef="let element">
+			<button (click)="removeSelectedListings()" mat-raised-button color="primary">Ask For Payment</button>
+		</td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+
+</table>
+
+<mat-paginator [length]="totalResults" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons="true"></mat-paginator>

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class SharedService {
 
 	constructor() { }
 
-	public refreshNotification: Subject<any> = new Subject<any>();
+	public refreshNotification: EventEmitter<boolean> = new EventEmitter<boolean>();
+	public readyToRefresh: EventEmitter<boolean> = new EventEmitter<boolean>();
 }

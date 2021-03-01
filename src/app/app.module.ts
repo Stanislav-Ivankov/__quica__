@@ -35,6 +35,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { MatSortModule } from "@angular/material/sort";
 import { SoldListingsTableComponent } from './user-listings/sold-listings-table/sold-listings-table.component';
 import { ActiveListingsTableComponent } from './user-listings/active-listings-table/active-listings-table.component';
+import { ItemsWaitingToBeSoldTableComponent } from './user-wallet/items-waiting-to-be-sold-table/items-waiting-to-be-sold-table.component';
+import { ItemsSharedWaitingApprovalPaymentComponent } from './user-wallet/items-shared-waiting-approval-payment/items-shared-waiting-approval-payment.component';
+import { PendingDealsSellsComponent } from './user-wallet/pending-deals-sells/pending-deals-sells.component';
+import { PendingDealsBuysComponent } from './user-wallet/pending-deals-buys/pending-deals-buys.component';
+import { PaymentHistoryComponent } from './user-wallet/payment-history/payment-history.component';
 
 @NgModule({
 	declarations: [
@@ -50,7 +55,12 @@ import { ActiveListingsTableComponent } from './user-listings/active-listings-ta
 		UserSavedListingsComponent,
 		SavedListingsTableComponent,
 		SoldListingsTableComponent,
-		ActiveListingsTableComponent
+		ActiveListingsTableComponent,
+		ItemsWaitingToBeSoldTableComponent,
+		ItemsSharedWaitingApprovalPaymentComponent,
+		PendingDealsSellsComponent,
+		PendingDealsBuysComponent,
+		PaymentHistoryComponent
 	],
 	imports: [
 		BrowserModule,

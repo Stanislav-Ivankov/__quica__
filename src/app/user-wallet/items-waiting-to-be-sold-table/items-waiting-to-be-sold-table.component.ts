@@ -16,21 +16,19 @@ import { SharedService } from "../../services/shared.service";
 import { IUserSavedListing } from "../../models/user-saved-listing";
 
 @Component({
-	selector: 'quica-sold-listings-table',
-	templateUrl: './sold-listings-table.component.html',
-	styleUrls: ['./sold-listings-table.component.scss']
+	selector: 'quica-items-waiting-to-be-sold-table',
+	templateUrl: './items-waiting-to-be-sold-table.component.html',
+	styleUrls: ['./items-waiting-to-be-sold-table.component.scss']
 })
-export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ItemsWaitingToBeSoldTableComponent implements OnInit {
 	ELEMENT_DATA: IUserSavedListing[] = [
-		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 },
-		{ comission: 2, listingName: 'Helium', price: 4.0026, status: 'He', timesShared: 12 },
-		{ comission: 3, listingName: 'Lithium', price: 6.941, status: 'Li', timesShared: 12 }
+		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 }
 	];
 
 	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
-	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
+	itemsWaitingToBeSharedColumns: string[] = ["ID", "Listing Name", "Price", "Possible Max Comission", "Date"];
 
 	// Referentials
 	fetchSoldListingsSubscription$: Subscription = new Subscription();
@@ -44,8 +42,6 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
 
-	soldListingsColumns: string[] = ["Listing Name", "Price", "Comission", "Times Shared", "Use Template"];
-
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
 	ngOnInit() {
@@ -58,32 +54,23 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 
 	ngAfterViewInit(): void {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.fetchSoldListings();
-
-		this._sharedService.refreshNotification.subscribe(() => {
-			this.isLoading = true;
-			this.getSoldListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
-				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
-				this.selection = new SelectionModel<IUserSavedListing>(true, []);
-				this.isLoading = false;
-			});
-		});
+		this.fetchSavedListings();
 	}
 
 	ngOnDestroy(): void {
 		this.fetchSoldListingsSubscription$.unsubscribe();
 	}
 
-	private getSoldListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
+	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
 		return this._httpService.get<IUserSavedListing[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private fetchSoldListings() {
+	private fetchSavedListings() {
 		this.fetchSoldListingsSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}),
 			switchMap(() => {
 				this.isLoading = true;
-				return this.getSoldListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+				return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
 			map((payload: IUserSavedListing[] | any) => {
 				this.totalResults = payload.total_count;
@@ -99,6 +86,4 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 			this.isLoading = false;
 		});
 	}
-
-	useTemplate() { }
 }
