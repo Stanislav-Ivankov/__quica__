@@ -7,8 +7,8 @@
 </section>
 
 <table mat-table [dataSource]="ELEMENT_DATA" matSort matSortActive="ID" matSortDirection="asc">
-	<tr mat-header-row *matHeaderRowDef="itemsWaitingToBeSharedColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: itemsWaitingToBeSharedColumns;"></tr>
+	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
 
 	<ng-container matColumnDef="ID">
 		<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>ID</th>

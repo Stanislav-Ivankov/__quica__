@@ -16,23 +16,25 @@ import { SharedService } from "../../services/shared.service";
 import { IUserSavedListing } from "../../models/user-saved-listing";
 
 @Component({
-	selector: 'quica-payment-history',
+	selector: 'quica-payment-history-table',
 	templateUrl: './payment-history.component.html',
 	styleUrls: ['./payment-history.component.scss']
 })
 export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	ELEMENT_DATA: IUserSavedListing[] = [
-		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 }
+		{ comission: 1000, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 },
+		{ comission: 1123, listingName: 'Hydrogen', price: 1.0123, status: 'AS', timesShared: 44 },
+		{ comission: 132321, listingName: 'Hydrogen', price: 2.312, status: 'GT', timesShared: 54 }
 	];
 
 	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
-	itemsWaitingToBeSharedColumns: string[] = ["ID", "Listing Name", "Deal", "Price", "Comission", "Date", "Status"];
+	tableColumns: string[] = ["ID", "Listing Name", "Deal", "Price", "Comission", "Date", "Status"];
 
 	// Referentials
-	fetchSoldListingsSubscription$: Subscription = new Subscription();
+	fetchPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
 
@@ -47,8 +49,8 @@ export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy
 
 	ngOnInit() {
 		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
+		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.lastPageLabel = "Last Page";
 		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 	}
@@ -59,7 +61,7 @@ export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy
 
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
-			this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
+			this.getPaymentHistory(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
 				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
 				this.selection = new SelectionModel<IUserSavedListing>(true, []);
 				this.isLoading = false;
@@ -68,19 +70,19 @@ export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy
 	}
 
 	ngOnDestroy(): void {
-		this.fetchSoldListingsSubscription$.unsubscribe();
+		this.fetchPipelineSubscription$.unsubscribe();
 	}
 
-	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
+	private getPaymentHistory(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
 		return this._httpService.get<IUserSavedListing[]>(`https://jsonplaceholder.typicode.com/todos/1?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
 	private fetchSavedListings() {
-		this.fetchSoldListingsSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
+		this.fetchPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}),
 			switchMap(() => {
 				this.isLoading = true;
-				return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+				return this.getPaymentHistory(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
 			map((payload: IUserSavedListing[] | any) => {
 				this.totalResults = payload.total_count;

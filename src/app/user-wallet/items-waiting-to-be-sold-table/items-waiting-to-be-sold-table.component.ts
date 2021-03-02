@@ -23,16 +23,19 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	ELEMENT_DATA: IUserSavedListing[] = [
-		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 }
+		{ comission: 1, listingName: 'Hydrogen', price: 100, status: 'H', timesShared: 12 },
+		{ comission: 1, listingName: 'Hydrogen', price: 150, status: 'L', timesShared: 1321 },
+		{ comission: 1, listingName: 'Hydrogen', price: 1000, status: 'G', timesShared: 123 },
+		{ comission: 1, listingName: 'Hydrogen', price: 1200, status: 'G', timesShared: 112312 }
 	];
 
 	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
-	itemsWaitingToBeSharedColumns: string[] = ["ID", "Listing Name", "Price", "Possible Max Comission", "Date"];
+	tableColumns: string[] = ["ID", "Listing Name", "Price", "Possible Max Comission", "Date"];
 
 	// Referentials
-	fetchSoldListingsSubscription$: Subscription = new Subscription();
+	fetchPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
 
@@ -45,21 +48,22 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
+		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.lastPageLabel = "Last Page";
 		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 	}
 
 	ngAfterViewInit(): void {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.fetchSavedListings();
+		this.fetchPipeline();
 
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
-			this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
+
+			this.getItemsWaitingToBeSold(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
 				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
 				this.selection = new SelectionModel<IUserSavedListing>(true, []);
 				this.isLoading = false;
@@ -68,19 +72,19 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 	}
 
 	ngOnDestroy(): void {
-		this.fetchSoldListingsSubscription$.unsubscribe();
+		this.fetchPipelineSubscription$.unsubscribe();
 	}
 
-	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
+	private getItemsWaitingToBeSold(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
 		return this._httpService.get<IUserSavedListing[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private fetchSavedListings() {
-		this.fetchSoldListingsSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
+	private fetchPipeline(): void {
+		this.fetchPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}),
 			switchMap(() => {
 				this.isLoading = true;
-				return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+				return this.getItemsWaitingToBeSold(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
 			map((payload: IUserSavedListing[] | any) => {
 				this.totalResults = payload.total_count;

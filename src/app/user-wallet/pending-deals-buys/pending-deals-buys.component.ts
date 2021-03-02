@@ -14,24 +14,28 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 import { SharedService } from '../../services/shared.service';
 
 @Component({
-	selector: 'quica-pending-deals-buys',
+	selector: 'quica-pending-deals-buys-table',
 	templateUrl: './pending-deals-buys.component.html',
 	styleUrls: ['./pending-deals-buys.component.scss']
 })
 export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	ELEMENT_DATA: IUserSavedListing[] = [
-		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 }
+		{ comission: 1, listingName: 'Hydrogen', price: 10000, status: 'H', timesShared: 12 },
+		{ comission: 1, listingName: 'Hydrogen', price: 120000, status: 'H', timesShared: 13 },
+		{ comission: 1, listingName: 'Hydrogen', price: 1500, status: 'H', timesShared: 14 },
+		{ comission: 1, listingName: 'Hydrogen', price: 12000, status: 'H', timesShared: 15 },
 	];
 
 	// Primitives
 	isLoading: boolean = true;
+	totalSelectedSum: number = 0;
 	totalResults: number = 0;
 	tableColumns: string[] = ["Select", 'Listing Name', "Price", "Approved By Other Part ?", "Date", "Cancel", "Approve"];
 
 	// Referentials
 	readyToRefreshSubscription$: Subscription = new Subscription();
-	fetchItemsSharedWaitingApprovalPaymentSubscription$: Subscription = new Subscription();
+	fetchPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
 
@@ -44,20 +48,21 @@ export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestr
 
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
+		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.lastPageLabel = "Last Page";
 		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 	}
 
 	ngAfterViewInit(): void {
-		this.fetchActiveListings();
+		this.fetchPipeline();
 
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
-			this.getSavedListings(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
+			this.totalSelectedSum = 0;
+			this.getPendingDealsBuys(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
 				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
 				this.selection = new SelectionModel<IUserSavedListing>(true, []);
 				this.isLoading = false;
@@ -66,19 +71,21 @@ export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestr
 	}
 
 	ngOnDestroy(): void {
-		this.fetchItemsSharedWaitingApprovalPaymentSubscription$.unsubscribe();
+		this.fetchPipelineSubscription$.unsubscribe();
+		this.readyToRefreshSubscription$.unsubscribe();
 	}
 
-	private getSavedListings(page: number, pageSize: number): Observable<IUserSavedListing[]> {
+	private getPendingDealsBuys(page: number, pageSize: number): Observable<IUserSavedListing[]> {
 		return this._httpService.get<IUserSavedListing[]>(`https://jsonplaceholder.typicode.com/todos/1?q=repo:angular/components&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private fetchActiveListings() {
-		this.fetchItemsSharedWaitingApprovalPaymentSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.paginator.page).pipe(
+	private fetchPipeline(): void {
+		this.fetchPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.paginator.page).pipe(
 			startWith({}), 
 			switchMap(() => {
+				this.totalSelectedSum = 0;
 				this.isLoading = true;
-				return this.getSavedListings(this.paginator.pageIndex, this.paginator.pageSize);
+				return this.getPendingDealsBuys(this.paginator.pageIndex, this.paginator.pageSize);
 			}),
 			map((payload: IUserSavedListing[] | any) => {			  
 				this.totalResults = payload.total_count;
@@ -97,21 +104,60 @@ export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestr
 		});
 	}
 
+	public getSelectedRow(row: IUserSavedListing) {
+		if (!this.selection.isSelected(row)) {
+			this.totalSelectedSum += row.price;
+		} else {
+			this.totalSelectedSum -= row.price;
+		}
+	}
+
 	public areAllRowsSelected(): boolean {
 		return this.selection.selected.length === this.ELEMENT_DATA.length;
 	}
 
 	public masterToggle(): void {
-		this.areAllRowsSelected() ? this.selection.clear() : this.ELEMENT_DATA.forEach((row: IUserSavedListing) => this.selection.select(row));
+		if (this.areAllRowsSelected()) {
+			this.selection.clear()
+			this.totalSelectedSum = 0;
+		} else {
+			this.totalSelectedSum  = 0;
+			this.ELEMENT_DATA.forEach((row: IUserSavedListing) => {
+				this.selection.select(row);
+				this.totalSelectedSum += row.price;
+			});
+		}
 	}
 
-	public removeSelectedListings(): void {
+	public cancel(row: IUserSavedListing) {
+		console.log(row);
+		this.fetchPipelineSubscription$.unsubscribe();
+		this.fetchPipeline();
+
+		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
+			this._sharedService.refreshNotification.next();
+			this.readyToRefreshSubscription$.unsubscribe();
+		});
+	}
+
+	public approve(row: IUserSavedListing) {
+		console.log(row);
+		this.fetchPipelineSubscription$.unsubscribe();
+		this.fetchPipeline();
+
+		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
+			this._sharedService.refreshNotification.next();
+			this.readyToRefreshSubscription$.unsubscribe();
+		});
+	}
+
+	public payForSelected(): void {
 		if (0 === this.selection.selected.length) {
 			return;
 		}
 
-		this.fetchItemsSharedWaitingApprovalPaymentSubscription$.unsubscribe();
-		this.fetchActiveListings();
+		this.fetchPipelineSubscription$.unsubscribe();
+		this.fetchPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();

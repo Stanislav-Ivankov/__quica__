@@ -14,24 +14,27 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
-	selector: 'quica-items-shared-waiting-approval-payment',
+	selector: 'quica-items-shared-waiting-approval-payment-table',
 	templateUrl: './items-shared-waiting-approval-payment.component.html',
 	styleUrls: ['./items-shared-waiting-approval-payment.component.scss']
 })
 export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	ELEMENT_DATA: IUserSavedListing[] = [
-		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 }
+		{ comission: 1, listingName: 'Hydrogen', price: 1000, status: 'H', timesShared: 12 },
+		{ comission: 2, listingName: 'JAVA', price: 1250, status: 'M', timesShared: 14 },
+		{ comission: 5, listingName: 'ME', price: 3000, status: 'TRR', timesShared: 1234 },
 	];
 
 	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
-	tableColumns: string[] = ["Select", 'Listing Name', 'How Many Between Me And The Buyer ?', "Price", "Comission", "Date", "Status", "test"];
+	totalSelectedSum: number = 0;
+	tableColumns: string[] = ["Select", 'Listing Name', 'How Many Between Me And The Buyer ?', "Price", "Comission", "Date", "Status"];
 
 	// Referentials
 	readyToRefreshSubscription$: Subscription = new Subscription();
-	fetchItemsSharedWaitingApprovalPaymentSubscription$: Subscription = new Subscription();
+	fetchPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
 
@@ -46,37 +49,40 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 
 	ngOnInit(): void {
 		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
+		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.lastPageLabel = "Last Page";
 		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 	}
 
 	ngAfterViewInit(): void {
-		this.fetchActiveListings();
+		this.fetchPipeline();
 
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
 			this.getSavedListings(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
 				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
 				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+				this.totalSelectedSum = 0;
 				this.isLoading = false;
 			});
 		});
 	}
 
 	ngOnDestroy(): void {
-		this.fetchItemsSharedWaitingApprovalPaymentSubscription$.unsubscribe();
+		this.fetchPipelineSubscription$.unsubscribe();
+		this.readyToRefreshSubscription$.unsubscribe();
 	}
 
 	private getSavedListings(page: number, pageSize: number): Observable<IUserSavedListing[]> {
 		return this._httpService.get<IUserSavedListing[]>(`https://api.github.com/search/issues?q=repo:angular/components&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private fetchActiveListings() {
-		this.fetchItemsSharedWaitingApprovalPaymentSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.paginator.page).pipe(
+	private fetchPipeline() {
+		this.fetchPipelineSubscription$ = merge<EventEmitter<PageEvent>>(this.paginator.page).pipe(
 			startWith({}), 
 			switchMap(() => {
+				this.totalSelectedSum = 0;
 				this.isLoading = true;
 				return this.getSavedListings(this.paginator.pageIndex, this.paginator.pageSize);
 			}),
@@ -97,21 +103,39 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 		});
 	}
 
+	public getSelectedRow(row: IUserSavedListing) {
+		if (!this.selection.isSelected(row)) {
+			this.totalSelectedSum += row.price;
+		} else {
+			this.totalSelectedSum -= row.price;
+		}
+	}
+
 	public areAllRowsSelected(): boolean {
 		return this.selection.selected.length === this.ELEMENT_DATA.length;
 	}
 
 	public masterToggle(): void {
-		this.areAllRowsSelected() ? this.selection.clear() : this.ELEMENT_DATA.forEach((row: IUserSavedListing) => this.selection.select(row));
+		if (this.areAllRowsSelected()) {
+			this.selection.clear()
+			this.totalSelectedSum = 0;
+		} else {
+			this.totalSelectedSum  = 0;
+			this.ELEMENT_DATA.forEach((row: IUserSavedListing) => {
+				this.selection.select(row);
+				this.totalSelectedSum += row.price;
+			});
+		}
 	}
 
-	public removeSelectedListings(): void {		
+	public askForPaymentForSelected(): void {		
 		if (0 === this.selection.selected.length) {
+			this.totalSelectedSum = 0;
 			return;
 		}
 
-		this.fetchItemsSharedWaitingApprovalPaymentSubscription$.unsubscribe();
-		this.fetchActiveListings();
+		this.fetchPipelineSubscription$.unsubscribe();
+		this.fetchPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();

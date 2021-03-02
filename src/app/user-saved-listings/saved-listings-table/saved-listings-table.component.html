@@ -21,7 +21,7 @@
 
 	<ng-container matColumnDef="Price">
 		<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Price</th>
-		<td mat-cell *matCellDef="let row">{{ row.title }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.number }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Comission">
@@ -38,8 +38,8 @@
 		<th mat-header-cell *matHeaderCellDef>
 			<button (click)="removeSelectedListings()" mat-raised-button color="warn">Remove All</button>
 		</th>
-		<td mat-cell *matCellDef="let element">
-			<button (click)="removeListing()" mat-raised-button color="primary">Remove</button>
+		<td mat-cell *matCellDef="let row">
+			<button (click)="removeListing(row)" mat-raised-button color="primary">Remove</button>
 		</td>
 	</ng-container>
 

@@ -14,7 +14,7 @@
 		</th>
 
 		<td mat-cell *matCellDef="let row">
-			<mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)" color="primary">{{ row.created_at | date }}</mat-checkbox>
+			<mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="getSelectedRow(row)" (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)" color="primary">{{ row.created_at | date }}</mat-checkbox>
 		</td>
 	</ng-container>
 
@@ -25,17 +25,17 @@
 
 	<ng-container matColumnDef="Price">
 		<th mat-header-cell *matHeaderCellDef>Price</th>
-		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.price }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Comission">
 		<th mat-header-cell *matHeaderCellDef>Comission</th>
-		<td mat-cell *matCellDef="let row">{{ row.listingName }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Approved By Other Party ?">
 		<th mat-header-cell *matHeaderCellDef>Approved By Other Party ?</th>
-		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.status }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Date">
@@ -50,15 +50,15 @@
 
 	<ng-container matColumnDef="Cancel">
 		<th mat-header-cell *matHeaderCellDef></th>
-		<td mat-cell *matCellDef="let element">
-			<!-- <button (click)="removeSelectedListings()" mat-raised-button color="primary">Cancel</button> -->
+		<td mat-cell *matCellDef="let row">
+			<button (click)="cancel(row)" mat-raised-button color="warn">Cancel</button>
 		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Approve">
 		<th mat-header-cell *matHeaderCellDef></th>
-		<td mat-cell *matCellDef="let element">
-			<button (click)="removeSelectedListings()" mat-raised-button color="primary">
+		<td mat-cell *matCellDef="let row">
+			<button (click)="approveAndPayComission(row)" mat-raised-button color="primary">
 				<span>Approve And Pay Comission</span>
 				<mat-icon class="Label">error_outline</mat-icon>
 			</button>
@@ -73,6 +73,6 @@
 <mat-paginator [length]="totalResults" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons="true"></mat-paginator>
 
 <section class="Payment">
-	<span class="Payment__Amount">Total Amount Selected: {{ 12000 + " Ft" }}</span>
-	<!-- <button (click)="removeSelectedListings()" mat-raised-button color="primary">Pay Comission For Selected</button> -->
+	<span class="Payment__Amount">Total Amount Selected: {{ totalSelectedSum + " Ft" }}</span>
+	<button (click)="askForPaymentForSelected()" mat-raised-button color="primary">Pay Comission For Selected</button>
 </section>

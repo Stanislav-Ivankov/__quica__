@@ -33,7 +33,7 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
 
 	// Referentials
-	fetchSoldListingsSubscription$: Subscription = new Subscription();
+	fetchPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
 
@@ -44,21 +44,21 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
 
-	soldListingsColumns: string[] = ["Listing Name", "Price", "Comission", "Times Shared", "Use Template"];
+	soldListingsColumns: string[] = ["Listing Name", "Price", "Comission", "Times Shared", "Use As Template"];
 
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
 	ngOnInit() {
 		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
+		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.lastPageLabel = "Last Page";
 		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 	}
 
 	ngAfterViewInit(): void {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.fetchSoldListings();
+		this.fetchPipeline();
 
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
@@ -71,15 +71,15 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	}
 
 	ngOnDestroy(): void {
-		this.fetchSoldListingsSubscription$.unsubscribe();
+		this.fetchPipelineSubscription$.unsubscribe();
 	}
 
 	private getSoldListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
 		return this._httpService.get<IUserSavedListing[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private fetchSoldListings() {
-		this.fetchSoldListingsSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
+	private fetchPipeline() {
+		this.fetchPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}),
 			switchMap(() => {
 				this.isLoading = true;
@@ -100,5 +100,7 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 		});
 	}
 
-	useTemplate() { }
+	useAsTemplate(row: Element) {
+		console.log(row);
+	}
 }

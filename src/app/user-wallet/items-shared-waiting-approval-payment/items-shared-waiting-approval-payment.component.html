@@ -14,7 +14,7 @@
 		</th>
 
 		<td mat-cell *matCellDef="let row">
-			<mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)" color="primary">{{ row.created_at | date }}</mat-checkbox>
+			<mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="getSelectedRow(row)" (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)" color="primary">{{ row.created_at | date }}</mat-checkbox>
 		</td>
 	</ng-container>
 
@@ -30,7 +30,7 @@
 
 	<ng-container matColumnDef="Price">
 		<th mat-header-cell *matHeaderCellDef>Price</th>
-		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.price }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Comission">
@@ -45,14 +45,7 @@
 
 	<ng-container matColumnDef="Status">
 		<th mat-header-cell *matHeaderCellDef>Status</th>
-		<td mat-cell *matCellDef="let row">{{ row.price }}</td>
-	</ng-container>
-
-	<ng-container matColumnDef="test">
-		<th mat-header-cell *matHeaderCellDef>Status</th>
-		<td mat-cell *matCellDef="let row">
-			<button (click)="removeSelectedListings()" mat-raised-button color="primary">Ask For Payment For Selected</button>
-		</td>
+		<td mat-cell *matCellDef="let row">{{ row.status }}</td>
 	</ng-container>
 
 	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
@@ -63,6 +56,6 @@
 <mat-paginator [length]="totalResults" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons="true"></mat-paginator>
 
 <section class="Payment">
-	<span class="Payment__Amount">Total Amount Selected: {{ 12000 + " Ft" }}</span>
-	<!-- <button (click)="removeSelectedListings()" mat-raised-button color="primary">Ask For Payment For Selected</button> -->
+	<span class="Payment__Amount">Total Amount Selected: {{ totalSelectedSum + " Ft" }}</span>
+	<button (click)="askForPaymentForSelected()" mat-raised-button color="primary">Ask For Payment For Selected</button>
 </section>
