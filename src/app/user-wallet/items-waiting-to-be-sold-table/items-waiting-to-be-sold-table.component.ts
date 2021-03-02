@@ -20,7 +20,8 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 	templateUrl: './items-waiting-to-be-sold-table.component.html',
 	styleUrls: ['./items-waiting-to-be-sold-table.component.scss']
 })
-export class ItemsWaitingToBeSoldTableComponent implements OnInit {
+export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit, OnDestroy {
+
 	ELEMENT_DATA: IUserSavedListing[] = [
 		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 }
 	];
@@ -55,6 +56,15 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit {
 	ngAfterViewInit(): void {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 		this.fetchSavedListings();
+
+		this._sharedService.refreshNotification.subscribe(() => {
+			this.isLoading = true;
+			this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
+				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
+				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+				this.isLoading = false;
+			});
+		});
 	}
 
 	ngOnDestroy(): void {

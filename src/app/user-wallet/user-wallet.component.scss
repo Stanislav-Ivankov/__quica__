@@ -29,4 +29,34 @@
 			padding-bottom: 0px;
 		}
 	}
+
+	&__Pending-Deals-Sells {
+		width: 75%;
+		margin: 0 auto;
+		padding-bottom: 50px;
+
+		&:last-of-type {
+			padding-bottom: 0px;
+		}
+	}
+
+	&__Pending-Deals-Buys {
+		width: 75%;
+		margin: 0 auto;
+		padding-bottom: 50px;
+
+		&:last-of-type {
+			padding-bottom: 0px;
+		}
+	}
+
+	&__Payment-History {
+		width: 75%;
+		margin: 0 auto;
+		padding-bottom: 50px;
+
+		&:last-of-type {
+			padding-bottom: 0px;
+		}
+	}
 }

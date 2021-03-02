@@ -12,12 +12,13 @@ import { MatSort, Sort } from '@angular/material/sort';
 
 import { IUserSavedListing } from "../../models/user-saved-listing";
 import { SharedService } from 'src/app/services/shared.service';
+
 @Component({
 	selector: 'quica-items-shared-waiting-approval-payment',
 	templateUrl: './items-shared-waiting-approval-payment.component.html',
 	styleUrls: ['./items-shared-waiting-approval-payment.component.scss']
 })
-export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, OnDestroy {
+export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	ELEMENT_DATA: IUserSavedListing[] = [
 		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 }
@@ -26,9 +27,10 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, OnDes
 	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
-	tableColumns: string[] = ["Select", 'Listing Name', 'How Many Between Me And The Buyer ?', "Price", "Comission", "Date", "Status", "Ask For Payment For Selected"];
+	tableColumns: string[] = ["Select", 'Listing Name', 'How Many Between Me And The Buyer ?', "Price", "Comission", "Date", "Status", "test"];
 
 	// Referentials
+	readyToRefreshSubscription$: Subscription = new Subscription();
 	fetchItemsSharedWaitingApprovalPaymentSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
 	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
@@ -42,7 +44,7 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, OnDes
 
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this._matPaginatorService.firstPageLabel = "First Page";
 		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
@@ -52,6 +54,15 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, OnDes
 
 	ngAfterViewInit(): void {
 		this.fetchActiveListings();
+
+		this._sharedService.refreshNotification.subscribe(() => {
+			this.isLoading = true;
+			this.getSavedListings(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
+				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
+				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+				this.isLoading = false;
+			});
+		});
 	}
 
 	ngOnDestroy(): void {
@@ -81,6 +92,8 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, OnDes
 			this.tableData = new MatTableDataSource<IUserSavedListing>(payload);
 			this.selection = new SelectionModel<IUserSavedListing>(true, []);
 			this.isLoading = false;
+
+			this._sharedService.readyToRefresh.emit(true);
 		});
 	}
 
@@ -92,13 +105,17 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, OnDes
 		this.areAllRowsSelected() ? this.selection.clear() : this.ELEMENT_DATA.forEach((row: IUserSavedListing) => this.selection.select(row));
 	}
 
-	public removeSelectedListings(): void {
+	public removeSelectedListings(): void {		
 		if (0 === this.selection.selected.length) {
 			return;
 		}
 
 		this.fetchItemsSharedWaitingApprovalPaymentSubscription$.unsubscribe();
 		this.fetchActiveListings();
-		this._sharedService.refreshNotification.next();
+
+		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
+			this._sharedService.refreshNotification.next();
+			this.readyToRefreshSubscription$.unsubscribe();
+		});
 	}
 }

@@ -19,3 +19,18 @@ table, mat-paginator {
 		}
 	}
 }
+
+mat-paginator {
+	margin-bottom: 25px;
+}
+
+.Payment {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+
+	&__Amount {
+		margin: 0px 25px;
+		font-weight: 500;
+	}
+}
