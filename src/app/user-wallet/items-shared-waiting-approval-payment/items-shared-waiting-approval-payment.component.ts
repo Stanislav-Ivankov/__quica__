@@ -8,9 +8,8 @@ import { map, startWith, switchMap, catchError } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 
-import { IUserSavedListing } from "../../models/user-saved-listing";
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
@@ -20,25 +19,22 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	ELEMENT_DATA: IUserSavedListing[] = [
+	ELEMENT_DATA: any[] = [
 		{ comission: 1, listingName: 'Hydrogen', price: 1000, status: 'H', timesShared: 12 },
 		{ comission: 2, listingName: 'JAVA', price: 1250, status: 'M', timesShared: 14 },
 		{ comission: 5, listingName: 'ME', price: 3000, status: 'TRR', timesShared: 1234 },
 	];
 
-	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
 	totalSelectedSum: number = 0;
 	tableColumns: string[] = ["Select", 'Listing Name', 'How Many Between Me And The Buyer ?', "Price", "Comission", "Date", "Status"];
 
-	// Referentials
 	readyToRefreshSubscription$: Subscription = new Subscription();
-	fetchPipelineSubscription$: Subscription = new Subscription();
-	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
-	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
+	requestPipelineSubscription$: Subscription = new Subscription();
+	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
-	// Decorators
 	@ViewChild(MatSort)
 	sort!: MatSort;
 
@@ -47,46 +43,46 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
-	ngOnInit(): void {
+	ngOnInit() {
+		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 		this._matPaginatorService.firstPageLabel = "First Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
 		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.lastPageLabel = "Last Page";
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 	}
 
-	ngAfterViewInit(): void {
-		this.fetchPipeline();
+	ngAfterViewInit() {
+		this.requestPipeline();
 
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
-			this.getSavedListings(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
-				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
-				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+			this.getListings(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: any[]) => {
+				this.tableData = new MatTableDataSource<any>(data);
+				this.selection = new SelectionModel<any>(true, []);
 				this.totalSelectedSum = 0;
 				this.isLoading = false;
 			});
 		});
 	}
 
-	ngOnDestroy(): void {
-		this.fetchPipelineSubscription$.unsubscribe();
+	ngOnDestroy() {
+		this.requestPipelineSubscription$.unsubscribe();
 		this.readyToRefreshSubscription$.unsubscribe();
 	}
 
-	private getSavedListings(page: number, pageSize: number): Observable<IUserSavedListing[]> {
-		return this._httpService.get<IUserSavedListing[]>(`https://api.github.com/search/issues?q=repo:angular/components&page=${ page + 1 }&pageSize=${ pageSize }`);
+	private getListings(page: number, pageSize: number): Observable<any[]> {
+		return this._httpService.get<any[]>(`https://api.github.com/search/issues?q=repo:angular/components&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private fetchPipeline() {
-		this.fetchPipelineSubscription$ = merge<EventEmitter<PageEvent>>(this.paginator.page).pipe(
+	private requestPipeline() {
+		this.requestPipelineSubscription$ = merge<EventEmitter<PageEvent>>(this.paginator.page).pipe(
 			startWith({}), 
 			switchMap(() => {
 				this.totalSelectedSum = 0;
 				this.isLoading = true;
-				return this.getSavedListings(this.paginator.pageIndex, this.paginator.pageSize);
+				return this.getListings(this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((payload: IUserSavedListing[] | any) => {			  
+			map((payload: any[] | any) => {			  
 				this.totalResults = payload.total_count;
 				return payload.items;
 			}),
@@ -94,16 +90,16 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 				this.isLoading = true;
 				return EMPTY;
 			})
-		).subscribe((payload: IUserSavedListing[]) => {
-			this.tableData = new MatTableDataSource<IUserSavedListing>(payload);
-			this.selection = new SelectionModel<IUserSavedListing>(true, []);
+		).subscribe((payload: any[]) => {
+			this.tableData = new MatTableDataSource<any>(payload);
+			this.selection = new SelectionModel<any>(true, []);
 			this.isLoading = false;
 
 			this._sharedService.readyToRefresh.emit(true);
 		});
 	}
 
-	public getSelectedRow(row: IUserSavedListing) {
+	public getSelectedRow(row: any) {
 		if (!this.selection.isSelected(row)) {
 			this.totalSelectedSum += row.price;
 		} else {
@@ -121,7 +117,7 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 			this.totalSelectedSum = 0;
 		} else {
 			this.totalSelectedSum  = 0;
-			this.ELEMENT_DATA.forEach((row: IUserSavedListing) => {
+			this.ELEMENT_DATA.forEach((row: any) => {
 				this.selection.select(row);
 				this.totalSelectedSum += row.price;
 			});
@@ -134,8 +130,8 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 			return;
 		}
 
-		this.fetchPipelineSubscription$.unsubscribe();
-		this.fetchPipeline();
+		this.requestPipelineSubscription$.unsubscribe();
+		this.requestPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();

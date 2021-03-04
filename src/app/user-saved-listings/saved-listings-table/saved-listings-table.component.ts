@@ -10,8 +10,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { IUserSavedListing } from "../../models/user-saved-listing";
-
 @Component({
 	selector: 'quica-saved-listings-table',
 	templateUrl: './saved-listings-table.component.html',
@@ -19,15 +17,13 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 })
 export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
 	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
 
-	// Referentials
-	fetchPipelineSubscription$: Subscription = new Subscription();
-	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
-	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
+	requestPipelineSubscription$: Subscription = new Subscription();
+	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
 	// Decorators
 	@ViewChild(MatPaginator)
@@ -38,44 +34,44 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient) { }
 
-	ngOnInit(): void {
+	ngOnInit() {
+		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 		this._matPaginatorService.firstPageLabel = "First Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
 		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.lastPageLabel = "Last Page";
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 	}
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.fetchPipeline();
+		this.requestPipeline();
 	}
 
-	ngOnDestroy(): void {
-		this.fetchPipelineSubscription$.unsubscribe();
+	ngOnDestroy() {
+		this.requestPipelineSubscription$.unsubscribe();
 	}
 
-	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
-		return this._httpService.get<IUserSavedListing[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
+	private getListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any> {
+		return this._httpService.get<any>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private fetchPipeline() {
-		this.fetchPipelineSubscription$ = merge(this.sort.sortChange, this.paginator.page).pipe(
+	private requestPipeline() {
+		this.requestPipelineSubscription$ = merge(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}), 
 			switchMap(() => {
 				this.isLoading = true;
-				return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+				return this.getListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((payload: IUserSavedListing[] | any) => {
+			map((payload: any) => {
 				this.totalResults = payload.total_count;
 				return payload.items;
 			}),
 			catchError(() => {
 				this.isLoading = false;
 				return EMPTY;
-			})).subscribe((payload: IUserSavedListing[]) => {
-				this.tableData =  new MatTableDataSource<IUserSavedListing>(payload);
-				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+			})).subscribe((payload: any) => {
+				this.tableData =  new MatTableDataSource<any>(payload);
+				this.selection = new SelectionModel<any>(true, []);
 				this.isLoading = false;
 			});
 	}
@@ -85,13 +81,12 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 	}
 
 	public masterToggle(): void {
-		this.areAllRowsSelected() ? this.selection.clear() : this.tableData.data.forEach((row: IUserSavedListing) => this.selection.select(row));
+		this.areAllRowsSelected() ? this.selection.clear() : this.tableData.data.forEach((row: any) => this.selection.select(row));
 	}
 
-	public removeListing(row: Element): void {
-		console.log(row);
-		this.fetchPipelineSubscription$.unsubscribe();
-		this.fetchPipeline();
+	public removeListing(row: any): void {
+		this.requestPipelineSubscription$.unsubscribe();
+		this.requestPipeline();
 	}
 
 	public removeSelectedListings(): void {
@@ -99,8 +94,7 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 			return;
 		}
 
-		console.log(this.selection.selected);
-		this.fetchPipelineSubscription$.unsubscribe();
-		this.fetchPipeline();
+		this.requestPipelineSubscription$.unsubscribe();
+		this.requestPipeline();
 	}
 }

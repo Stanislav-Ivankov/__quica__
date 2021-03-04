@@ -1,9 +1,11 @@
 <main class="Company-Details">
+
 	<h1>About Quica</h1>
 
 	<h3>Company Details</h3>
 
 	<mat-list class="Company-Details__List">
+
 		<mat-list-item>
 			<mat-icon mat-list-icon>email</mat-icon>
 			<span mat-line>{{ companyDetails.email }}</span>
@@ -24,9 +26,11 @@
 			<span mat-line>{{ companyDetails.companyRegistryNumber }}</span>
 		</mat-list-item>
 
-		<mat-list-item *ngFor="let legalInformation of companyDetails.otherLegalInformation">
+		<mat-list-item *ngFor="let payload of companyDetails.legalInformation">
 			<mat-icon mat-list-icon>info</mat-icon>
-			<span mat-line>{{ legalInformation }}</span>
+			<span mat-line>{{ payload }}</span>
 		</mat-list-item>
+
 	</mat-list>
+
 </main>

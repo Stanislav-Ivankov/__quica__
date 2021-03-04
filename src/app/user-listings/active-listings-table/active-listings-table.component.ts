@@ -13,18 +13,16 @@ import { MatSort, Sort } from '@angular/material/sort';
 
 import { SharedService } from "../../services/shared.service";
 
-import { IUserSavedListing } from "../../models/user-saved-listing";
-
 @Component({
 	selector: 'quica-active-listings-table',
 	templateUrl: './active-listings-table.component.html',
 	styleUrls: ['./active-listings-table.component.scss']
 })
 export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
-	ELEMENT_DATA: IUserSavedListing[] = [
-		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 },
-		{ comission: 2, listingName: 'Helium', price: 4.0026, status: 'He', timesShared: 12 },
-		{ comission: 3, listingName: 'Lithium', price: 6.941, status: 'Li', timesShared: 12 }
+	ELEMENT_DATA = [
+		{ comission: 1, listingName: 'Hydrogen', price: 100, status: 'H', timesShared: 12 },
+		{ comission: 2, listingName: 'Helium', price: 400, status: 'He', timesShared: 134 },
+		{ comission: 3, listingName: 'Lithium', price: 6500, status: 'Li', timesShared: 12342 }
 	];
 
 	// Primitives
@@ -34,9 +32,9 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 
 	// Referentials
 	readyToRefreshSubscription$: Subscription = new Subscription();
-	fetchPipelineSubscription$: Subscription = new Subscription();
-	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
-	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
+	requestPipelineSubscription$: Subscription = new Subscription();
+	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
 	// Decorators
 	@ViewChild(MatSort)
@@ -48,35 +46,35 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
 	ngOnInit() {
+		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 		this._matPaginatorService.firstPageLabel = "First Page";
 		this._matPaginatorService.previousPageLabel = "Previous Page"
 		this._matPaginatorService.nextPageLabel = "Next Page";
 		this._matPaginatorService.lastPageLabel = "Last Page";
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
 	}
 
-	ngAfterViewInit(): void {
+	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.fetchPipeline();
+		this.requestPipeline();
 	}
 
-	ngOnDestroy(): void {
-		this.fetchPipelineSubscription$.unsubscribe();
+	ngOnDestroy() {
+		this.requestPipelineSubscription$.unsubscribe();
 		this.readyToRefreshSubscription$.unsubscribe();
 	}
 
-	private getActiveListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
-		return this._httpService.get<IUserSavedListing[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
+	private getListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any[]> {
+		return this._httpService.get<any[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private fetchPipeline() {
-		this.fetchPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
+	private requestPipeline() {
+		this.requestPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}), 
 			switchMap(() => {
 				this.isLoading = true;
-				return this.getActiveListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+				return this.getListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((payload: IUserSavedListing[] | any) => {			  
+			map((payload: any) => {			  
 				this.totalResults = payload.total_count;
 				return payload.items;
 			}),
@@ -84,9 +82,9 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 				this.isLoading = true;
 				return EMPTY;
 			})
-		).subscribe((payload: IUserSavedListing[]) => {
-			this.tableData = new MatTableDataSource<IUserSavedListing>(payload);
-			this.selection = new SelectionModel<IUserSavedListing>(true, []);
+		).subscribe((payload: any[]) => {
+			this.tableData = new MatTableDataSource<any>(payload);
+			this.selection = new SelectionModel<any>(true, []);
 			this.isLoading = false;
 
 			this._sharedService.readyToRefresh.emit(true);
@@ -98,13 +96,12 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	}
 
 	public masterToggle(): void {
-		this.areAllRowsSelected() ? this.selection.clear() : this.ELEMENT_DATA.forEach((row: IUserSavedListing) => this.selection.select(row));
+		this.areAllRowsSelected() ? this.selection.clear() : this.ELEMENT_DATA.forEach((row: any) => this.selection.select(row));
 	}
 
-	public refundComission(row: Element): void {
-		console.log(row);
-		this.fetchPipelineSubscription$.unsubscribe();
-		this.fetchPipeline();
+	public action(row: any): void {
+		this.requestPipelineSubscription$.unsubscribe();
+		this.requestPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();
@@ -112,10 +109,9 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 		});
 	}
 
-	public editListing(row: Element): void {
-		console.log(row);
-		this.fetchPipelineSubscription$.unsubscribe();
-		this.fetchPipeline();
+	public editListing(row: any): void {
+		this.requestPipelineSubscription$.unsubscribe();
+		this.requestPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();
@@ -123,10 +119,9 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 		});
 	}
 
-	public removeListing(row: Element): void {
-		console.log(row);
-		this.fetchPipelineSubscription$.unsubscribe();
-		this.fetchPipeline();
+	public removeListing(row: any): void {
+		this.requestPipelineSubscription$.unsubscribe();
+		this.requestPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();
@@ -139,9 +134,8 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 			return;
 		}
 
-		console.log(this.selection.selected);
-		this.fetchPipelineSubscription$.unsubscribe();
-		this.fetchPipeline();
+		this.requestPipelineSubscription$.unsubscribe();
+		this.requestPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();

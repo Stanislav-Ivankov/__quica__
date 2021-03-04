@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IUserInformation } from "../models/user-information";
-import { IFrequentlyAskedQuestions } from "../models/frequently-asked-questions";
-
 @Component({
 	selector: 'quica-about',
 	templateUrl: './about.component.html',
 	styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
-	public panelOpenState: boolean = false;
+	public panelState: boolean = false;
 
-	public userInformation: IUserInformation[] = [
+	public generalInformation = [
 		{
 			title: "how it works for sellers ?",
 			information: [
@@ -43,7 +40,7 @@ export class AboutComponent implements OnInit {
 		}
 	];
 
-	public FAQs: IFrequentlyAskedQuestions[] = [
+	public FAQs = [
 		{
 			question: "sample question ?",
 			answer: "sample asnwer."
@@ -64,5 +61,5 @@ export class AboutComponent implements OnInit {
 
 	constructor() { }
 
-	ngOnInit(): void { }
+	ngOnInit() { }
 }

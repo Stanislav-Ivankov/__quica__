@@ -15,6 +15,16 @@ import { UserListingsComponent } from './user-listings/user-listings.component';
 import { UserWalletComponent } from './user-wallet/user-wallet.component';
 import { UserSavedListingsComponent } from './user-saved-listings/user-saved-listings.component';
 import { SavedListingsTableComponent } from './user-saved-listings/saved-listings-table/saved-listings-table.component';
+import { SoldListingsTableComponent } from './user-listings/sold-listings-table/sold-listings-table.component';
+import { ActiveListingsTableComponent } from './user-listings/active-listings-table/active-listings-table.component';
+import { ItemsWaitingToBeSoldTableComponent } from './user-wallet/items-waiting-to-be-sold-table/items-waiting-to-be-sold-table.component';
+import { ItemsSharedWaitingApprovalPaymentComponent } from './user-wallet/items-shared-waiting-approval-payment/items-shared-waiting-approval-payment.component';
+import { PendingDealsSellsComponent } from './user-wallet/pending-deals-sells/pending-deals-sells.component';
+import { PendingDealsBuysComponent } from './user-wallet/pending-deals-buys/pending-deals-buys.component';
+import { PaymentHistoryComponent } from './user-wallet/payment-history/payment-history.component';
+import { ListingDetailsComponent } from './listing-details/listing-details.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { LoginComponent } from './login/login.component';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -33,13 +43,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { HttpClientModule } from "@angular/common/http";
 import { MatSortModule } from "@angular/material/sort";
-import { SoldListingsTableComponent } from './user-listings/sold-listings-table/sold-listings-table.component';
-import { ActiveListingsTableComponent } from './user-listings/active-listings-table/active-listings-table.component';
-import { ItemsWaitingToBeSoldTableComponent } from './user-wallet/items-waiting-to-be-sold-table/items-waiting-to-be-sold-table.component';
-import { ItemsSharedWaitingApprovalPaymentComponent } from './user-wallet/items-shared-waiting-approval-payment/items-shared-waiting-approval-payment.component';
-import { PendingDealsSellsComponent } from './user-wallet/pending-deals-sells/pending-deals-sells.component';
-import { PendingDealsBuysComponent } from './user-wallet/pending-deals-buys/pending-deals-buys.component';
-import { PaymentHistoryComponent } from './user-wallet/payment-history/payment-history.component';
+import { MatSelectModule } from "@angular/material/select";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { CarouselModule } from "ngx-bootstrap/carousel";
 
 @NgModule({
 	declarations: [
@@ -60,7 +67,10 @@ import { PaymentHistoryComponent } from './user-wallet/payment-history/payment-h
 		ItemsSharedWaitingApprovalPaymentComponent,
 		PendingDealsSellsComponent,
 		PendingDealsBuysComponent,
-		PaymentHistoryComponent
+		PaymentHistoryComponent,
+		ListingDetailsComponent,
+		SignUpComponent,
+		LoginComponent
 	],
 	imports: [
 		BrowserModule,
@@ -83,7 +93,11 @@ import { PaymentHistoryComponent } from './user-wallet/payment-history/payment-h
 		MatProgressBarModule,
 		MatPaginatorModule,
 		HttpClientModule,
-		MatSortModule
+		MatSortModule,
+		MatSelectModule,
+		MatNativeDateModule,
+		MatDatepickerModule,
+		CarouselModule.forRoot()
 	],
 	providers: [],
 	bootstrap: [AppComponent]

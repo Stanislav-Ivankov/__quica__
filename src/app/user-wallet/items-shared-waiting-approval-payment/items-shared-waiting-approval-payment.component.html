@@ -8,6 +8,9 @@
 
 <table mat-table [dataSource]="ELEMENT_DATA">
 
+	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+
 	<ng-container matColumnDef="Select">
 		<th mat-header-cell *matHeaderCellDef>
 			<mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && areAllRowsSelected()" [indeterminate]="selection.hasValue() && !areAllRowsSelected()" color="primary">ID</mat-checkbox>
@@ -47,9 +50,6 @@
 		<th mat-header-cell *matHeaderCellDef>Status</th>
 		<td mat-cell *matCellDef="let row">{{ row.status }}</td>
 	</ng-container>
-
-	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
 
 </table>
 

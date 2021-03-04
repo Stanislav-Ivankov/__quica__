@@ -8,8 +8,13 @@ import { UserListingsComponent } from "./user-listings/user-listings.component";
 import { UserSettingsComponent } from "./user-settings/user-settings.component";
 import { UserWalletComponent } from "./user-wallet/user-wallet.component";
 import { UserSavedListingsComponent } from "./user-saved-listings/user-saved-listings.component";
+import { ListingDetailsComponent } from "./listing-details/listing-details.component";
 
 const routes: Routes = [
+	{
+		path: "",
+		component: ListingDetailsComponent
+	},
 	{
 		path: "about",
 		component: AboutComponent

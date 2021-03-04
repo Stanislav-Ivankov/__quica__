@@ -9,5 +9,5 @@ export class UserWalletComponent implements OnInit {
 
 	constructor() { }
 
-	ngOnInit(): void { }
+	ngOnInit() { }
 }

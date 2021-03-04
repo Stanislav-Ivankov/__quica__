@@ -1,10 +1,13 @@
 <h3>Active</h3>
 
-<section class="Table-Loader">
+<section class="Loader">
 	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
 </section>
 
 <table mat-table [dataSource]="ELEMENT_DATA" matSort matSortActive="Price" matSortDirection="asc">
+
+	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
 
 	<ng-container matColumnDef="Select">
 		<th mat-header-cell *matHeaderCellDef>
@@ -18,23 +21,23 @@
 
 	<ng-container matColumnDef="Price">
 		<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Price</th>
-		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.price + " Ft" }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Comission">
 		<th mat-header-cell *matHeaderCellDef>Comission</th>
-		<td mat-cell *matCellDef="let row">{{ row.listingName }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.price + " %" }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Times Shared">
 		<th mat-header-cell *matHeaderCellDef>Times Shared</th>
-		<td mat-cell *matCellDef="let row">{{ row.price | date }}</td>
+		<td mat-cell *matCellDef="let row">{{ "Shared " + row.price + " Times" }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Action">
 		<th mat-header-cell *matHeaderCellDef>Action</th>
 		<td mat-cell *matCellDef="let row">
-			<button (click)="refundComission(row)" mat-stroked-button>Refund Comission</button>
+			<button (click)="action(row)" mat-stroked-button>Refund Comission</button>
 		</td>
 	</ng-container>
 
@@ -53,9 +56,6 @@
 			<button (click)="removeListing(row)" mat-raised-button color="primary">Remove</button>
 		</td>
 	</ng-container>
-
-	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
-	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
 
 </table>
 
