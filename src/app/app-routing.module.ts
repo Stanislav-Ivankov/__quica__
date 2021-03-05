@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AboutComponent } from "./about/about.component";
-import { CompanyDetailsComponent } from "./company-details/company-details.component";
-import { UserProfileComponent } from "./user-profile/user-profile.component";
-import { UserListingsComponent } from "./user-listings/user-listings.component";
-import { UserSettingsComponent } from "./user-settings/user-settings.component";
-import { UserWalletComponent } from "./user-wallet/user-wallet.component";
-import { UserSavedListingsComponent } from "./user-saved-listings/user-saved-listings.component";
-import { ListingDetailsComponent } from "./listing-details/listing-details.component";
+import { AboutComponent } from "./pages/about/about.component";
+import { CompanyDetailsComponent } from "./pages/company-details/company-details.component";
+import { UserProfileComponent } from "./pages/user-profile/user-profile.component";
+import { UserListingsComponent } from "./pages/user-listings/user-listings.component";
+import { UserSettingsComponent } from "./pages/user-settings/user-settings.component";
+import { UserWalletComponent } from "./pages/user-wallet/user-wallet.component";
+import { UserSavedListingsComponent } from "./pages/user-saved-listings/user-saved-listings.component";
+import { ListingDetailsComponent } from "./pages/listing-details/listing-details.component";
 
 const routes: Routes = [
 	{
