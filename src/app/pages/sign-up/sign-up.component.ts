@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class SignUpComponent implements OnInit {
 	verifyPhoneNumberForm: FormGroup = new FormGroup({
-		phoneNumber: new FormControl(null, Validators.required)
+		phoneNumber: new FormControl(null, Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g))
 	});
 
 	constructor(public dialog: MatDialog) { }
