@@ -46,7 +46,6 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatSelectModule } from "@angular/material/select";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { CarouselModule } from "ngx-bootstrap/carousel";
 
 @NgModule({
 	declarations: [
@@ -96,8 +95,7 @@ import { CarouselModule } from "ngx-bootstrap/carousel";
 		MatSortModule,
 		MatSelectModule,
 		MatNativeDateModule,
-		MatDatepickerModule,
-		CarouselModule.forRoot()
+		MatDatepickerModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
