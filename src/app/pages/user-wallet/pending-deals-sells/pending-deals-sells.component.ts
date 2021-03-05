@@ -10,8 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 
-import { IUserSavedListing } from "../../models/user-saved-listing";
-import { SharedService } from '../../services/shared.service';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
 	selector: 'quica-pending-deals-sells-table',
@@ -20,7 +19,7 @@ import { SharedService } from '../../services/shared.service';
 })
 export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	ELEMENT_DATA: IUserSavedListing[] = [
+	ELEMENT_DATA: any[] = [
 		{ comission: 12000, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 },
 		{ comission: 5000, listingName: 'Sun', price: 1.0079, status: 'H', timesShared: 12 },
 		{ comission: 100000, listingName: 'REAH', price: 1.0079, status: 'H', timesShared: 12 }
@@ -35,8 +34,8 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 	// Referentials
 	readyToRefreshSubscription$: Subscription = new Subscription();
 	fetchPipelineSubscription$: Subscription = new Subscription();
-	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
-	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
+	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
 	// Decorators
 	@ViewChild(MatSort)
@@ -61,9 +60,9 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
 			this.totalSelectedSum = 0;
-			this.getPendingDealsSells(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
-				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
-				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+			this.getPendingDealsSells(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: any[]) => {
+				this.tableData = new MatTableDataSource<any>(data);
+				this.selection = new SelectionModel<any>(true, []);
 				this.isLoading = false;
 			});
 		});
@@ -74,8 +73,8 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 		this.readyToRefreshSubscription$.unsubscribe();
 	}
 
-	private getPendingDealsSells(page: number, pageSize: number): Observable<IUserSavedListing[]> {
-		return this._httpService.get<IUserSavedListing[]>(`https://jsonplaceholder.typicode.com/todos/1?q=repo:angular/components&page=${ page + 1 }&pageSize=${ pageSize }`);
+	private getPendingDealsSells(page: number, pageSize: number): Observable<any[]> {
+		return this._httpService.get<any[]>(`https://jsonplaceholder.typicode.com/todos/1?q=repo:angular/components&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
 	private fetchPipeline() {
@@ -86,7 +85,7 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 				this.isLoading = true;
 				return this.getPendingDealsSells(this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((payload: IUserSavedListing[] | any) => {			  
+			map((payload: any[] | any) => {			  
 				this.totalResults = payload.total_count;
 				return payload.items;
 			}),
@@ -94,16 +93,16 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 				this.isLoading = true;
 				return EMPTY;
 			})
-		).subscribe((payload: IUserSavedListing[]) => {
-			this.tableData = new MatTableDataSource<IUserSavedListing>(payload);
-			this.selection = new SelectionModel<IUserSavedListing>(true, []);
+		).subscribe((payload: any[]) => {
+			this.tableData = new MatTableDataSource<any>(payload);
+			this.selection = new SelectionModel<any>(true, []);
 			this.isLoading = false;
 
 			this._sharedService.readyToRefresh.emit(true);
 		});
 	}
 
-	public getSelectedRow(row: IUserSavedListing) {
+	public getSelectedRow(row: any) {
 		if (!this.selection.isSelected(row)) {
 			this.totalSelectedSum += row.comission;
 		} else {
@@ -121,14 +120,14 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 			this.totalSelectedSum = 0;
 		} else {
 			this.totalSelectedSum  = 0;
-			this.ELEMENT_DATA.forEach((row: IUserSavedListing) => {
+			this.ELEMENT_DATA.forEach((row: any) => {
 				this.selection.select(row);
 				this.totalSelectedSum += row.comission;
 			});
 		}
 	}
 
-	public cancel(row: IUserSavedListing) {
+	public cancel(row: any) {
 		console.log(row);
 		this.fetchPipelineSubscription$.unsubscribe();
 		this.fetchPipeline();
@@ -139,7 +138,7 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 		});
 	}
 
-	public approveAndPayComission(row: IUserSavedListing) {
+	public approveAndPayComission(row: any) {
 		console.log(row);
 		this.fetchPipelineSubscription$.unsubscribe();
 		this.fetchPipeline();

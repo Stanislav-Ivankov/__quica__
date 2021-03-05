@@ -4,7 +4,7 @@
 	<form (ngSubmit)="submitProfileForm()" [formGroup]="profileForm">
 
 		<section class="AAA">
-			<img [src]="isProfilePicturePresent ? base64ProfilePictureURL : '../../assets/Profile Picture.png'" alt="Profile Picture" draggable="false" class="Picture">
+			<img [src]="isProfilePicturePresent ? base64ProfilePictureURL : '../../assets/Default Profile Picture.png'" alt="Profile Picture" draggable="false" class="Picture">
 			<button (click)="File_Input.click()" type="button" mat-raised-button color="primary" class="Upload-Button">Upload Profile</button>
 			<input formControlName="userProfilePicture" #File_Input (change)="uploadProfilePicture($event)" [hidden]="true" type="file" accept="image/*">
 		</section>

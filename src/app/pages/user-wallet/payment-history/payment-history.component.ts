@@ -11,9 +11,7 @@ import { map, startWith, switchMap, catchError } from 'rxjs/operators';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 
-import { SharedService } from "../../services/shared.service";
-
-import { IUserSavedListing } from "../../models/user-saved-listing";
+import { SharedService } from "../../../services/shared.service";
 
 @Component({
 	selector: 'quica-payment-history-table',
@@ -22,7 +20,7 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 })
 export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	ELEMENT_DATA: IUserSavedListing[] = [
+	ELEMENT_DATA: any[] = [
 		{ comission: 1000, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 },
 		{ comission: 1123, listingName: 'Hydrogen', price: 1.0123, status: 'AS', timesShared: 44 },
 		{ comission: 132321, listingName: 'Hydrogen', price: 2.312, status: 'GT', timesShared: 54 }
@@ -35,8 +33,8 @@ export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy
 
 	// Referentials
 	fetchPipelineSubscription$: Subscription = new Subscription();
-	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
-	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
+	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
 	// Decorators
 	@ViewChild(MatSort)
@@ -61,9 +59,9 @@ export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy
 
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
-			this.getPaymentHistory(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
-				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
-				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+			this.getPaymentHistory(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: any[]) => {
+				this.tableData = new MatTableDataSource<any>(data);
+				this.selection = new SelectionModel<any>(true, []);
 				this.isLoading = false;
 			});
 		});
@@ -73,8 +71,8 @@ export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy
 		this.fetchPipelineSubscription$.unsubscribe();
 	}
 
-	private getPaymentHistory(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
-		return this._httpService.get<IUserSavedListing[]>(`https://jsonplaceholder.typicode.com/todos/1?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
+	private getPaymentHistory(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any[]> {
+		return this._httpService.get<any[]>(`https://jsonplaceholder.typicode.com/todos/1?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
 	private fetchSavedListings() {
@@ -84,7 +82,7 @@ export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy
 				this.isLoading = true;
 				return this.getPaymentHistory(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((payload: IUserSavedListing[] | any) => {
+			map((payload: any[] | any) => {
 				this.totalResults = payload.total_count;
 				return payload.items;
 			}),
@@ -92,9 +90,9 @@ export class PaymentHistoryComponent implements OnInit, AfterViewInit, OnDestroy
 				this.isLoading = true;
 				return EMPTY;
 			})
-		).subscribe((payload: IUserSavedListing[]) => {
-			this.tableData = new MatTableDataSource<IUserSavedListing>(payload);
-			this.selection = new SelectionModel<IUserSavedListing>(true, []);
+		).subscribe((payload: any[]) => {
+			this.tableData = new MatTableDataSource<any>(payload);
+			this.selection = new SelectionModel<any>(true, []);
 			this.isLoading = false;
 		});
 	}

@@ -11,9 +11,7 @@ import { map, startWith, switchMap, catchError } from 'rxjs/operators';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 
-import { SharedService } from "../../services/shared.service";
-
-import { IUserSavedListing } from "../../models/user-saved-listing";
+import { SharedService } from "../../../services/shared.service";
 
 @Component({
 	selector: 'quica-items-waiting-to-be-sold-table',
@@ -22,7 +20,7 @@ import { IUserSavedListing } from "../../models/user-saved-listing";
 })
 export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	ELEMENT_DATA: IUserSavedListing[] = [
+	ELEMENT_DATA: any[] = [
 		{ comission: 1, listingName: 'Hydrogen', price: 100, status: 'H', timesShared: 12 },
 		{ comission: 1, listingName: 'Hydrogen', price: 150, status: 'L', timesShared: 1321 },
 		{ comission: 1, listingName: 'Hydrogen', price: 1000, status: 'G', timesShared: 123 },
@@ -36,8 +34,8 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 
 	// Referentials
 	fetchPipelineSubscription$: Subscription = new Subscription();
-	tableData: MatTableDataSource<IUserSavedListing> = new MatTableDataSource<IUserSavedListing>([]);
-	selection: SelectionModel<IUserSavedListing> = new SelectionModel<IUserSavedListing>(true, []);
+	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
 	// Decorators
 	@ViewChild(MatSort)
@@ -63,9 +61,9 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
 
-			this.getItemsWaitingToBeSold(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: IUserSavedListing[]) => {
-				this.tableData = new MatTableDataSource<IUserSavedListing>(data);
-				this.selection = new SelectionModel<IUserSavedListing>(true, []);
+			this.getItemsWaitingToBeSold(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: any[]) => {
+				this.tableData = new MatTableDataSource<any>(data);
+				this.selection = new SelectionModel<any>(true, []);
 				this.isLoading = false;
 			});
 		});
@@ -75,8 +73,8 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 		this.fetchPipelineSubscription$.unsubscribe();
 	}
 
-	private getItemsWaitingToBeSold(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<IUserSavedListing[]> {
-		return this._httpService.get<IUserSavedListing[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
+	private getItemsWaitingToBeSold(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any[]> {
+		return this._httpService.get<any[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
 	private fetchPipeline(): void {
@@ -86,7 +84,7 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 				this.isLoading = true;
 				return this.getItemsWaitingToBeSold(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((payload: IUserSavedListing[] | any) => {
+			map((payload: any[] | any) => {
 				this.totalResults = payload.total_count;
 				return payload.items;
 			}),
@@ -94,9 +92,9 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 				this.isLoading = true;
 				return EMPTY;
 			})
-		).subscribe((payload: IUserSavedListing[]) => {
-			this.tableData = new MatTableDataSource<IUserSavedListing>(payload);
-			this.selection = new SelectionModel<IUserSavedListing>(true, []);
+		).subscribe((payload: any[]) => {
+			this.tableData = new MatTableDataSource<any>(payload);
+			this.selection = new SelectionModel<any>(true, []);
 			this.isLoading = false;
 		});
 	}

@@ -11,7 +11,7 @@ import { map, startWith, switchMap, catchError } from 'rxjs/operators';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 
-import { SharedService } from "../../services/shared.service";
+import { SharedService } from "../../../services/shared.service";
 
 @Component({
 	selector: 'quica-sold-listings-table',
