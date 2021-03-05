@@ -1,0 +1,18 @@
+<main class="Verify-Number-Modal">
+	<mat-icon (click)="closeModal()">highlight_off</mat-icon>
+	<h3>Please, Verify Your Phone Number</h3>
+
+	<form [formGroup]="verificationForm">
+		<mat-form-field appearance="outline">
+			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+			<input formControlName="verificationCode" matInput placeholder="Verification Code" type="text">
+		</mat-form-field>
+
+		<button (click)="verifyCode()" [disabled]="verificationForm.status == 'INVALID' || isLoading == true" mat-raised-button type="submit" color="primary">Verify Code</button>
+		<button (click)="resendCode()" [disabled]="isLoading == true" mat-raised-button type="button" color="accent">Resend Code</button>
+
+		<aside class="Loader">
+			<mat-spinner *ngIf="isLoading" diameter="36" color="primary"></mat-spinner>
+		</aside>
+	</form>
+</main>

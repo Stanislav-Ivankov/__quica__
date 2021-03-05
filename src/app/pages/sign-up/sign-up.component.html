@@ -1,6 +1,6 @@
 <main class="Sign-Up">
 
-	<form (ngSubmit)="open()" [formGroup]="verifyPhoneNumberForm" class="Sign-Up__Form">
+	<form [formGroup]="verifyPhoneNumberForm" class="Sign-Up__Form">
 		<h3>Sign Up</h3>
 
 		<mat-form-field appearance="outline">
@@ -9,7 +9,7 @@
 			<input formControlName="phoneNumber" matInput type="text">
 		</mat-form-field>
 
-		<button (click)="open()" [disabled]="verifyPhoneNumberForm.status === 'INVALID'" type="submit" mat-raised-button color="primary">Continue</button>
+		<button (click)="open()" [disabled]="verifyPhoneNumberForm.status === 'INVALID'" type="button" mat-raised-button color="primary">Continue</button>
 	</form>
 
 	<aside class="Sign-Up__Additional-Information">

@@ -1,0 +1,40 @@
+.Verify-Number-Modal {
+	clear: both;
+
+	h3 {
+		font-size: 18px;
+		text-align: center;
+	}
+
+	mat-icon {
+		float: right;
+		cursor: pointer;
+	}
+
+	mat-form-field {
+		display: flex;
+		justify-content: center;
+	}
+
+	button {
+		display: block;
+		width: 150px;
+		margin: 0 auto;
+
+		&:not(:last-of-type) {
+			margin-bottom: 25px;
+		}
+
+		&:last-of-type {
+			margin-bottom: 25px;
+		}
+	}
+
+	.Loader {
+		height: 36px;
+
+		mat-spinner {
+			margin: 0 auto;
+		}
+	}
+}
