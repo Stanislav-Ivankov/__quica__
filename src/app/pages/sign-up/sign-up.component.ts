@@ -1,15 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'quica-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+	selector: 'quica-sign-up',
+	templateUrl: './sign-up.component.html',
+	styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
+	verifyPhoneNumberForm: FormGroup = new FormGroup({
+		phoneNumber: new FormControl(null, Validators.required)
+	});
 
-  constructor() { }
+	constructor(public dialog: MatDialog) { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit() {}
 
+	open() {
+
+	}
 }

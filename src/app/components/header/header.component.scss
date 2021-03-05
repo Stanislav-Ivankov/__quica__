@@ -7,6 +7,7 @@
 
 	&__Logo {
 		width: 192px;
+		cursor: pointer;
 
 		img {
 			width: 100%;
@@ -16,7 +17,7 @@
 
 	&__Input {
 		width: 40%;
-		margin: 0px 12.5px;
+		margin: 0px 25px;
 
 		mat-form-field {
 			width: 100%;

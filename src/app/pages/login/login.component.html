@@ -1,1 +1,28 @@
-<p>login works!</p>
+<main class="Login">
+
+	<form (ngSubmit)="login()" [formGroup]="loginForm" class="Login__Login-Form">
+		<h3>Login</h3>
+
+		<mat-form-field appearance="outline">
+			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+			<mat-label>Email *</mat-label>
+			<input formControlName="email" matInput type="email">
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+			<mat-label>Password *</mat-label>
+			<input formControlName="password" autocomplete matInput type="password">
+		</mat-form-field>
+
+		<button type="submit" mat-raised-button color="primary">Login</button>
+	</form>
+
+	<aside class="Login__Sign-Up-Button">
+		<h3>Sign Up</h3>
+
+		<h5>Not A Member Yet ? Sign Up.</h5>
+		<button routerLink="/sign-up" type="submit" mat-raised-button color="primary">Sign Up</button>
+	</aside>
+
+</main>

@@ -8,19 +8,24 @@ import { UserListingsComponent } from "./pages/user-listings/user-listings.compo
 import { UserSettingsComponent } from "./pages/user-settings/user-settings.component";
 import { UserWalletComponent } from "./pages/user-wallet/user-wallet.component";
 import { UserSavedListingsComponent } from "./pages/user-saved-listings/user-saved-listings.component";
-import { ListingDetailsComponent } from "./pages/listing-details/listing-details.component";
+import { LoginComponent } from "./pages/login/login.component";
+import { SignUpComponent } from "./pages/sign-up/sign-up.component";
 
 const routes: Routes = [
 	{
 		path: "",
-		component: ListingDetailsComponent
+		component: LoginComponent
+	},
+	{
+		path: "sign-up",
+		component: SignUpComponent
 	},
 	{
 		path: "about",
 		component: AboutComponent
 	},
 	{
-		path: "company-details",
+		path: "company-details/:id",
 		component: CompanyDetailsComponent
 	},
 	{

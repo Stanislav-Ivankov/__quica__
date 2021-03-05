@@ -22,6 +22,8 @@ import { ItemsSharedWaitingApprovalPaymentComponent } from './pages/user-wallet/
 import { PendingDealsSellsComponent } from './pages/user-wallet/pending-deals-sells/pending-deals-sells.component';
 import { PendingDealsBuysComponent } from './pages/user-wallet/pending-deals-buys/pending-deals-buys.component';
 import { PaymentHistoryComponent } from './pages/user-wallet/payment-history/payment-history.component';
+import { LoginComponent } from "./pages/login/login.component";
+import { SignUpComponent } from "./pages/sign-up/sign-up.component";
 
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -43,7 +45,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { MatSortModule } from "@angular/material/sort";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatSelectModule } from "@angular/material/select";
-import { MatFormFieldModule } from "@angular/material/form-field"
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
 	declarations: [
@@ -64,7 +67,9 @@ import { MatFormFieldModule } from "@angular/material/form-field"
 		ItemsSharedWaitingApprovalPaymentComponent,
 		PendingDealsSellsComponent,
 		PendingDealsBuysComponent,
-		PaymentHistoryComponent
+		PaymentHistoryComponent,
+		LoginComponent,
+		SignUpComponent
 	],
 	imports: [
 		BrowserModule,
@@ -91,7 +96,8 @@ import { MatFormFieldModule } from "@angular/material/form-field"
 		MatDatepickerModule,
 		MatSelectModule,
 		MatFormFieldModule,
-		MatNativeDateModule
+		MatNativeDateModule,
+		MatDialogModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

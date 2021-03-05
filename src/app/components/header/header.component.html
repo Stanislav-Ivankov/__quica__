@@ -1,6 +1,6 @@
 <header class="Header">
 
-	<section class="Header__Logo">
+	<section routerLink="/" class="Header__Logo">
 		<img src="../../assets/Quica Header Logo.svg" alt="Logo" draggable="false">
 	</section>
 
@@ -15,7 +15,7 @@
 	<section class="Header__Log-In">
 		<button routerLink="/about" mat-raised-button color="primary">About</button>
 		<button mat-raised-button color="primary">Sell</button>
-		<button *ngIf="isLogged; else LOGGED_IN_TEMPLATE" mat-raised-button color="primary">Log In</button>
+		<button routerLink="/" *ngIf="!isLogged; else LOGGED_IN_TEMPLATE" mat-raised-button color="primary">Log In</button>
 	</section>
 
 </header>
