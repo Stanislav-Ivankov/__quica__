@@ -10,40 +10,43 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./verify-number-modal.component.scss']
 })
 export class VerifyNumberModalComponent implements OnInit {
+
 	isLoading: boolean = false;
 	verifySubscription$: Subscription = new Subscription();
-	verificationForm: FormGroup = new FormGroup({
+
+	OTPForm: FormGroup = new FormGroup({
 		verificationCode: new FormControl(null, Validators.required)
 	});
 
-	constructor(private _httpService: HttpClient, public dialogRef: MatDialogRef<VerifyNumberModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+	constructor(private _httpService: HttpClient, public dialogReference: MatDialogRef<VerifyNumberModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 	ngOnInit() {
 		this.isLoading = true;
-		this.verifySubscription$ = this._httpService.post("https://jsonplaceholder.typicode.com/posts", this.data.phoneNumber.phoneNumber)
-			.subscribe(() => this.isLoading = false);
+		this.verifySubscription$ = this._httpService.post("https://jsonplaceholder.typicode.com/posts", {
+			PhoneNumber: this.data.phoneNumber
+		}).subscribe(() => this.isLoading = false);
 	}
 
 	verifyCode() {
 		this.isLoading = true;
 		this.verifySubscription$ = this._httpService.post("https://jsonplaceholder.typicode.com/posts", {
-			phoneNumber: this.data.phoneNumber.phoneNumber,
-			verificationCode: 1234
-		})
-		.subscribe(() => {
+			phoneNumber: this.data.phoneNumber,
+			verificationCode: this.OTPForm.value.verificationCode
+		}).subscribe(() => {
 			this.isLoading = false;
-			this.dialogRef.close();
+			this.dialogReference.close();
 		});
 	}
 
 	resendCode() {
 		this.isLoading = true;
 		this.verifySubscription$.unsubscribe();
-		this.verifySubscription$ = this._httpService.post("https://jsonplaceholder.typicode.com/posts", this.data.phoneNumber.phoneNumber).
-			subscribe(() => this.isLoading = false);
+		this.verifySubscription$ = this._httpService.post("https://jsonplaceholder.typicode.com/posts", {
+			PhoneNumber: this.data.phoneNumber
+		}).subscribe(() => this.isLoading = false);
 	}
 
 	closeModal() {
-		this.dialogRef.close();
+		this.dialogReference.close();
 	}
 }

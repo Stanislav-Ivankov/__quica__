@@ -1,28 +1,28 @@
-<main class="Login">
+<main>
 
-	<form (ngSubmit)="login()" [formGroup]="loginForm" class="Login__Login-Form">
+	<form (ngSubmit)="login()" [formGroup]="loginForm">
 		<h3>Login</h3>
 
 		<mat-form-field appearance="outline">
-			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
 			<mat-label>Email *</mat-label>
-			<input formControlName="email" matInput type="email">
+			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+			<input formControlName="email" type="email" autocomplete="email" matInput>
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
-			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
 			<mat-label>Password *</mat-label>
-			<input formControlName="password" autocomplete matInput type="password">
+			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+			<input formControlName="password" type="password" autocomplete="current-password" matInput>
 		</mat-form-field>
 
-		<button type="submit" mat-raised-button color="primary">Login</button>
+		<button [disabled]="'INVALID' === loginForm.status" type="submit" mat-raised-button color="primary">Login</button>
 	</form>
 
-	<aside class="Login__Sign-Up-Button">
+	<aside>
 		<h3>Sign Up</h3>
 
-		<h5>Not A Member Yet ? Sign Up.</h5>
-		<button routerLink="/sign-up" [queryParams]="query" type="submit" mat-raised-button color="primary">Sign Up</button>
+		<p>Not A Member Yet ? Sign Up.</p>
+		<button routerLink="/sign-up" [queryParams]="queryParameters" mat-raised-button color="primary">Sign Up</button>
 	</aside>
 
 </main>

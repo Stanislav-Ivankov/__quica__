@@ -1,18 +1,18 @@
-<main class="Sign-Up">
+<main>
 
-	<form [formGroup]="verifyPhoneNumberForm" class="Sign-Up__Form">
+	<form [formGroup]="phoneNumberForm">
 		<h3>Sign Up</h3>
 
 		<mat-form-field appearance="outline">
-			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
 			<mat-label>Phone Number *</mat-label>
-			<input formControlName="phoneNumber" matInput type="text">
+			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+			<input formControlName="phoneNumber" type="text" matInput>
 		</mat-form-field>
 
-		<button (click)="open()" [disabled]="verifyPhoneNumberForm.status === 'INVALID'" type="button" mat-raised-button color="primary">Continue</button>
+		<button (click)="openModal()" [disabled]="'INVALID' === phoneNumberForm.status" mat-raised-button color="primary">Continue</button>
 	</form>
 
-	<aside class="Sign-Up__Additional-Information">
+	<aside>
 		<h3>Why We Ask For Phone Numbers ?</h3>
 
 		<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto dolores fugit quae non, ut aspernatur odit hic tempore error ad sint ipsum voluptates placeat atque? Qui iusto atque veritatis esse porro iste voluptate omnis autem aut similique voluptates cum fugiat, repudiandae, quae minima quibusdam officia, et eius itaque. Voluptatum, quaerat.</p>

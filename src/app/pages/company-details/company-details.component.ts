@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./company-details.component.scss']
 })
 export class CompanyDetailsComponent implements OnInit {
+
 	public companyDetails = {
 		email: "info@quica.io",
 		address: "Some Address, NY, 12345",

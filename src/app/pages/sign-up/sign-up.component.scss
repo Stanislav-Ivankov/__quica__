@@ -1,4 +1,4 @@
-.Sign-Up {
+main {
 	display: flex;
 	justify-content: space-around;
 	align-items: flex-start;
@@ -6,7 +6,7 @@
 	padding-bottom: 213px;
 	background-color: #F5F8F1;
 
-	&__Form {
+	form {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -27,13 +27,13 @@
 		}
 	}
 
-	&__Additional-Information {
+	aside {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		width: 50%;
 		margin-bottom: 25px;
-		max-width: 500px;
 
 		h3 {
 			font-size: 18px;
