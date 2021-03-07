@@ -30,7 +30,10 @@ export class VerifyNumberModalComponent implements OnInit {
 			phoneNumber: this.data.phoneNumber.phoneNumber,
 			verificationCode: 1234
 		})
-		.subscribe(() => this.isLoading = false);
+		.subscribe(() => {
+			this.isLoading = false;
+			this.dialogRef.close();
+		});
 	}
 
 	resendCode() {

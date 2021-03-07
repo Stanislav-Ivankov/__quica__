@@ -15,7 +15,7 @@
 	<section class="Header__Log-In">
 		<button routerLink="/about" mat-raised-button color="primary">About</button>
 		<button mat-raised-button color="primary">Sell</button>
-		<button routerLink="/" *ngIf="!isLogged; else LOGGED_IN_TEMPLATE" mat-raised-button color="primary">Log In</button>
+		<button routerLink="/login" *ngIf="!isLogged; else LOGGED_IN_TEMPLATE" mat-raised-button color="primary">Log In</button>
 	</section>
 
 </header>

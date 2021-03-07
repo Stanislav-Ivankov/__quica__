@@ -10,15 +10,40 @@ import { UserWalletComponent } from "./pages/user-wallet/user-wallet.component";
 import { UserSavedListingsComponent } from "./pages/user-saved-listings/user-saved-listings.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { SignUpComponent } from "./pages/sign-up/sign-up.component";
+import { MainPageComponent } from "./pages/main-page/main-page.component";
+import { CheckoutComponent } from "./pages/checkout/checkout.component";
+
+import { AuthenticateGuard } from "./guards/authenticate.guard";
 
 const routes: Routes = [
 	{
 		path: "",
+		component: MainPageComponent
+	},
+	{
+		path: "checkout/:id",
+		component: CheckoutComponent,
+		canActivate: [AuthenticateGuard]
+	},
+	{
+		path: "login",
 		component: LoginComponent
 	},
 	{
 		path: "sign-up",
 		component: SignUpComponent
+	},
+	{
+		path: "sign-up/register-buy",
+		component: AboutComponent
+	},
+	{
+		path: "sign-up/register-share",
+		component: AboutComponent
+	},
+	{
+		path: "sign-up/register-normal",
+		component: AboutComponent
 	},
 	{
 		path: "about",

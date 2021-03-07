@@ -47,6 +47,9 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDialogModule } from '@angular/material/dialog';
+import { VerifyNumberModalComponent } from './pages/sign-up/verify-number-modal/verify-number-modal.component';
+import { MainPageComponent } from './pages/main-page/main-page.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 @NgModule({
 	declarations: [
@@ -69,7 +72,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 		PendingDealsBuysComponent,
 		PaymentHistoryComponent,
 		LoginComponent,
-		SignUpComponent
+		SignUpComponent,
+		VerifyNumberModalComponent,
+		MainPageComponent,
+		CheckoutComponent
 	],
 	imports: [
 		BrowserModule,
