@@ -1,21 +1,22 @@
-<main class="About">
+<main>
 
 	<h1>About Quica</h1>
 
-	<video controls preload="auto">
+	<video controls preload="metadata">
 		<source type="video/mp4" src="../../assets/Sample Video.mp4">
 	</video>
 
-	<section *ngFor="let payload of generalInformation; index as _Index" class="About__User-Information">
+	<section *ngFor="let payload of userInformation; index as _Index" class="User-Information">
 		<h3>{{ payload.title | titlecase }}</h3>
 
 		<mat-list>
 
 			<section>
-				<mat-list-item *ngFor="let payload of payload.information; index as _Index">
+				<mat-list-item *ngFor="let payload of payload.summary; index as _Index">
 					<mat-chip-list>
 						<mat-chip selected color="primary">{{ _Index + 1 }}</mat-chip>
 					</mat-chip-list>
+
 					<span>{{ payload | titlecase }}</span>
 				</mat-list-item>
 			</section>
@@ -27,15 +28,15 @@
 		</mat-list>
 	</section>
 
-	<section class="About__FAQ">
+	<section class="FAQ">
 		<h3>FAQ</h3>
 
 		<mat-expansion-panel *ngFor="let payload of FAQs" (opened)="panelState = true" (closed)="panelState = false">
 			<mat-expansion-panel-header>
-				<mat-panel-title class="About__FAQ--Question">Q: {{ payload.question | titlecase }}</mat-panel-title>
+				<mat-panel-title class="Question">Q: {{ payload.question | titlecase }}</mat-panel-title>
 			</mat-expansion-panel-header>
 
-			<p class="About__FAQ--Answer">A: {{ payload.answer | titlecase }}</p>
+			<p class="Answer">A: {{ payload.answer | titlecase }}</p>
 		</mat-expansion-panel>
 	</section>
 

@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
 					this.route.navigate(['/sign-up/register-share'], { queryParams: this._activatedRoute.snapshot.queryParams });
 					break;
 				default:
-					this.route.navigate(['/sign-up/register-normal'], { queryParams: this._activatedRoute.snapshot.queryParams });
+					this.route.navigate(['/sign-up/register'], { queryParams: this._activatedRoute.snapshot.queryParams });
 					break;
 			}
 		});

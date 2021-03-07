@@ -1,10 +1,10 @@
-<header class="Header">
+<header>
 
-	<section routerLink="/" class="Header__Logo">
+	<section routerLink="/" class="Logo">
 		<img src="../../assets/Quica Header Logo.svg" alt="Logo" draggable="false">
 	</section>
 
-	<section class="Header__Input">
+	<section class="Input">
 		<mat-form-field>
 			<mat-label>Search Quica</mat-label>
 			<mat-icon matPrefix>search</mat-icon>
@@ -12,10 +12,10 @@
 		  </mat-form-field>
 	</section>
 
-	<section class="Header__Log-In">
+	<section class="Log-In">
 		<button routerLink="/about" mat-raised-button color="primary">About</button>
 		<button mat-raised-button color="primary">Sell</button>
-		<button routerLink="/login" *ngIf="!isLogged; else LOGGED_IN_TEMPLATE" mat-raised-button color="primary">Log In</button>
+		<button routerLink="/login" *ngIf="!isUserLoggedIn; else LOGGED_IN_TEMPLATE" mat-raised-button color="primary">Log In</button>
 	</section>
 
 </header>
@@ -25,8 +25,8 @@
 <!-- TEMPLATES -->
 <ng-template #LOGGED_IN_TEMPLATE>
 
-	<section class="Header__Logged-In" [matMenuTriggerFor]="Menu">
-		<img [src]="profilePicture ? profilePicture : '../../assets/Default Profile Picture.png'" alt="Profile Picture" draggable="false">
+	<section class="Logged-In" [matMenuTriggerFor]="Menu">
+		<img [src]="userProfilePicture ? userProfilePicture : '../../assets/Default User Profile Picture.png'" alt="User Profile Picture" draggable="false">
 		<span>John Smith</span>
 		<mat-icon>arrow_drop_down</mat-icon>
 	</section>

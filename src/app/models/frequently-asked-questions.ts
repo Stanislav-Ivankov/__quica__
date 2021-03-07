@@ -1,4 +1,1 @@
-export interface IFrequentlyAskedQuestions {
-	question: string,
-	answer: string
-}
+export interface IFrequentlyAskedQuestions { }

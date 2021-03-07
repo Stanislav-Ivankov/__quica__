@@ -24,6 +24,9 @@ import { PendingDealsBuysComponent } from './pages/user-wallet/pending-deals-buy
 import { PaymentHistoryComponent } from './pages/user-wallet/payment-history/payment-history.component';
 import { LoginComponent } from "./pages/login/login.component";
 import { SignUpComponent } from "./pages/sign-up/sign-up.component";
+import { VerifyNumberModalComponent } from './pages/sign-up/verify-number-modal/verify-number-modal.component';
+import { MainPageComponent } from './pages/main-page/main-page.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -47,9 +50,10 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDialogModule } from '@angular/material/dialog';
-import { VerifyNumberModalComponent } from './pages/sign-up/verify-number-modal/verify-number-modal.component';
-import { MainPageComponent } from './pages/main-page/main-page.component';
-import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { RegisterBuyComponent } from './pages/sign-up/register-buy/register-buy.component';
+import { RegisterShareComponent } from './pages/sign-up/register-share/register-share.component';
+import { RegisterComponent } from './pages/sign-up/register/register.component';
 
 @NgModule({
 	declarations: [
@@ -75,7 +79,10 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 		SignUpComponent,
 		VerifyNumberModalComponent,
 		MainPageComponent,
-		CheckoutComponent
+		CheckoutComponent,
+		RegisterBuyComponent,
+		RegisterShareComponent,
+		RegisterComponent
 	],
 	imports: [
 		BrowserModule,
@@ -103,7 +110,8 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 		MatSelectModule,
 		MatFormFieldModule,
 		MatNativeDateModule,
-		MatDialogModule
+		MatDialogModule,
+		MatStepperModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

@@ -8,10 +8,6 @@ export class LoginGuard implements CanActivate {
 	constructor(private _routerService: Router) { }
 
 	canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-		if (localStorage.getItem('username') === 'Test_User') {
-			return true;
-		} else {
-			return this._routerService.navigate(['/login'], { queryParams: { ...next.params, ...next.queryParams } });
-		}
+		return true;
 	}
 }

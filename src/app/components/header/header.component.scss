@@ -1,21 +1,22 @@
-.Header {
+header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 12.5px 12.5px 100px 12.5px;
 	background-color: #F5F8F1;
 
-	&__Logo {
+	.Logo {
 		width: 192px;
+		height: auto;
 		cursor: pointer;
 
 		img {
 			width: 100%;
-			height: auto;
+			height: inherit;
 		}
 	}
 
-	&__Input {
+	.Input {
 		width: 40%;
 		margin: 0px 25px;
 
@@ -24,7 +25,7 @@
 		}
 	}
 
-	&__Log-In {
+	.Log-In {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -38,7 +39,7 @@
 		}
 	}
 
-	&__Logged-In {
+	.Logged-In {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

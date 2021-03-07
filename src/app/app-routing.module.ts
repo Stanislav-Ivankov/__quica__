@@ -12,8 +12,12 @@ import { LoginComponent } from "./pages/login/login.component";
 import { SignUpComponent } from "./pages/sign-up/sign-up.component";
 import { MainPageComponent } from "./pages/main-page/main-page.component";
 import { CheckoutComponent } from "./pages/checkout/checkout.component";
+import { RegisterBuyComponent } from "./pages/sign-up/register-buy/register-buy.component";
+import { RegisterShareComponent } from "./pages/sign-up/register-share/register-share.component";
+import { RegisterComponent } from "./pages/sign-up/register/register.component";
 
 import { AuthenticateGuard } from "./guards/authenticate.guard";
+import { LoginGuard } from "./guards/login.guard";
 
 const routes: Routes = [
 	{
@@ -22,8 +26,7 @@ const routes: Routes = [
 	},
 	{
 		path: "checkout/:id",
-		component: CheckoutComponent,
-		canActivate: [AuthenticateGuard]
+		component: CheckoutComponent
 	},
 	{
 		path: "login",
@@ -35,15 +38,15 @@ const routes: Routes = [
 	},
 	{
 		path: "sign-up/register-buy",
-		component: AboutComponent
+		component: RegisterBuyComponent
 	},
 	{
 		path: "sign-up/register-share",
-		component: AboutComponent
+		component: RegisterShareComponent
 	},
 	{
-		path: "sign-up/register-normal",
-		component: AboutComponent
+		path: "sign-up/register",
+		component: RegisterComponent
 	},
 	{
 		path: "about",

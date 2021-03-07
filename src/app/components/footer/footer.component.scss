@@ -1,15 +1,15 @@
-.Footer {
+footer {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	padding: 32px 0px;
+	padding: 25px 0px;
 	background-color: #363738;
 
-	&__Links {
+	.Links {
 		font-size: 18px;
 		color: #FFF;
 
-		a {
+		span {
 			display: block;
 			margin: 25px 0px;
 			text-decoration: none;
@@ -17,8 +17,13 @@
 		}
 	}
 
-	&__Logo {
+	.Logo {
 		width: 192px;
 		height: auto;
+
+		img {
+			width: 100%;
+			height: inherit;
+		}
 	}
 }

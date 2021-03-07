@@ -8,14 +8,15 @@ import { UserService } from "../../services/user.service";
 	styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-	public isLogged: boolean = false;
-	public profilePicture: string = "";
+
+	public isUserLoggedIn: boolean = false;
+	public userProfilePicture: string | ArrayBuffer | null = null;
 
 	constructor(private _userService: UserService) { }
 
 	ngOnInit() {
-		this._userService.profilePictureChangeNotification.subscribe((profilePicture: string) => {
-			this.profilePicture = profilePicture;
+		this._userService.profilePictureChangeNotification.subscribe((payload: string | ArrayBuffer | null) => {
+			this.userProfilePicture = payload;
 		});
 	}
 }

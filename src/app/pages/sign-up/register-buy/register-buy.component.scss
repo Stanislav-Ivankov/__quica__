@@ -1,0 +1,46 @@
+.Stepper-Form {
+	background-color: #F5F8F1;
+
+	h3 {
+		font-size: 28px;
+		text-align: center;
+	}
+
+	mat-horizontal-stepper {
+		max-width: 75%;
+		margin: 0 auto;
+		background-color: #F5F8F1;
+
+		aside {
+			margin: 25px 0px;
+		}
+
+		form {
+			margin-top: 25px;
+
+			.Back-Button {
+				margin-right: 12.5px;
+			}
+
+			mat-form-field {
+				display: block;
+				width: 50%;
+				margin: 0 auto 12.5px auto;
+			}
+		}
+
+		mat-checkbox {
+			display: block;
+			margin-bottom: 12.5px;
+		}
+	}
+
+	.Profile--Upload-ID-Scan-Button {
+		margin: 0 auto;
+		text-align: center;
+
+		aside {
+			margin-top: 25px;
+		}
+	}
+}

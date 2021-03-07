@@ -8,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class AboutComponent implements OnInit {
 	public panelState: boolean = false;
 
-	public generalInformation = [
+	public userInformation = [
 		{
 			title: "how it works for sellers ?",
-			information: [
+			summary: [
 				"information...",
 				"information... information...",
 				"information... information... information... information...",
@@ -20,7 +20,7 @@ export class AboutComponent implements OnInit {
 		},
 		{
 			title: "how it works for buyers ?",
-			information: [
+			summary: [
 				"information...",
 				"information... information...",
 				"information... information... information...",
@@ -30,7 +30,7 @@ export class AboutComponent implements OnInit {
 		},
 		{
 			title: "how it works for people for share ?",
-			information: [
+			summary: [
 				"information...",
 				"information... information...",
 				"information... information... information...",

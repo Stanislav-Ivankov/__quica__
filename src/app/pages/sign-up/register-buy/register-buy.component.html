@@ -1,0 +1,151 @@
+<main class="Stepper-Form">
+	<h3>We Need To Know A Bit More About You</h3>
+
+	<mat-horizontal-stepper>
+
+		<mat-step [stepControl]="generalInformation" label="General Information">
+
+			<form [formGroup]="generalInformation">
+				<aside>
+					<button mat-raised-button color="primary" matStepperNext>Next</button>
+				</aside>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+					<mat-label>First Name *</mat-label>
+					<input formControlName="firstName" matInput type="text">
+					<mat-hint>Required Field</mat-hint>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+					<mat-label>Last Name</mat-label>
+					<input formControlName="lastname" matInput type="text">
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+					<mat-label>Email *</mat-label>
+					<input formControlName="email" matInput type="email">
+					<mat-hint>Required Field</mat-hint>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>password</mat-icon>
+					<mat-label>Password *</mat-label>
+					<input formControlName="password" matInput autocomplete type="password">
+					<mat-hint>Required Field</mat-hint>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Date Of Birth</mat-label>
+					<input formControlName="dateOfBirth" matInput [matDatepicker]="Picker">
+					<mat-datepicker-toggle matSuffix [for]="Picker"></mat-datepicker-toggle>
+					<mat-datepicker #Picker></mat-datepicker>
+					<mat-hint>Required Field</mat-hint>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>share_location</mat-icon>
+					<mat-label>Place Of Birth</mat-label>
+					<input formControlName="placeOfBirth" matInput type="text">
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>female</mat-icon>
+					<mat-label>Gender</mat-label>
+					<mat-select>
+						<mat-option value="Male">Male</mat-option>
+						<mat-option value="Female">Female</mat-option>
+					</mat-select>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>source</mat-icon>
+					<mat-label>ZIP Code</mat-label>
+					<input formControlName="zipCode" matInput type="text">
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>apartment</mat-icon>
+					<mat-label>City</mat-label>
+					<input formControlName="city" matInput type="text">
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>streetview</mat-icon>
+					<mat-label>Street</mat-label>
+					<input formControlName="street" matInput type="text">
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>home</mat-icon>
+					<mat-label>House Number</mat-label>
+					<input formControlName="houseNumber" matInput type="text">
+				</mat-form-field>
+			</form>
+
+		</mat-step>
+
+		<mat-step [stepControl]="IDType" label="Select ID Type">
+			<form [formGroup]="IDType">
+				<aside>
+					<button mat-raised-button color="primary" matStepperPrevious class="Back-Button">Back</button>
+					<button mat-raised-button color="primary" matStepperNext>Next</button>
+				</aside>
+
+				<mat-form-field appearance="outline">
+					<mat-icon matPrefix>assignment_ind</mat-icon>
+					<mat-label>Please, Choose Your ID Type</mat-label>
+					<mat-select>
+						<mat-option value="Male">ID Card</mat-option>
+						<mat-option value="Female">Driver's License</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</form>
+
+			<section class="Profile--Upload-ID-Scan-Button">
+				<button (click)="FileInput.click()" type="button" mat-raised-button color="primary" class="Upload-Button">Upload Scan Of Your ID Card *</button>
+				<input #FileInput [hidden]="true" type="file" accept="image/*">
+				<aside>
+					<mat-spinner *ngIf="true" diameter="36" color="warn"></mat-spinner>
+				</aside>
+			</section>
+		</mat-step>
+
+		<mat-step [stepControl]="paymentOptions" label="Payment Option">
+			<form [formGroup]="paymentOptions">
+				<aside>
+					<button mat-raised-button color="primary" matStepperPrevious class="Back-Button">Back</button>
+					<button mat-raised-button color="primary" matStepperNext>Next</button>
+				</aside>
+
+				<button mat-raised-button color="primary">Connect OTP Simple</button>
+				<p>We Will Deduct A Non-Refundable 99 Ft For Verification Purposes</p>
+			</form>
+		</mat-step>
+
+		<mat-step [stepControl]="GDPRConsent" label="GDPR Consent">
+			<form [formGroup]="GDPRConsent">
+				<aside>
+					<button mat-raised-button color="primary" matStepperPrevious class="Back-Button">Back</button>
+					<button mat-raised-button color="primary" matStepperNext>Next</button>
+				</aside>
+
+				<mat-checkbox formControlName="acceptedTermsAndConditions" color="primary">aaaa</mat-checkbox>
+				<mat-checkbox formControlName="acknowledgedPaymentLiabilityTowardsQuica" color="primary">aaaa</mat-checkbox>
+
+				<button type="submit">AAA</button>
+			</form>
+		</mat-step>
+
+		<mat-step label="Summary">
+
+		</mat-step>
+
+		<mat-step label="Verification Email">
+
+		</mat-step>
+
+	</mat-horizontal-stepper>
+</main>
