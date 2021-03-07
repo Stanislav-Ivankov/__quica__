@@ -22,7 +22,10 @@ export class LoginComponent implements OnInit {
 	}
 
 	login() {
-		localStorage.setItem('Username', 'Test_User');
+		if (this.loginForm.controls['email'].value == 'test@test.com' &&
+		this.loginForm.controls['password'].value == 12345) {
+			localStorage.setItem('Username', 'Test_User');
+		}
 
 		switch (this.query.Process) {
 			case "Buy":
