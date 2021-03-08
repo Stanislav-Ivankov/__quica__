@@ -14,6 +14,10 @@ table, mat-paginator {
 
 	th, td {
 
+		.Use-As-A-Template {
+			width: 150px;
+		}
+
 		&:not(:first-of-type) {
 			text-align: center;
 		}

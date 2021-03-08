@@ -16,12 +16,13 @@ export class UserSettingsComponent implements OnInit {
 		newListingInAChosenCategory: new FormControl(null)
 	});
 
-	isLoading: boolean = true;
-	isDeleting: boolean = false;
+	isSavingChanges: boolean = false;
+	isDeletingAccount: boolean = false;
 
 	constructor(private _httpService: HttpClient) { }
 
-	ngOnInit(): void {
+	ngOnInit() {
+		this.isSavingChanges = true;
 		this._httpService.get("https://jsonplaceholder.typicode.com/todos/1").subscribe(() => {
 			this.userSettingsForms.setValue({
 				"newSharesOfMyListings": true,
@@ -30,23 +31,21 @@ export class UserSettingsComponent implements OnInit {
 				"newListingInAChosenCategory": false
 			}, { onlySelf: true });
 
-			this.isLoading = false;
+			this.isSavingChanges = false;
 		});
 	}
 
 	saveUserSettings(): void {
-		this.isLoading = true;
+		this.isSavingChanges = true;
 		this._httpService.get("https://jsonplaceholder.typicode.com/todos/1").subscribe(() => {
-			console.log(this.userSettingsForms.value);
-			this.isLoading = false;
+			this.isSavingChanges = false;
 		});
 	}
 
 	deleteUserAccount(): void {
-		this.isDeleting = true;
+		this.isDeletingAccount = true;
 		this._httpService.get("https://jsonplaceholder.typicode.com/todos/1").subscribe(() => {
-			console.log(this.userSettingsForms.value);
-			this.isDeleting = false;
+			this.isDeletingAccount = false;
 		});
 	}
 }

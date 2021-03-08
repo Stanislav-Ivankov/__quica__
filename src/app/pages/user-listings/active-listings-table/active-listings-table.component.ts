@@ -19,31 +19,28 @@ import { SharedService } from "../../../services/shared.service";
 	styleUrls: ['./active-listings-table.component.scss']
 })
 export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
-	ELEMENT_DATA = [
-		{ comission: 1, listingName: 'Hydrogen', price: 100, status: 'H', timesShared: 12 },
-		{ comission: 2, listingName: 'Helium', price: 400, status: 'He', timesShared: 134 },
-		{ comission: 3, listingName: 'Lithium', price: 6500, status: 'Li', timesShared: 12342 }
+	sampleData = [
+		{ comission: 10, listingName: "Stock", price: 100, status: "S", timesShared: 12, action: 1 },
+		{ comission: 22, listingName: "Laptop", price: 400, status: "L", timesShared: 134, action: 2 },
+		{ comission: 35, listingName: "House", price: 6500, status: "H", timesShared: 12342, action: 1 }
 	];
 
-	// Primitives
 	isLoading: boolean = true;
 	totalResults: number = 0;
 	tableColumns: string[] = ["Select", 'Price', 'Comission', 'Times Shared', "Action", "Edit Listing", "Remove All"];
 
-	// Referentials
 	readyToRefreshSubscription$: Subscription = new Subscription();
-	requestPipelineSubscription$: Subscription = new Subscription();
+	refreshPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
 	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
-	// Decorators
 	@ViewChild(MatSort)
 	sort!: MatSort;
 
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
 
-	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
+	constructor(private _httpService: HttpClient, private _sharedService: SharedService, private _matPaginatorService: MatPaginatorIntl) { }
 
 	ngOnInit() {
 		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
@@ -55,11 +52,11 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.requestPipeline();
+		this.refreshPipeline();
 	}
 
 	ngOnDestroy() {
-		this.requestPipelineSubscription$.unsubscribe();
+		this.refreshPipelineSubscription$.unsubscribe();
 		this.readyToRefreshSubscription$.unsubscribe();
 	}
 
@@ -67,8 +64,8 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 		return this._httpService.get<any[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private requestPipeline() {
-		this.requestPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
+	private refreshPipeline() {
+		this.refreshPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}), 
 			switchMap(() => {
 				this.isLoading = true;
@@ -92,16 +89,16 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	}
 
 	public areAllRowsSelected(): boolean {
-		return this.selection.selected.length === this.ELEMENT_DATA.length;
+		return this.selection.selected.length === this.sampleData.length;
 	}
 
 	public masterToggle(): void {
-		this.areAllRowsSelected() ? this.selection.clear() : this.ELEMENT_DATA.forEach((row: any) => this.selection.select(row));
+		this.areAllRowsSelected() ? this.selection.clear() : this.sampleData.forEach((row: any) => this.selection.select(row));
 	}
 
 	public action(row: any): void {
-		this.requestPipelineSubscription$.unsubscribe();
-		this.requestPipeline();
+		this.refreshPipelineSubscription$.unsubscribe();
+		this.refreshPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();
@@ -110,8 +107,8 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	}
 
 	public editListing(row: any): void {
-		this.requestPipelineSubscription$.unsubscribe();
-		this.requestPipeline();
+		this.refreshPipelineSubscription$.unsubscribe();
+		this.refreshPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();
@@ -120,8 +117,8 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	}
 
 	public removeListing(row: any): void {
-		this.requestPipelineSubscription$.unsubscribe();
-		this.requestPipeline();
+		this.refreshPipelineSubscription$.unsubscribe();
+		this.refreshPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();
@@ -134,8 +131,8 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 			return;
 		}
 
-		this.requestPipelineSubscription$.unsubscribe();
-		this.requestPipeline();
+		this.refreshPipelineSubscription$.unsubscribe();
+		this.refreshPipeline();
 
 		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
 			this._sharedService.refreshNotification.next();

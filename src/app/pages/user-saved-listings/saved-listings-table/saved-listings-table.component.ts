@@ -21,18 +21,17 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 	totalResults: number = 0;
 	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
 
-	requestPipelineSubscription$: Subscription = new Subscription();
+	refreshPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
 	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
-	// Decorators
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
 
 	@ViewChild(MatSort)
 	sort!: MatSort;
 
-	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient) { }
+	constructor(private _httpService: HttpClient,private _matPaginatorService: MatPaginatorIntl) { }
 
 	ngOnInit() {
 		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
@@ -44,19 +43,19 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.requestPipeline();
+		this.refreshPipeline();
 	}
 
 	ngOnDestroy() {
-		this.requestPipelineSubscription$.unsubscribe();
+		this.refreshPipelineSubscription$.unsubscribe();
 	}
 
 	private getListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any> {
 		return this._httpService.get<any>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private requestPipeline() {
-		this.requestPipelineSubscription$ = merge(this.sort.sortChange, this.paginator.page).pipe(
+	private refreshPipeline() {
+		this.refreshPipelineSubscription$ = merge(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}), 
 			switchMap(() => {
 				this.isLoading = true;
@@ -85,8 +84,9 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 	}
 
 	public removeListing(row: any): void {
-		this.requestPipelineSubscription$.unsubscribe();
-		this.requestPipeline();
+		// TODO - Single DELETE Request !!!
+		this.refreshPipelineSubscription$.unsubscribe();
+		this.refreshPipeline();
 	}
 
 	public removeSelectedListings(): void {
@@ -94,7 +94,8 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 			return;
 		}
 
-		this.requestPipelineSubscription$.unsubscribe();
-		this.requestPipeline();
+		// TODO - Batch DELETE Request !!!
+		this.refreshPipelineSubscription$.unsubscribe();
+		this.refreshPipeline();
 	}
 }

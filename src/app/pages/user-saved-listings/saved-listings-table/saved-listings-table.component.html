@@ -1,6 +1,6 @@
-<section class="Loader">
+<aside class="Loader">
 	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
-</section>
+</aside>
 
 <table mat-table [dataSource]="tableData" matSort matSortActive="Price" matSortDirection="asc">
 
@@ -13,13 +13,13 @@
 		</th>
 
 		<td mat-cell *matCellDef="let row">
-			<mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)" color="primary">{{ row.created_at | date }}</mat-checkbox>
+			<mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)" color="primary">{{ row.status | date }}</mat-checkbox>
 		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Status">
 		<th mat-header-cell *matHeaderCellDef>Status</th>
-		<td mat-cell *matCellDef="let row">{{ row.number }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.state }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Price">
@@ -34,15 +34,16 @@
 
 	<ng-container matColumnDef="Times Shared">
 		<th mat-header-cell *matHeaderCellDef>Times Shared</th>
-		<td mat-cell *matCellDef="let row">{{ "Shared " + row.created_at + " Times" }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.number <= 1 ? "Shared " + row.number + " Time" : "Shared " + row.number + " Times" }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Remove All">
 		<th mat-header-cell *matHeaderCellDef>
-			<button (click)="removeSelectedListings()" mat-raised-button color="warn">Remove All</button>
+			<button (click)="removeSelectedListings()" mat-raised-button color="warn" class="Remove-All-Button">Remove All</button>
 		</th>
+
 		<td mat-cell *matCellDef="let row">
-			<button (click)="removeListing(row)" mat-raised-button color="primary">Remove</button>
+			<button (click)="removeListing(row)" mat-raised-button color="primary" class="Remove-Button">Remove</button>
 		</td>
 	</ng-container>
 

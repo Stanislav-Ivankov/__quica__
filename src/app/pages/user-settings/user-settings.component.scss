@@ -1,4 +1,4 @@
-.User-Settings {
+main {
 	padding-bottom: 50px;
 	background-color: #F5F8F1;
 
@@ -18,13 +18,13 @@
 		font-size: 24px;
 	}
 
-	&__Form {
+	form {
 		width: 50%;
 		margin: 0 auto;
 		text-align: center;
 		font-size: 18px;
 
-		&--Submit-Button, &--Delete-Button {
+		.Submit-Button, .Delete-Button {
 			display: flex;
 			justify-content: center;
 			align-items: center;

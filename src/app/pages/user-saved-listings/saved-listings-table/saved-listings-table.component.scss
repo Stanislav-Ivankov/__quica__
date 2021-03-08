@@ -9,6 +9,14 @@ table, mat-paginator {
 
 	th, td {
 
+		.Remove-All-Button {
+			width: 150px;
+		}
+
+		.Remove-Button {
+			width: 100px;
+		}
+
 		&:not(:first-of-type) {
 			text-align: center;
 		}

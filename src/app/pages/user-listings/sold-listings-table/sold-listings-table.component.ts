@@ -19,7 +19,8 @@ import { SharedService } from "../../../services/shared.service";
 	styleUrls: ['./sold-listings-table.component.scss']
 })
 export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
-	ELEMENT_DATA = [
+
+	sampleData = [
 		{ comission: 1, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 },
 		{ comission: 2, listingName: 'Helium', price: 4.0026, status: 'He', timesShared: 12 },
 		{ comission: 3, listingName: 'Lithium', price: 6.941, status: 'Li', timesShared: 12 }
@@ -29,7 +30,7 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	totalResults: number = 0;
 	tableColumns: string[] = ['Listing Name', 'Price', 'Comission', 'Times Shared', "Use As Template"];
 
-	requestPipelineSubscription$: Subscription = new Subscription();
+	refreshPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
 	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
@@ -53,7 +54,7 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 
 	ngAfterViewInit() {
 		this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-		this.requestPipeline();
+		this.refreshPipeline();
 
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
@@ -66,15 +67,15 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	}
 
 	ngOnDestroy() {
-		this.requestPipelineSubscription$.unsubscribe();
+		this.refreshPipelineSubscription$.unsubscribe();
 	}
 
 	private getListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any[]> {
 		return this._httpService.get<any[]>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
 	}
 
-	private requestPipeline() {
-		this.requestPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
+	private refreshPipeline() {
+		this.refreshPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}),
 			switchMap(() => {
 				this.isLoading = true;

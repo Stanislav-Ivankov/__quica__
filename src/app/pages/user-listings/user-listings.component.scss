@@ -1,4 +1,4 @@
-.User-Saved-Listings {
+main {
 	padding-bottom: 50px;
 	background-color: #F5F8F1;
 
@@ -10,7 +10,7 @@
 		font-size: 42px;
 	}
 
-	&__Active-Table, &__Sold-Table {
+	.Active-Table, .Sold-Table {
 		width: 75%;
 		margin: 0 auto;
 		padding-bottom: 50px;

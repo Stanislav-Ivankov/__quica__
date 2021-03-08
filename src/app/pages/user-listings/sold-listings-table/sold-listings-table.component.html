@@ -4,7 +4,7 @@
 	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
 </section>
 
-<table mat-table [dataSource]="ELEMENT_DATA" matSort matSortActive="Price" matSortDirection="asc">
+<table mat-table [dataSource]="sampleData" matSort matSortActive="Price" matSortDirection="asc">
 
 	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
 	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
@@ -26,13 +26,14 @@
 
 	<ng-container matColumnDef="Times Shared">
 		<th mat-header-cell *matHeaderCellDef>Times Shared</th>
-		<td mat-cell *matCellDef="let row">{{ "Shared " + row.timesShared + " Times" }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.price <= 1 ? "Shared " + row.price + " Time" : "Shared " + row.price + " Times" }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Use As Template">
 		<th mat-header-cell *matHeaderCellDef>Templates For New Listing</th>
+
 		<td mat-cell *matCellDef="let row">
-			<button (click)="useAsTemplate(row)" mat-raised-button color="primary">Use As Template</button>
+			<button (click)="useAsTemplate(row)" mat-raised-button color="primary" class="Use-As-A-Template">Use As Template</button>
 		</td>
 	</ng-container>
 

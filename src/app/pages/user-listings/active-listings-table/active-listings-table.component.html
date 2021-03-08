@@ -4,7 +4,7 @@
 	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
 </section>
 
-<table mat-table [dataSource]="ELEMENT_DATA" matSort matSortActive="Price" matSortDirection="asc">
+<table mat-table [dataSource]="sampleData" matSort matSortActive="Price" matSortDirection="asc">
 
 	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
 	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
@@ -31,29 +31,31 @@
 
 	<ng-container matColumnDef="Times Shared">
 		<th mat-header-cell *matHeaderCellDef>Times Shared</th>
-		<td mat-cell *matCellDef="let row">{{ "Shared " + row.price + " Times" }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.price <= 1 ? "Shared " + row.price + " Time" : "Shared " + row.price + " Times" }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Action">
 		<th mat-header-cell *matHeaderCellDef>Action</th>
 		<td mat-cell *matCellDef="let row">
-			<button (click)="action(row)" mat-stroked-button>Refund Comission</button>
+			<button *ngIf="1 === row.action" (click)="action(row)" mat-stroked-button class="Action-Button">Refund Comission</button>
+			<button *ngIf="2 === row.action" (click)="action(row)" mat-stroked-button class="Action-Button">Pay Comission In Advance</button>
 		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Edit Listing">
 		<th mat-header-cell *matHeaderCellDef>Edit Listing</th>
 		<td mat-cell *matCellDef="let row">
-			<button (click)="editListing(row)" mat-stroked-button color="primary">Edit</button>
+			<button (click)="editListing(row)" mat-stroked-button color="primary" class="Edit-Button">Edit</button>
 		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Remove All">
 		<th mat-header-cell *matHeaderCellDef>
-			<button (click)="removeSelectedListings()" mat-raised-button color="warn">Remove All</button>
+			<button (click)="removeSelectedListings()" mat-raised-button color="warn" class="Remove-All-Button">Remove All</button>
 		</th>
+
 		<td mat-cell *matCellDef="let row">
-			<button (click)="removeListing(row)" mat-raised-button color="primary">Remove</button>
+			<button (click)="removeListing(row)" mat-raised-button color="primary" class="Remove-Button">Remove</button>
 		</td>
 	</ng-container>
 
