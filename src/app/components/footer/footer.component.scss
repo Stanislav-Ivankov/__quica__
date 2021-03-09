@@ -5,20 +5,19 @@ footer {
 	padding: 25px 0px;
 	background-color: #363738;
 
-	.Links {
+	section {
 		font-size: 18px;
 		color: #FFF;
 
 		span {
 			display: block;
 			margin: 25px 0px;
-			text-decoration: none;
 			color: #FFF;
 			cursor: pointer;
 		}
 	}
 
-	.Logo {
+	aside {
 		width: 192px;
 		height: auto;
 		cursor: pointer;

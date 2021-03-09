@@ -12,7 +12,7 @@ export class CompanyDetailsComponent implements OnInit {
 		address: "Some Address, NY, 12345",
 		taxNumber: 1234567890,
 		companyRegistryNumber: 1234567890,
-		legalInformation: [
+		additionalInformation: [
 			"Information.......\
 				Information.......\
 				Information.......",

@@ -4,7 +4,7 @@
 
 	<h3>Company Details</h3>
 
-	<mat-list class="List">
+	<mat-list>
 
 		<mat-list-item>
 			<mat-icon mat-list-icon>email</mat-icon>
@@ -26,7 +26,7 @@
 			<span mat-line>{{ companyDetails.companyRegistryNumber }}</span>
 		</mat-list-item>
 
-		<mat-list-item *ngFor="let payload of companyDetails.legalInformation">
+		<mat-list-item *ngFor="let payload of companyDetails.additionalInformation">
 			<mat-icon mat-list-icon>info</mat-icon>
 			<span mat-line>{{ payload }}</span>
 		</mat-list-item>

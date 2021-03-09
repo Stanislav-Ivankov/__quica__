@@ -9,7 +9,7 @@ export class AboutComponent implements OnInit {
 
 	public panelState: boolean = false;
 
-	public userInformation = [
+	public QUICAInformation = [
 		{
 			title: "how it works for sellers ?",
 			summary: [

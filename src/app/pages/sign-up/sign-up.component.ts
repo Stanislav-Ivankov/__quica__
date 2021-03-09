@@ -11,20 +11,20 @@ import { VerifyNumberModalComponent } from "./verify-number-modal/verify-number-
 })
 export class SignUpComponent implements OnInit {
 
-	queryParameters!: Params;
+	queryParameters: Params = {};
 
 	phoneNumberForm: FormGroup = new FormGroup({
 		phoneNumber: new FormControl(null, Validators.compose([Validators.required, Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g)]))
 	});
 
-	constructor(private _activatedRouteService: ActivatedRoute, private _routeService: Router, public dialog: MatDialog) { }
+	constructor(private _activatedRouteService: ActivatedRoute, private _routeService: Router, public modal: MatDialog) { }
 
 	ngOnInit() {
 		this.queryParameters = this._activatedRouteService.snapshot.queryParams;
 	}
 
 	openModal() {
-		const modalReference = this.dialog.open(VerifyNumberModalComponent, { width: "375px", data: { phoneNumber: this.phoneNumberForm.value.phoneNumber } });
+		const modalReference = this.modal.open(VerifyNumberModalComponent, { width: "375px", data: { phoneNumber: this.phoneNumberForm.value.phoneNumber } });
 
 		modalReference.afterClosed().subscribe(() => {
 			switch (this.queryParameters.Process) {

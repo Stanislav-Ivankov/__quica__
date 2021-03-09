@@ -3,10 +3,10 @@
 	<h1>About Quica</h1>
 
 	<video controls preload="metadata">
-		<source type="video/mp4" src="../../assets/Sample Video.mp4">
+		<source src="../../assets/Sample Video.mp4" type="video/mp4">
 	</video>
 
-	<section *ngFor="let payload of userInformation; index as _Index" class="User-Information">
+	<section *ngFor="let payload of QUICAInformation; index as _Index" class="Quica-Information">
 		<h3>{{ payload.title | titlecase }}</h3>
 
 		<mat-list>

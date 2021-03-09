@@ -1,19 +1,21 @@
 main {
 	clear: both;
 
-	h3 {
-		font-size: 18px;
-		text-align: center;
-	}
-
 	mat-icon {
 		float: right;
 		cursor: pointer;
 	}
 
+	h3 {
+		font-size: 18px;
+		text-align: center;
+	}
+
 	mat-form-field {
 		display: flex;
 		justify-content: center;
+		width: 150px;
+		margin: 0px auto 25px auto;
 	}
 
 	button {

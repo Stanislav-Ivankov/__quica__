@@ -5,8 +5,9 @@
 
 	<form [formGroup]="OTPForm">
 		<mat-form-field appearance="outline">
-			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+			<mat-icon matPrefix>vpn_key</mat-icon>
 			<input formControlName="verificationCode" type="text" matInput>
+			<mat-hint>Required Field</mat-hint>
 		</mat-form-field>
 
 		<button (click)="verifyCode()" [disabled]="'INVALID' === OTPForm.status || true === isLoading" mat-raised-button color="primary">Verify Code</button>

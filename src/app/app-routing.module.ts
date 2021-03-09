@@ -17,7 +17,6 @@ import { RegisterShareComponent } from "./pages/sign-up/register-share/register-
 import { RegisterComponent } from "./pages/sign-up/register/register.component";
 
 import { AuthenticateGuard } from "./guards/authenticate.guard";
-import { LoginGuard } from "./guards/login.guard";
 
 const routes: Routes = [
 	{

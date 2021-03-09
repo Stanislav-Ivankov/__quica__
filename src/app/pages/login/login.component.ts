@@ -9,7 +9,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-	queryParameters!: Params;
+	queryParameters: Params = {};
 
 	loginForm: FormGroup = new FormGroup({
 		email: new FormControl(null, Validators.required),
@@ -27,18 +27,18 @@ export class LoginComponent implements OnInit {
 		// 	localStorage.setItem('Username', 'Test_User');
 		// }
 
-		switch (this.queryParameters.Process) {
-			case "Buy":
-				// this.route.navigate(['/checkout', this._activatedRoute.snapshot.queryParams.id], { queryParams: { Process: this.query.Process } });
-				break;
+		// switch (this.queryParameters.Process) {
+		// 	case "Buy":
+		// 		this._routeService.navigate(['/checkout', this._activatedRouteServce.snapshot.queryParams.id], { queryParams: { Process: this.queryParameters.Process } });
+		// 		break;
 
-			case "Share":
-				// this.route.navigate(['/share', this._activatedRoute.snapshot.queryParams.id], { queryParams: { Process: this.query.Process } });
-				break;
+		// 	case "Share":
+		// 		this._routeService.navigate(['/share', this._activatedRouteServce.snapshot.queryParams.id], { queryParams: { Process: this.queryParameters.Process } });
+		// 		break;
 
-			default:
-				// this.route.navigate(['/about']);
-				break;
-		}
+		// 	default:
+		// 		this._routeService.navigate(['/about']);
+		// 		break;
+		// }
 	}
 }

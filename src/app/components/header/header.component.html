@@ -1,7 +1,7 @@
 <header>
 
 	<section routerLink="/" class="Logo">
-		<img src="../../assets/Quica Header Logo.svg" alt="Logo" draggable="false">
+		<img src="../../assets/Quica Header Logo.svg" alt="Quica Header Logo" draggable="false">
 	</section>
 
 	<section class="Input">
@@ -22,12 +22,11 @@
 
 
 
-<!-- TEMPLATES -->
 <ng-template #LOGGED_IN_TEMPLATE>
 
-	<section class="Logged-In" [matMenuTriggerFor]="Menu">
+	<section [matMenuTriggerFor]="Menu" class="Logged-In">
 		<img [src]="userProfilePicture ? userProfilePicture : '../../assets/Default User Profile Picture.png'" alt="User Profile Picture" draggable="false">
-		<span>John Smith</span>
+		<span>John</span>
 		<mat-icon>arrow_drop_down</mat-icon>
 	</section>
 

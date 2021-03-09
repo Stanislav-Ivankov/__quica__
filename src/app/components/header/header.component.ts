@@ -9,14 +9,10 @@ import { UserService } from "../../services/user.service";
 })
 export class HeaderComponent implements OnInit {
 
-	public isUserLoggedIn: boolean = false;
+	public isUserLoggedIn: boolean | null = null;
 	public userProfilePicture: string | ArrayBuffer | null = null;
 
 	constructor(private _userService: UserService) { }
 
-	ngOnInit() {
-		this._userService.profilePictureChangeNotification.subscribe((payload: string | ArrayBuffer | null) => {
-			this.userProfilePicture = payload;
-		});
-	}
+	ngOnInit() { }
 }
