@@ -1,0 +1,21 @@
+<main>
+
+	<h1>Verification</h1>
+
+	<section>
+		<img src="../../../../assets/Verification Email.svg" alt="Verification Email Icon" draggable="false">
+	</section>
+
+	<p>We Sent You A Verification Email, Please Check It.</p>
+
+	<button (click)="resendEmail()" mat-raised-button color="accent">Resend Email</button>
+
+	<button (click)="imitiateClick()" mat-raised-button color="warn">Imitate Email Link</button>
+
+	<button (click)="goToLogin()" mat-raised-button color="primary">Return To Main Page</button>
+
+	<div class="Loader">
+		<mat-spinner *ngIf="isLoading" diameter="36" color="accent"></mat-spinner>
+	</div>
+
+</main>

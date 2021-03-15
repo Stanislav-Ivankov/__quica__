@@ -7,22 +7,27 @@
 			<mat-label>Email *</mat-label>
 			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
 			<input formControlName="email" type="email" autocomplete="email" matInput>
-			<mat-hint>Required Field</mat-hint>
+			<mat-hint>Required</mat-hint>
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Password *</mat-label>
 			<mat-icon matPrefix>password</mat-icon>
 			<input formControlName="password" type="password" autocomplete="current-password" matInput>
-			<mat-hint>Required Field</mat-hint>
+			<mat-hint>Required</mat-hint>
 		</mat-form-field>
 
-		<button [disabled]="'INVALID' === loginForm.status" type="submit" mat-raised-button color="primary">Login</button>
+		<section>
+			<button [disabled]="'INVALID' === loginForm.status" type="submit" mat-raised-button color="primary">Login</button>
+
+			<div class="Loader">
+				<mat-spinner *ngIf="isLoading" diameter="36" color="primary"></mat-spinner>
+			</div>
+		</section>
 	</form>
 
 	<aside>
 		<h3>Sign Up</h3>
-
 		<p>Not A Member Yet ? Sign Up.</p>
 
 		<button routerLink="/sign-up" [queryParams]="queryParameters" mat-raised-button color="primary">Sign Up</button>

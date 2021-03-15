@@ -10,26 +10,22 @@
 		<mat-checkbox formControlName="generalNewsAndProductAnnouncements" color="primary">General News And Product Announcements</mat-checkbox>
 		<mat-checkbox formControlName="newListingInAChosenCategory" color="primary">New Listing ( In A Chosen Category )</mat-checkbox>
 
-		<section class="Submit-Button">
-
+		<section>
 			<button type="submit" mat-raised-button color="primary">Save Settings</button>
 
-			<aside>
+			<div class="Loader">
 				<mat-spinner *ngIf="isSavingChanges" diameter="36" color="primary"></mat-spinner>
-			</aside>
-
-		</section>
-
-		<section class="Delete-Button">
-
-			<button (click)="deleteUserAccount()" mat-raised-button color="warn">DELETE MY ACCOUNT</button>
-
-			<aside>
-				<mat-spinner *ngIf="isDeletingAccount" diameter="36" color="warn"></mat-spinner>
-			</aside>
-
+			</div>
 		</section>
 
 	</form>
+
+	<section>
+		<button (click)="deleteUserAccount()" mat-raised-button color="warn">DELETE MY ACCOUNT</button>
+
+		<div class="Loader">
+			<mat-spinner *ngIf="isDeletingAccount" diameter="36" color="warn"></mat-spinner>
+		</div>
+	</section>
 
 </main>

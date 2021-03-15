@@ -1,69 +1,112 @@
-.Profile {
+main {
 	padding-bottom: 50px;
 	background-color: #F5F8F1;
 
 	h1 {
-		width: 25%;
-		margin: 0 auto;
-		padding-bottom: 50px;
+		width: 75%;
+		margin: 0 auto 50px auto;
 		text-align: center;
 		font-size: 42px;
 	}
 
-	.AAA {
-		width: 25%;
+	.Profile-Completion-Status {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		padding-right: 12.5px;
+
+		aside {
+			width: 25%;
+			padding: 12.5px;
+			background-color: #FFF;
+			border-radius: 12.5px;
+			box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 24%), 0px 4px 5px 0px rgb(0 0 0 / 16%), 0px 1px 10px 0px rgb(0 0 0 / 16%);
+
+			.Percentage {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 12.5px;
+				font-size: 18px;
+				font-weight: 500;
+			}
+
+			.Progress-Bar {
+				mat-progress-bar {
+					height: 12.5px;
+					border-radius: 12.5px;
+				}
+
+				margin-bottom: 12.5px;
+			}
+		}
+	}
+
+	.Profile-Picture {
+		width: 128px;
+		height: 128px;
 		margin: 0px auto 25px auto;
 
 		img {
 			display: block;
-			width: 128px;
-			height: 128px;
+			width: inherit;
+			height: inherit;
 			margin: 0 auto 25px auto;
 			border-radius: 100%;
+			cursor: pointer;
+		}
+
+		mat-spinner {
+			margin: 0 auto;
 		}
 	}
 
 	mat-form-field {
 		display: block;
-		width: 25%;
-		margin: 0 auto;
-	}
+		width: 400px;
+		margin: 0 auto 12.5px auto;
 
-	button {
-		display: block;
-		margin: 0 auto;
-	}
-
-	&__Upload-Profile-Picture-Button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-bottom: 12.5px;
-
-		button {
-			width: 250px;
-			margin: 12.5px;
+		&:last-of-type {
+			margin-bottom: 50px;
 		}
 	}
 
-	&--Upload-ID-Scan-Button {
-		margin-bottom: 25px;
-	}
-
-	&__ID-Scan {
+	.ID-Scan {
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		margin: 0 auto 25px auto;
-		width: 25%;
+		width: 512px;
+		height: 256px;
+		margin: 0 auto 50px auto;
+		cursor: pointer;
+
+		h4 {
+			font-size: 24px;
+		}
 
 		img {
-			width: 100%;
-			height: auto;
+			width: inherit;
+			height: inherit;
+			object-fit: scale-down;
 		}
 	}
 
-	&__Submit-Button {
-		width: 150px;
+	.Submit-Button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 25px;
+
+		button {
+			width: 150px;
+			display: block;
+			margin: 0px 12.5px;
+		}
+
+		div {
+			width: 36px;
+			height: 36px;
+		}
 	}
 }

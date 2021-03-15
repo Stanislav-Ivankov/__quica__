@@ -1,1 +1,122 @@
-<p>register-share works!</p>
+<main>
+
+	<h3>Just Some Basic Information To Create Your Account</h3>
+
+	<mat-horizontal-stepper linear #STEPPER>
+
+		<mat-step [stepControl]="basicInformation" label="Basic Information" [editable]="true">
+
+			<form [formGroup]="basicInformation">
+
+				<aside>
+					<button mat-raised-button color="primary" matStepperNext>Next</button>
+				</aside>
+
+				<h5>General Information</h5>
+
+				<mat-form-field appearance="outline">
+					<mat-label>First Name *</mat-label>
+					<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+					<input #FirstNameRef formControlName="firstName" matInput type="text">
+					<mat-hint>Required</mat-hint>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Last Name</mat-label>
+					<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
+					<input #LastNameRef formControlName="lastname" matInput type="text">
+					<mat-hint>Required</mat-hint>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Email *</mat-label>
+					<mat-icon matPrefix>alternate_email</mat-icon>
+					<input #EmailRef formControlName="email" matInput type="email">
+					<mat-hint>Required</mat-hint>
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Password *</mat-label>
+					<mat-icon matPrefix>password</mat-icon>
+					<input #PasswordRef formControlName="password" matInput autocomplete type="password">
+					<mat-hint>Required</mat-hint>
+				</mat-form-field>
+
+			</form>
+
+		</mat-step>
+
+		<mat-step [stepControl]="GDPRConsent" label="GDPR Consent" [editable]="true">
+
+			<form [formGroup]="GDPRConsent">
+				<aside>
+					<button mat-raised-button color="primary" matStepperPrevious class="Back-Button">Back</button>
+					<button mat-raised-button color="primary" matStepperNext>Next</button>
+				</aside>
+
+				<h5>GDPR Content</h5>
+
+				<p class="GDPR-Content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique nobis totam dolore, assumenda molestias sed numquam est illum! In omnis sequi dolore veritatis unde facere voluptates obcaecati magni. Distinctio cumque temporibus eveniet earum repudiandae pariatur harum autem magni quibusdam. Autem provident esse, optio amet iste aliquid necessitatibus perferendis voluptatem saepe veritatis vero nemo ut tenetur, et officiis beatae nisi non commodi cumque quidem dolorem odit ipsum eligendi! Nulla aspernatur dignissimos laudantium, qui saepe necessitatibus perferendis! Atque suscipit debitis adipisci neque aliquid? Placeat sequi incidunt dolor eveniet hic dolores soluta, eaque illum atque odit facilis tenetur dignissimos at consequatur accusantium iure consectetur illo quasi culpa. Sunt consequatur qui, incidunt illo voluptas nostrum quibusdam! Itaque omnis sint perspiciatis nobis numquam quia hic accusamus minima, veniam fuga tempora distinctio corrupti ut a fugiat! A aspernatur nostrum, quidem iusto facere quaerat ea assumenda possimus repellat dolores recusandae libero suscipit atque, in voluptate odio vitae repellendus quas voluptates quia aperiam aut. Rem quasi nisi iure nulla, possimus incidunt repellendus ex ipsam nesciunt delectus ea deserunt magni distinctio laudantium enim eius facilis a consequuntur perspiciatis sequi. Est nisi molestias suscipit! Iste perspiciatis dolore, velit dolores quam provident numquam sequi libero nihil, corporis in hic tempore natus, et fugit laudantium obcaecati optio. Nobis autem dicta perferendis reprehenderit repellat in a animi quisquam facilis libero quam quibusdam officia magnam aspernatur, facere quasi, vitae architecto veniam voluptate voluptatum quod optio asperiores ad! Consequuntur laborum minus quas commodi. Reiciendis, aliquid est. Officiis voluptate animi consectetur. Tempora, hic. Officiis modi eaque hic expedita ullam, doloribus animi quasi praesentium? Praesentium ducimus beatae molestias consequatur dolor. Et sequi minus laborum eaque iste doloremque commodi ab dicta eligendi inventore molestias, maxime labore earum nobis debitis autem ad deleniti. Tenetur in soluta omnis qui quo suscipit fugit rem esse sequi dolores vero, mollitia officia non.</p>
+
+				<mat-checkbox formControlName="acceptedTermsAndConditions" color="primary">I Accept The Above Terms And Conditions</mat-checkbox>
+				<mat-checkbox formControlName="acknowledgedPaymentLiabilityTowardsQuica" color="primary">I Aknowledge My Payment Liability Towards Quica</mat-checkbox>
+			</form>
+
+		</mat-step>
+
+		<mat-step label="Summary" [editable]="true">
+
+			<aside>
+				<button mat-raised-button color="primary" matStepperPrevious class="Back-Button">Back</button>
+				<button type="button" (click)="sendVerificationEmail()" mat-raised-button color="primary" class="Complete-Sign-Up-Button">Complete Sign Up</button>
+			</aside>
+
+			<h5>Check Everything One Last Time</h5>
+
+			<form>
+				<mat-form-field appearance="outline">
+					<mat-label>Phone Number</mat-label>
+					<mat-icon matPrefix>settings_cell</mat-icon>
+					<input matInput disabled type="text" [value]="phoneNumber">
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>First Name</mat-label>
+					<mat-icon matPrefix>assignment_ind</mat-icon>
+					<input matInput disabled type="text" [value]="FirstNameRef.value">
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Last Name</mat-label>
+					<mat-icon matPrefix>assignment_ind</mat-icon>
+					<input matInput disabled type="text" [value]="LastNameRef.value">
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Email</mat-label>
+					<mat-icon matPrefix>alternate_email</mat-icon>
+					<input matInput disabled type="text" [value]="EmailRef.value">
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Password</mat-label>
+					<mat-icon matPrefix>password</mat-icon>
+					<input matInput disabled type="text" [value]="PasswordRef.value">
+				</mat-form-field>
+
+				<aside class="Terms-And-Conditions">
+					<mat-label>Terms And Conditions</mat-label>
+					<mat-icon *ngIf="GDPRConsent.controls['acceptedTermsAndConditions'].value" matPrefix>verified</mat-icon>
+				</aside>
+
+				<aside class="Payment-Liability">
+					<mat-label>Payment Liabilty</mat-label>
+					<mat-icon *ngIf="GDPRConsent.controls['acknowledgedPaymentLiabilityTowardsQuica'].value" matPrefix>verified</mat-icon>
+				</aside>
+			</form>
+
+		</mat-step>
+
+	</mat-horizontal-stepper>
+
+</main>

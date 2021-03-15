@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 	styleUrls: ['./user-settings.component.scss']
 })
 export class UserSettingsComponent implements OnInit {
+
 	userSettingsForms: FormGroup = new FormGroup({
 		newSharesOfMyListings: new FormControl(null),
 		marketingEmails: new FormControl(null),
@@ -16,36 +17,41 @@ export class UserSettingsComponent implements OnInit {
 		newListingInAChosenCategory: new FormControl(null)
 	});
 
-	isSavingChanges: boolean = false;
-	isDeletingAccount: boolean = false;
+	isSavingChanges: boolean | null = null;
+	isDeletingAccount: boolean | null = null;
 
-	constructor(private _httpService: HttpClient) { }
+	constructor(private _httpClientService: HttpClient) { }
 
 	ngOnInit() {
-		this.isSavingChanges = true;
-		this._httpService.get("https://jsonplaceholder.typicode.com/todos/1").subscribe(() => {
-			this.userSettingsForms.setValue({
-				"newSharesOfMyListings": true,
-				"marketingEmails": false,
-				"generalNewsAndProductAnnouncements": true,
-				"newListingInAChosenCategory": false
-			}, { onlySelf: true });
-
-			this.isSavingChanges = false;
-		});
+		this._httpClientService.get("https://jsonplaceholder.typicode.com/todos/1").subscribe(
+			() => {
+				this.userSettingsForms.setValue({
+					"newSharesOfMyListings": true,
+					"marketingEmails": false,
+					"generalNewsAndProductAnnouncements": true,
+					"newListingInAChosenCategory": false
+				}, { onlySelf: true });
+			},
+			() => {},
+			() => {}
+		);
 	}
 
 	saveUserSettings(): void {
 		this.isSavingChanges = true;
-		this._httpService.get("https://jsonplaceholder.typicode.com/todos/1").subscribe(() => {
-			this.isSavingChanges = false;
-		});
+		this._httpClientService.post("https://jsonplaceholder.typicode.com/posts", this.userSettingsForms.value).subscribe(
+			() => this.isSavingChanges = false,
+			() => this.isSavingChanges = false,
+			() => this.isSavingChanges = false
+		);
 	}
 
-	deleteUserAccount(): void {
+	deleteUserAccount(): void {		
 		this.isDeletingAccount = true;
-		this._httpService.get("https://jsonplaceholder.typicode.com/todos/1").subscribe(() => {
-			this.isDeletingAccount = false;
-		});
+		this._httpClientService.post("https://jsonplaceholder.typicode.com/posts", this.userSettingsForms.value).subscribe(
+			() => this.isDeletingAccount = false,
+			() => this.isDeletingAccount = false,
+			() => this.isDeletingAccount = false
+		);
 	}
 }

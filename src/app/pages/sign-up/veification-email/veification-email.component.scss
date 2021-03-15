@@ -1,0 +1,41 @@
+main {
+	padding-bottom: 50px;
+	background-color: #F5F8F1;
+
+	h1 {
+		width: 75%;
+		margin: 0 auto 50px auto;
+		text-align: center;
+		font-size: 42px;
+	}
+
+	section {
+		width: 200px;
+		margin: 0 auto 50px auto;
+	}
+
+	p {
+		margin-bottom: 50px;
+		text-align: center;
+		font-size: 22px;
+	}
+
+	button {
+		display: block;
+		width: 200px;
+		margin: 0 auto 25px auto;
+	}
+
+	.Loader {
+		height: 36px;
+
+		mat-spinner {
+			margin: 0 auto;
+		}
+	}
+}
+
+::ng-deep snack-bar-container.Success {
+	background-color: #F5F8F1;
+	color: #000;
+}

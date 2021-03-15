@@ -15,8 +15,12 @@ import { CheckoutComponent } from "./pages/checkout/checkout.component";
 import { RegisterBuyComponent } from "./pages/sign-up/register-buy/register-buy.component";
 import { RegisterShareComponent } from "./pages/sign-up/register-share/register-share.component";
 import { RegisterComponent } from "./pages/sign-up/register/register.component";
+import { VeificationEmailComponent } from "./pages/sign-up/veification-email/veification-email.component";
+import { SuccessSimilarListingsComponent } from "./pages/success-similar-listings/success-similar-listings.component";
+import { ShareComponent } from "./pages/share/share.component";
 
 import { AuthenticateGuard } from "./guards/authenticate.guard";
+import { RegistrationGuard } from "./guards/registration.guard";
 
 const routes: Routes = [
 	{
@@ -24,8 +28,23 @@ const routes: Routes = [
 		component: MainPageComponent
 	},
 	{
+		path: "success",
+		component: SuccessSimilarListingsComponent,
+		canActivate: [AuthenticateGuard]
+	},
+	{
+		path: "verification-email",
+		component: VeificationEmailComponent
+	},
+	{
 		path: "checkout/:id",
-		component: CheckoutComponent
+		component: CheckoutComponent,
+		canActivate: [AuthenticateGuard]
+	},
+	{
+		path: "share/:id",
+		component: ShareComponent,
+		canActivate: [AuthenticateGuard]
 	},
 	{
 		path: "login",

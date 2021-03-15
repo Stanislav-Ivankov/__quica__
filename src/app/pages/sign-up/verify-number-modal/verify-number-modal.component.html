@@ -7,15 +7,15 @@
 		<mat-form-field appearance="outline">
 			<mat-icon matPrefix>vpn_key</mat-icon>
 			<input formControlName="verificationCode" type="text" matInput>
-			<mat-hint>Required Field</mat-hint>
+			<mat-hint>Required</mat-hint>
 		</mat-form-field>
 
 		<button (click)="verifyCode()" [disabled]="'INVALID' === OTPForm.status || true === isLoading" mat-raised-button color="primary">Verify Code</button>
 		<button (click)="resendCode()" [disabled]="true === isLoading" mat-raised-button color="accent">Resend Code</button>
 
-		<aside class="Loader">
+		<div class="Loader">
 			<mat-spinner *ngIf="isLoading" diameter="36" color="primary"></mat-spinner>
-		</aside>
+		</div>
 	</form>
 
 </main>

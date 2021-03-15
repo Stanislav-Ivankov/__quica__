@@ -3,7 +3,7 @@ h3 {
 	font-size: 24px;
 }
 
-.Table-Loader {
+.Loader {
 	height: 4px;
 }
 
@@ -19,7 +19,7 @@ table, mat-paginator {
 		}
 	}
 
-	.Label {
+	.Approve-Icon {
 		margin-left: 12.5px;
 	}
 }
@@ -33,7 +33,7 @@ mat-paginator {
 	justify-content: flex-end;
 	align-items: center;
 
-	&__Amount {
+	.Amount {
 		margin: 0px 25px;
 		font-weight: 500;
 	}

@@ -1,48 +1,66 @@
-<main class="Profile">
+<main>
+
 	<h1>User Profile</h1>
 
-	<form (ngSubmit)="submitProfileForm()" [formGroup]="profileForm">
+	<section class="Profile-Completion-Status">
 
-		<section class="AAA">
-			<img [src]="isProfilePicturePresent ? base64ProfilePictureURL : '../../assets/Default Profile Picture.png'" alt="Profile Picture" draggable="false" class="Picture">
-			<button (click)="File_Input.click()" type="button" mat-raised-button color="primary" class="Upload-Button">Upload Profile</button>
-			<input formControlName="userProfilePicture" #File_Input (change)="uploadProfilePicture($event)" [hidden]="true" type="file" accept="image/*">
+		<aside>
+			<div class="Percentage">
+				<span>Profile Completion Rate</span>
+				<span [ngStyle]="{ 'color': messageColor }">{{ percentage }} %</span>
+			</div>
+
+			<div class="Progress-Bar">
+				<mat-progress-bar [value]="percentage" [color]="color" mode="determinate"></mat-progress-bar>
+			</div>
+		</aside>
+
+	</section>
+
+	<form (ngSubmit)="saveProfile()" [formGroup]="profileForm">
+		<section class="Profile-Picture">
+			<img *ngIf="!isProfilePictureLoading" (click)="INPUT_PROFILE_PICTURE.click()" [src]="profilePicture ? profilePicture : '../../assets/Default User Profile Picture.png'" alt="Profile Picture" draggable="false" class="Picture">
+			<mat-spinner *ngIf="isProfilePictureLoading" diameter="48"></mat-spinner>
+			<input #INPUT_PROFILE_PICTURE (change)="uploadProfilePicture($event)" [hidden]="true" type="file" accept="image/*">
 		</section>
 
 		<mat-form-field appearance="outline">
-			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
 			<mat-label>First Name *</mat-label>
+			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
 			<input formControlName="firstName" matInput type="text">
+			<mat-hint>Required</mat-hint>
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
+			<mat-label>Last Name</mat-label>
 			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
-			<mat-label>Last Name *</mat-label>
 			<input formControlName="lastName" matInput type="text">
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
-			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
 			<mat-label>Phone Number *</mat-label>
-			<input formControlName="phoneNumber" matInput type="number">
-			<mat-hint>When You Change Your Phone Number We Verify It By An SMS.</mat-hint>
+			<mat-icon matPrefix>settings_cell</mat-icon>
+			<input formControlName="phoneNumber" matInput type="text">
+			<mat-hint>Required. When You Change Your Phone Number We Verify It By An SMS</mat-hint>
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
-			<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
 			<mat-label>Email *</mat-label>
+			<mat-icon matPrefix>alternate_email</mat-icon>
 			<input formControlName="email" matInput type="email">
-			<mat-hint>When You Change Your Email Address We Verify It By An Email.</mat-hint>
+			<mat-hint>Required. When You Change Your Email Address We Verify It By An Email</mat-hint>
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
-			<mat-icon matPrefix>password</mat-icon>
 			<mat-label>Password *</mat-label>
+			<mat-icon matPrefix>password</mat-icon>
 			<input formControlName="password" matInput autocomplete type="password">
+			<mat-hint>Required</mat-hint>
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Date Of Birth</mat-label>
+			<mat-icon matPrefix>event</mat-icon>
 			<input formControlName="dateOfBirth" matInput [matDatepicker]="Picker">
 			<mat-datepicker-toggle matSuffix [for]="Picker"></mat-datepicker-toggle>
 			<mat-datepicker #Picker></mat-datepicker>
@@ -50,34 +68,40 @@
 
 		<mat-form-field appearance="outline">
 			<mat-label>Place Of Birth</mat-label>
+			<mat-icon matPrefix>home</mat-icon>
 			<input formControlName="placeOfBirth" matInput type="text">
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
-			<mat-label>Gender *</mat-label>
-			<mat-select>
-				<mat-option value="Male">Male</mat-option>
-				<mat-option value="Female">Female</mat-option>
+			<mat-label>Gender</mat-label>
+			<mat-icon matPrefix>female</mat-icon>
+			<mat-select formControlName="gender">
+				<mat-option value="male">Male</mat-option>
+				<mat-option value="female">Female</mat-option>
 			</mat-select>
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>ZIP Code</mat-label>
+			<mat-icon matPrefix>source</mat-icon>
 			<input formControlName="zipCode" matInput type="text">
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>City</mat-label>
+			<mat-icon matPrefix>location_city</mat-icon>
 			<input formControlName="city" matInput type="text">
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>Street</mat-label>
+			<mat-icon matPrefix>add_road</mat-icon>
 			<input formControlName="street" matInput type="text">
 		</mat-form-field>
 
 		<mat-form-field appearance="outline">
 			<mat-label>House Number</mat-label>
+			<mat-icon matPrefix>maps_home_work</mat-icon>
 			<input formControlName="houseNumber" matInput type="text">
 		</mat-form-field>
 
@@ -86,20 +110,26 @@
 			<textarea formControlName="bio" #autosize="cdkTextareaAutosize" matInput cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10"></textarea>
 		</mat-form-field>
 
-		<section class="Profile--Upload-ID-Scan-Button">
-			<button (click)="FileInput.click()" type="button" mat-raised-button color="primary" class="Upload-Button">Upload Scan Of Your ID Card *</button>
-			<input formControlName="IDScan" #FileInput (change)="uploadIDScan($event)" [hidden]="true" type="file" accept="image/*">
-			<aside>
-				<mat-spinner *ngIf="isIDScanUploading" diameter="36" color="warn"></mat-spinner>
-			</aside>
+		<mat-form-field appearance="outline">
+			<mat-label>Tax Number</mat-label>
+			<mat-icon matPrefix>money</mat-icon>
+			<input formControlName="taxNumber" matInput type="text">
+		</mat-form-field>
+
+		<section (click)="INPUT_ID_SCAN.click()" class="ID-Scan">
+			<h4>ID Scan</h4>
+			<img *ngIf="!isIDScanLoading" [src]="IDScan ? IDScan : '../../../assets/Default ID Scan.png'" alt="ID Scan" draggable="false">
+			<mat-spinner *ngIf="isIDScanLoading" diameter="48"></mat-spinner>
+			<input #INPUT_ID_SCAN (change)="uploadIDScan($event)" [hidden]="true" type="file" accept="image/*">
 		</section>
 
-		<section *ngIf="isIDScanPresent" class="Profile__ID-Scan">
-			<img [src]="base64IDScanURL" alt="ID Scan" draggable="false">
+		<section class="Submit-Button">
+			<button type="submit" [disabled]="'INVALID' === this.profileForm.status" mat-raised-button color="primary">Save Changes</button>
+
+			<div class="Loader">
+				<mat-spinner *ngIf="isProfileSaving" diameter="36" color="primary"></mat-spinner>
+			</div>
 		</section>
-
-		<button mat-raised-button type="submit" color="primary" class="Profile__Submit-Button">Save</button>
-
 	</form>
 
 </main>

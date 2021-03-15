@@ -29,15 +29,21 @@ export class SignUpComponent implements OnInit {
 		modalReference.afterClosed().subscribe(() => {
 			switch (this.queryParameters.Process) {
 				case "Buy":
-					// this.route.navigate(['/sign-up/register-buy'], { queryParams: this._activatedRoute.snapshot.queryParams });
+					this._routeService.navigate(['/sign-up/register-buy'],
+						{ state: { "phoneNumber": this.phoneNumberForm.value.phoneNumber },
+							queryParams: this._activatedRouteService.snapshot.queryParams });
 					break;
 
 				case "Share":
-					// this.route.navigate(['/sign-up/register-share'], { queryParams: this._activatedRoute.snapshot.queryParams });
+					this._routeService.navigate(['/sign-up/register-share'],
+						{ state: { "phoneNumber": this.phoneNumberForm.value.phoneNumber },
+							queryParams: this._activatedRouteService.snapshot.queryParams });
 					break;
 
 				default:
-					// this.route.navigate(['/sign-up/register'], { queryParams: this._activatedRoute.snapshot.queryParams });
+					this._routeService.navigate(['/sign-up/register'],
+						{ state: { "phoneNumber": this.phoneNumberForm.value.phoneNumber },
+							queryParams: this._activatedRouteService.snapshot.queryParams });
 					break;
 			}
 		});

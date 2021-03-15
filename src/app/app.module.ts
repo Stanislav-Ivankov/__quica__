@@ -27,6 +27,11 @@ import { SignUpComponent } from "./pages/sign-up/sign-up.component";
 import { VerifyNumberModalComponent } from './pages/sign-up/verify-number-modal/verify-number-modal.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { RegisterBuyComponent } from './pages/sign-up/register-buy/register-buy.component';
+import { RegisterShareComponent } from './pages/sign-up/register-share/register-share.component';
+import { RegisterComponent } from './pages/sign-up/register/register.component';
+import { VeificationEmailComponent } from './pages/sign-up/veification-email/veification-email.component';
+import { SuccessSimilarListingsComponent } from './pages/success-similar-listings/success-similar-listings.component';
 
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -51,9 +56,9 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
-import { RegisterBuyComponent } from './pages/sign-up/register-buy/register-buy.component';
-import { RegisterShareComponent } from './pages/sign-up/register-share/register-share.component';
-import { RegisterComponent } from './pages/sign-up/register/register.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
+import { ShareComponent } from './pages/share/share.component';
 
 @NgModule({
 	declarations: [
@@ -82,7 +87,10 @@ import { RegisterComponent } from './pages/sign-up/register/register.component';
 		CheckoutComponent,
 		RegisterBuyComponent,
 		RegisterShareComponent,
-		RegisterComponent
+		RegisterComponent,
+		VeificationEmailComponent,
+		SuccessSimilarListingsComponent,
+		ShareComponent
 	],
 	imports: [
 		BrowserModule,
@@ -111,7 +119,9 @@ import { RegisterComponent } from './pages/sign-up/register/register.component';
 		MatFormFieldModule,
 		MatNativeDateModule,
 		MatDialogModule,
-		MatStepperModule
+		MatStepperModule,
+		MatSnackBarModule,
+		MatDividerModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

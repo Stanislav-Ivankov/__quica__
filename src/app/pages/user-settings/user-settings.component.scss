@@ -4,16 +4,14 @@ main {
 
 	h1 {
 		width: 50%;
-		margin: 0 auto;
-		margin-bottom: 50px;
+		margin: 0 auto 50px auto;
 		text-align: center;
 		font-size: 42px;
 	}
 
 	h3 {
 		width: 50%;
-		margin: 0 auto;
-		margin-bottom: 50px;
+		margin: 0 auto 50px auto;
 		text-align: center;
 		font-size: 24px;
 	}
@@ -24,17 +22,18 @@ main {
 		text-align: center;
 		font-size: 18px;
 
-		.Submit-Button, .Delete-Button {
+		section {
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			margin-bottom: 25px;
 
 			button {
 				width: 200px;
-				margin: 12.5px;
+				margin: 0px 12.5px;
 			}
 
-			aside {
+			div {
 				width: 36px;
 				height: 36px;
 			}
@@ -44,6 +43,26 @@ main {
 			display: block;
 			margin-bottom: 25px;
 			text-align: justify;
+
+			&:last-of-type {
+				margin-bottom: 50px;
+			}
+		}
+	}
+
+	section {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		button {
+			width: 200px;
+			margin: 0px 12.5px;
+		}
+
+		div {
+			width: 36px;
+			height: 36px;
 		}
 	}
 }

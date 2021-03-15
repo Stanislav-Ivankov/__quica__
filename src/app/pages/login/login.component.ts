@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+import { LoginService } from "../../services/login.service";
 
 @Component({
 	selector: 'quica-login',
@@ -9,6 +12,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+	isLoading: boolean | null = null;
 	queryParameters: Params = {};
 
 	loginForm: FormGroup = new FormGroup({
@@ -16,29 +20,37 @@ export class LoginComponent implements OnInit {
 		password: new FormControl(null, Validators.required)
 	});
 
-	constructor(private _activatedRouteServce: ActivatedRoute, private _routeService: Router) { }
+	constructor(private _activatedRouteServce: ActivatedRoute, private _routeService: Router, private _httpClientService: HttpClient, private _loginService: LoginService) { }
 
 	ngOnInit() {
 		this.queryParameters = this._activatedRouteServce.snapshot.queryParams;
 	}
 
 	login() {
-		// if (this.loginForm.controls['email'].value == 'test@test.com' && this.loginForm.controls['password'].value == 12345) {
-		// 	localStorage.setItem('Username', 'Test_User');
-		// }
+		this.isLoading  = true;
+		this._httpClientService.post("https://jsonplaceholder.typicode.com/posts", this.loginForm.value).subscribe(
+			() => this.isLoading = false,
+			() => this.isLoading = false,
+			() => {}
+		);
 
-		// switch (this.queryParameters.Process) {
-		// 	case "Buy":
-		// 		this._routeService.navigate(['/checkout', this._activatedRouteServce.snapshot.queryParams.id], { queryParams: { Process: this.queryParameters.Process } });
-		// 		break;
+		if (this.loginForm.controls['email'].value == 'test@test.com' && this.loginForm.controls['password'].value == 12345) {
+			localStorage.setItem('Username', 'Test_User');
+			this._loginService.loggedStatus.emit(true);
 
-		// 	case "Share":
-		// 		this._routeService.navigate(['/share', this._activatedRouteServce.snapshot.queryParams.id], { queryParams: { Process: this.queryParameters.Process } });
-		// 		break;
+			switch (this.queryParameters.Process) {
+				case "Buy":
+					this._routeService.navigate(['/checkout', this.queryParameters.id], { queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration } });
+					break;
 
-		// 	default:
-		// 		this._routeService.navigate(['/about']);
-		// 		break;
-		// }
+				case "Share":
+					this._routeService.navigate(['/share', this._activatedRouteServce.snapshot.queryParams.id], { queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration } });
+					break;
+
+				default:
+					this._routeService.navigate(['/']);
+					break;
+			}
+		}
 	}
 }
