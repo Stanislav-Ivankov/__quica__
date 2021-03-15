@@ -92,6 +92,11 @@ export class RegisterBuyComponent implements OnInit {
 		}
 	}
 
+	public removeIDScan(): void {
+		this.IDScan = "";
+		this.formData.delete("IDScan");
+	}
+
 	public connectOTPSimple(): void {
 		this.isOTPVerifyLoading = true;
 		this._httpClientService.post("https://jsonplaceholder.typicode.com/posts", { phoneNumber: this.phoneNumber }).subscribe(

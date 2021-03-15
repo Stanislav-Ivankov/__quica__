@@ -19,6 +19,7 @@
 
 	<form (ngSubmit)="saveProfile()" [formGroup]="profileForm">
 		<section class="Profile-Picture">
+			<mat-icon *ngIf="profilePicture" (click)="removeProfilePicture()">highlight_off</mat-icon>
 			<img *ngIf="!isProfilePictureLoading" (click)="INPUT_PROFILE_PICTURE.click()" [src]="profilePicture ? profilePicture : '../../assets/Default User Profile Picture.png'" alt="Profile Picture" draggable="false" class="Picture">
 			<mat-spinner *ngIf="isProfilePictureLoading" diameter="48"></mat-spinner>
 			<input #INPUT_PROFILE_PICTURE (change)="uploadProfilePicture($event)" [hidden]="true" type="file" accept="image/*">
@@ -118,6 +119,7 @@
 
 		<section (click)="INPUT_ID_SCAN.click()" class="ID-Scan">
 			<h4>ID Scan</h4>
+			<mat-icon *ngIf="IDScan" (click)="removeIDScan()">highlight_off</mat-icon>
 			<img *ngIf="!isIDScanLoading" [src]="IDScan ? IDScan : '../../../assets/Default ID Scan.png'" alt="ID Scan" draggable="false">
 			<mat-spinner *ngIf="isIDScanLoading" diameter="48"></mat-spinner>
 			<input #INPUT_ID_SCAN (change)="uploadIDScan($event)" [hidden]="true" type="file" accept="image/*">

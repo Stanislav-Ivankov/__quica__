@@ -118,6 +118,7 @@
 
 			<section (click)="INPUT_ID_SCAN.click()" class="ID-Scan">
 				<h4>ID Scan</h4>
+				<mat-icon *ngIf="IDScan" (click)="removeIDScan()">highlight_off</mat-icon>
 				<img *ngIf="!isIDScanLoading" [src]="IDScan ? IDScan : '../../../assets/Default ID Scan.png'" alt="ID Scan" draggable="false">
 				<mat-spinner *ngIf="isIDScanLoading" diameter="48"></mat-spinner>
 				<input required #INPUT_ID_SCAN (change)="uploadIDScan($event)" [hidden]="true" type="file" accept="image/*">

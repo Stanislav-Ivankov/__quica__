@@ -46,6 +46,7 @@ main {
 		width: 128px;
 		height: 128px;
 		margin: 0px auto 25px auto;
+		position: relative;
 
 		img {
 			display: block;
@@ -53,6 +54,14 @@ main {
 			height: inherit;
 			margin: 0 auto 25px auto;
 			border-radius: 100%;
+			cursor: pointer;
+		}
+
+		mat-icon {
+			position: absolute;
+			top: -12.5px;
+			right: -12.5px;
+			color: #363738;
 			cursor: pointer;
 		}
 
@@ -80,9 +89,17 @@ main {
 		height: 256px;
 		margin: 0 auto 50px auto;
 		cursor: pointer;
+		position: relative;
 
 		h4 {
 			font-size: 24px;
+		}
+
+		mat-icon {
+			position: absolute;
+			top: -12.5px;
+			right: -12.5px;
+			color: #363738;
 		}
 
 		img {

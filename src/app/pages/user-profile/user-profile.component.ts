@@ -67,7 +67,7 @@ export class UserProfileComponent implements OnInit {
 		this.checkProfileCompetion();
 	}
 
-	checkProfileCompetion() {
+	public checkProfileCompetion(): void {
 		Object.keys(this.profileForm.controls).forEach(key => {
 			if (this.profileForm.controls[key].value) {
 				this.filledControlsCount++;
@@ -124,6 +124,11 @@ export class UserProfileComponent implements OnInit {
 		}
 	}
 
+	public removeProfilePicture(): void {
+		this.profilePicture = "";
+		this.formData.delete("profilePicture");
+	}
+
 	public uploadIDScan(event: Event): void {
 		const inputElement = event.target as HTMLInputElement;
 
@@ -142,6 +147,11 @@ export class UserProfileComponent implements OnInit {
 			this.IDScan = fileReader.result;
 			this.isIDScanLoading = false;
 		}
+	}
+
+	public removeIDScan(): void {
+		this.IDScan = "";
+		this.formData.delete("IDScan");
 	}
 
 	public saveProfile(): void {
