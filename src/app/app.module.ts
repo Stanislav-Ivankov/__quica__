@@ -59,6 +59,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { ShareComponent } from './pages/share/share.component';
+import { EditListingModalComponent } from './pages/user-listings/edit-listing-modal/edit-listing-modal.component';
 
 @NgModule({
 	declarations: [
@@ -90,7 +91,8 @@ import { ShareComponent } from './pages/share/share.component';
 		RegisterComponent,
 		VeificationEmailComponent,
 		SuccessSimilarListingsComponent,
-		ShareComponent
+		ShareComponent,
+		EditListingModalComponent
 	],
 	imports: [
 		BrowserModule,

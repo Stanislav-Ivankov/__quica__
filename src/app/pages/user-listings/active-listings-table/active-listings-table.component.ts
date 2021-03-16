@@ -12,6 +12,8 @@ import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/pag
 import { MatSort, Sort } from '@angular/material/sort';
 
 import { SharedService } from "../../../services/shared.service";
+import { MatDialog } from '@angular/material/dialog';
+import { EditListingModalComponent } from "../edit-listing-modal/edit-listing-modal.component";
 
 @Component({
 	selector: 'quica-active-listings-table',
@@ -40,7 +42,7 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
 
-	constructor(private _httpService: HttpClient, private _sharedService: SharedService, private _matPaginatorService: MatPaginatorIntl) { }
+	constructor(private _httpService: HttpClient, private _sharedService: SharedService, public modal: MatDialog, private _matPaginatorService: MatPaginatorIntl) { }
 
 	ngOnInit() {
 		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
