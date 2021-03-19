@@ -23,13 +23,13 @@ export class UserSettingsComponent implements OnInit {
 	constructor(private _httpClientService: HttpClient) { }
 
 	ngOnInit() {
-		this._httpClientService.get("https://jsonplaceholder.typicode.com/todos/1").subscribe(
+		this._httpClientService.get('https://jsonplaceholder.typicode.com/todos/1').subscribe(
 			() => {
 				this.userSettingsForms.setValue({
-					"newSharesOfMyListings": true,
-					"marketingEmails": false,
-					"generalNewsAndProductAnnouncements": true,
-					"newListingInAChosenCategory": false
+					newSharesOfMyListings: true,
+					marketingEmails: false,
+					generalNewsAndProductAnnouncements: true,
+					newListingInAChosenCategory: false
 				}, { onlySelf: true });
 			},
 			() => {},
@@ -39,16 +39,16 @@ export class UserSettingsComponent implements OnInit {
 
 	saveUserSettings(): void {
 		this.isSavingChanges = true;
-		this._httpClientService.post("https://jsonplaceholder.typicode.com/posts", this.userSettingsForms.value).subscribe(
+		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.userSettingsForms.value).subscribe(
 			() => this.isSavingChanges = false,
 			() => this.isSavingChanges = false,
 			() => this.isSavingChanges = false
 		);
 	}
 
-	deleteUserAccount(): void {		
+	deleteUserAccount(): void {
 		this.isDeletingAccount = true;
-		this._httpClientService.post("https://jsonplaceholder.typicode.com/posts", this.userSettingsForms.value).subscribe(
+		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.userSettingsForms.value).subscribe(
 			() => this.isDeletingAccount = false,
 			() => this.isDeletingAccount = false,
 			() => this.isDeletingAccount = false

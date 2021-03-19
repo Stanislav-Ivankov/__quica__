@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { VerifyNumberModalComponent } from "./verify-number-modal/verify-number-modal.component";
+import { VerifyNumberModalComponent } from './verify-number-modal/verify-number-modal.component';
 
 @Component({
 	selector: 'quica-sign-up',
@@ -24,25 +24,27 @@ export class SignUpComponent implements OnInit {
 	}
 
 	openModal() {
-		const modalReference = this.modal.open(VerifyNumberModalComponent, { width: "375px", data: { phoneNumber: this.phoneNumberForm.value.phoneNumber } });
+		const modalReference = this.modal.open(VerifyNumberModalComponent, {
+			width: '375px', data: { phoneNumber: this.phoneNumberForm.value.phoneNumber }
+		});
 
 		modalReference.afterClosed().subscribe(() => {
 			switch (this.queryParameters.Process) {
-				case "Buy":
+				case 'Buy':
 					this._routeService.navigate(['/sign-up/register-buy'],
-						{ state: { "phoneNumber": this.phoneNumberForm.value.phoneNumber },
+						{ state: { phoneNumber: this.phoneNumberForm.value.phoneNumber },
 							queryParams: this._activatedRouteService.snapshot.queryParams });
 					break;
 
-				case "Share":
+				case 'Share':
 					this._routeService.navigate(['/sign-up/register-share'],
-						{ state: { "phoneNumber": this.phoneNumberForm.value.phoneNumber },
+						{ state: { phoneNumber: this.phoneNumberForm.value.phoneNumber },
 							queryParams: this._activatedRouteService.snapshot.queryParams });
 					break;
 
 				default:
 					this._routeService.navigate(['/sign-up/register'],
-						{ state: { "phoneNumber": this.phoneNumberForm.value.phoneNumber },
+						{ state: { phoneNumber: this.phoneNumberForm.value.phoneNumber },
 							queryParams: this._activatedRouteService.snapshot.queryParams });
 					break;
 			}

@@ -7,56 +7,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-	public panelState: boolean = false;
+	public panelState = false;
 
 	public QUICAInformation = [
 		{
-			title: "how it works for sellers ?",
+			title: 'how it works for sellers ?',
 			summary: [
-				"information...",
-				"information... information...",
-				"information... information... information... information...",
+				'information...',
+				'information... information...',
+				'information... information... information... information...',
 			],
-			imageURL: "../../assets/Leaf.jpg"
+			imageURL: '../../assets/Leaf.jpg'
 		},
 		{
-			title: "how it works for buyers ?",
+			title: 'how it works for buyers ?',
 			summary: [
-				"information...",
-				"information... information...",
-				"information... information... information...",
-				"information... information... information... information...",
+				'information...',
+				'information... information...',
+				'information... information... information...',
+				'information... information... information... information...',
 			],
-			imageURL: "../../assets/Paper.jpg"
+			imageURL: '../../assets/Paper.jpg'
 		},
 		{
-			title: "how it works for people for share ?",
+			title: 'how it works for people for share ?',
 			summary: [
-				"information...",
-				"information... information...",
-				"information... information... information...",
-				"information... information... information... information..."
+				'information...',
+				'information... information...',
+				'information... information... information...',
+				'information... information... information... information...'
 			],
-			imageURL: "../../assets/Woman.jpg"
+			imageURL: '../../assets/Woman.jpg'
 		}
 	];
 
 	public FAQs = [
 		{
-			question: "sample question ?",
-			answer: "sample asnwer."
+			question: 'sample question ?',
+			answer: 'sample asnwer.'
 		},
 		{
-			question: "another sample question ?",
-			answer: "another sample asnwer."
+			question: 'another sample question ?',
+			answer: 'another sample asnwer.'
 		},
 		{
-			question: "third sample question ?",
-			answer: "third asnwer."
+			question: 'third sample question ?',
+			answer: 'third asnwer.'
 		},
 		{
-			question: "forth sample question ?",
-			answer: "forth sample asnwer."
+			question: 'forth sample question ?',
+			answer: 'forth sample asnwer.'
 		}
 	];
 

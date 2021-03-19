@@ -10,11 +10,11 @@ import { } from 'googlemaps';
 })
 export class CheckoutComponent implements OnInit, AfterViewInit {
 
-	id: string = "";
+	id = '';
 	queryParameters: Params = {};
 	map!: google.maps.Map;
 
-	@ViewChild("MAP")
+	@ViewChild('MAP')
 	mapElement!: ElementRef;
 
 	constructor(private _router: Router, private _httpClient: HttpClient, private _activatedRoute: ActivatedRoute) { }
@@ -40,8 +40,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 	}
 
 	goToSucessPage() {
-		this._httpClient.post("https://jsonplaceholder.typicode.com/posts", {}).subscribe(
-			() => this._router.navigate(["/success"], { queryParams: this.queryParameters }),
+		this._httpClient.post('https://jsonplaceholder.typicode.com/posts', {}).subscribe(
+			() => this._router.navigate(['/success'], { queryParams: this.queryParameters }),
 			() => {},
 			() => {}
 		);

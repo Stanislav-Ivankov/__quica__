@@ -25,10 +25,10 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 		{ comission: 5, listingName: 'ME', price: 3000, status: 'TRR', timesShared: 1234 },
 	];
 
-	isLoading: boolean = true;
-	totalResults: number = 0;
-	totalSelectedSum: number = 0;
-	tableColumns: string[] = ["Select", 'Listing Name', 'How Many Between Me And The Buyer ?', "Price", "Comission", "Date", "Status"];
+	isLoading = true;
+	totalResults = 0;
+	totalSelectedSum = 0;
+	tableColumns: string[] = ['Select', 'Listing Name', 'How Many Between Me And The Buyer ?', 'Price', 'Comission', 'Date', 'Status'];
 
 	readyToRefreshSubscription$: Subscription = new Subscription();
 	requestPipelineSubscription$: Subscription = new Subscription();
@@ -44,11 +44,11 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
 	ngOnInit() {
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
-		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.previousPageLabel = "Previous Page"
-		this._matPaginatorService.nextPageLabel = "Next Page";
-		this._matPaginatorService.lastPageLabel = "Last Page";
+		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
+		this._matPaginatorService.firstPageLabel = 'First Page';
+		this._matPaginatorService.previousPageLabel = 'Previous Page';
+		this._matPaginatorService.nextPageLabel = 'Next Page';
+		this._matPaginatorService.lastPageLabel = 'Last Page';
 	}
 
 	ngAfterViewInit() {
@@ -76,13 +76,13 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 
 	private requestPipeline() {
 		this.requestPipelineSubscription$ = merge<EventEmitter<PageEvent>>(this.paginator.page).pipe(
-			startWith({}), 
+			startWith({}),
 			switchMap(() => {
 				this.totalSelectedSum = 0;
 				this.isLoading = true;
 				return this.getListings(this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((payload: any[] | any) => {			  
+			map((payload: any[] | any) => {
 				this.totalResults = payload.total_count;
 				return payload.items;
 			}),
@@ -113,7 +113,7 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 
 	public masterToggle(): void {
 		if (this.areAllRowsSelected()) {
-			this.selection.clear()
+			this.selection.clear();
 			this.totalSelectedSum = 0;
 		} else {
 			this.totalSelectedSum  = 0;
@@ -124,7 +124,7 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 		}
 	}
 
-	public askForPaymentForSelected(): void {		
+	public askForPaymentForSelected(): void {
 		if (0 === this.selection.selected.length) {
 			this.totalSelectedSum = 0;
 			return;

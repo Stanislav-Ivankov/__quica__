@@ -11,9 +11,9 @@ import { map, startWith, switchMap, catchError } from 'rxjs/operators';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 
-import { SharedService } from "../../../services/shared.service";
+import { SharedService } from '../../../services/shared.service';
 import { MatDialog } from '@angular/material/dialog';
-import { EditListingModalComponent } from "../edit-listing-modal/edit-listing-modal.component";
+import { EditListingModalComponent } from '../edit-listing-modal/edit-listing-modal.component';
 
 @Component({
 	selector: 'quica-active-listings-table',
@@ -22,14 +22,14 @@ import { EditListingModalComponent } from "../edit-listing-modal/edit-listing-mo
 })
 export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 	sampleData = [
-		{ comission: 10, listingName: "Stock", price: 100, status: "S", timesShared: 12, action: 1 },
-		{ comission: 22, listingName: "Laptop", price: 400, status: "L", timesShared: 134, action: 2 },
-		{ comission: 35, listingName: "House", price: 6500, status: "H", timesShared: 12342, action: 1 }
+		{ comission: 10, listingName: 'Stock', price: 100, status: 'S', timesShared: 12, action: 1 },
+		{ comission: 22, listingName: 'Laptop', price: 400, status: 'L', timesShared: 134, action: 2 },
+		{ comission: 35, listingName: 'House', price: 6500, status: 'H', timesShared: 12342, action: 1 }
 	];
 
-	isLoading: boolean = true;
-	totalResults: number = 0;
-	tableColumns: string[] = ["Select", 'Price', 'Comission', 'Times Shared', "Action", "Edit Listing", "Remove All"];
+	isLoading = true;
+	totalResults = 0;
+	tableColumns: string[] = ['Select', 'Price', 'Comission', 'Times Shared', 'Action', 'Edit Listing', 'Remove All'];
 
 	readyToRefreshSubscription$: Subscription = new Subscription();
 	refreshPipelineSubscription$: Subscription = new Subscription();
@@ -42,14 +42,19 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
 
-	constructor(private _httpService: HttpClient, private _sharedService: SharedService, public modal: MatDialog, private _matPaginatorService: MatPaginatorIntl) { }
+	constructor(
+		private _httpService: HttpClient,
+		private _sharedService: SharedService,
+		public modal: MatDialog,
+		private _matPaginatorService: MatPaginatorIntl
+	) { }
 
 	ngOnInit() {
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
-		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.previousPageLabel = "Previous Page"
-		this._matPaginatorService.nextPageLabel = "Next Page";
-		this._matPaginatorService.lastPageLabel = "Last Page";
+		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
+		this._matPaginatorService.firstPageLabel = 'First Page';
+		this._matPaginatorService.previousPageLabel = 'Previous Page';
+		this._matPaginatorService.nextPageLabel = 'Next Page';
+		this._matPaginatorService.lastPageLabel = 'Last Page';
 	}
 
 	ngAfterViewInit() {
@@ -68,12 +73,12 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 
 	private refreshPipeline() {
 		this.refreshPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.sort.sortChange, this.paginator.page).pipe(
-			startWith({}), 
+			startWith({}),
 			switchMap(() => {
 				this.isLoading = true;
 				return this.getListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((payload: any) => {			  
+			map((payload: any) => {
 				this.totalResults = payload.total_count;
 				return payload.items;
 			}),

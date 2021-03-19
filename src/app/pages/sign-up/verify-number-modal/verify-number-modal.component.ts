@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { normalizePhoneNumber } from "../../../utilities/utilities";
+import { normalizePhoneNumber } from '../../../utilities/utilities';
 
 @Component({
 	selector: 'quica-verify-number-modal',
@@ -20,11 +20,15 @@ export class VerifyNumberModalComponent implements OnInit, OnDestroy {
 		verificationCode: new FormControl(null, Validators.required)
 	});
 
-	constructor(private _httpService: HttpClient, public modalReference: MatDialogRef<VerifyNumberModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+	constructor(
+		private _httpService: HttpClient,
+		public modalReference: MatDialogRef<VerifyNumberModalComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: any
+	) { }
 
 	ngOnInit() {
 		this.isLoading = true;
-		this.verifySubscription$ = this._httpService.post("https://jsonplaceholder.typicode.com/posts", {
+		this.verifySubscription$ = this._httpService.post('https://jsonplaceholder.typicode.com/posts', {
 			phoneNumber: normalizePhoneNumber(this.data.phoneNumber)
 		}).subscribe(
 			() => this.isLoading = false,
@@ -39,7 +43,7 @@ export class VerifyNumberModalComponent implements OnInit, OnDestroy {
 
 	verifyCode() {
 		this.isLoading = true;
-		this.verifySubscription$ = this._httpService.post("https://jsonplaceholder.typicode.com/posts", {
+		this.verifySubscription$ = this._httpService.post('https://jsonplaceholder.typicode.com/posts', {
 			phoneNumber: normalizePhoneNumber(this.data.phoneNumber),
 			verificationCode: this.OTPForm.value.verificationCode
 		}).subscribe(
@@ -52,7 +56,7 @@ export class VerifyNumberModalComponent implements OnInit, OnDestroy {
 	resendCode() {
 		this.isLoading = true;
 		this.verifySubscription$.unsubscribe();
-		this.verifySubscription$ = this._httpService.post("https://jsonplaceholder.typicode.com/posts", {
+		this.verifySubscription$ = this._httpService.post('https://jsonplaceholder.typicode.com/posts', {
 			phoneNumber: normalizePhoneNumber(this.data.phoneNumber)
 		}).subscribe(
 			() => this.isLoading = false,

@@ -36,7 +36,7 @@
 		"import-spacing": true,
 		"indent": {
 			"options": [
-				"spaces"
+				"tabs"
 			]
 		},
 		"max-classes-per-file": false,
@@ -55,7 +55,7 @@
 				]
 			}
 		],
-		"no-any": true,
+		"no-any": false,
 		"no-console": [
 			true,
 			"debug",
@@ -96,7 +96,7 @@
 			}
 		},
 		"typedef": [
-			true,
+			false,
 			"call-signature"
 		],
 		"typedef-whitespace": {
@@ -121,6 +121,7 @@
 			"options": [
 				"ban-keywords",
 				"check-format",
+				"allow-leading-underscore",
 				"allow-pascal-case"
 			]
 		},

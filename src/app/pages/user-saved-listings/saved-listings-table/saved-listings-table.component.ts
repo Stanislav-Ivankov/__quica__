@@ -17,9 +17,9 @@ import { MatSort } from '@angular/material/sort';
 })
 export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	isLoading: boolean = true;
-	totalResults: number = 0;
-	tableColumns: string[] = ["Select", 'Status', 'Price', 'Comission', 'Times Shared', "Remove All"];
+	isLoading = true;
+	totalResults = 0;
+	tableColumns: string[] = ['Select', 'Status', 'Price', 'Comission', 'Times Shared', 'Remove All'];
 
 	refreshPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
@@ -31,14 +31,14 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 	@ViewChild(MatSort)
 	sort!: MatSort;
 
-	constructor(private _httpService: HttpClient,private _matPaginatorService: MatPaginatorIntl) { }
+	constructor(private _httpService: HttpClient, private _matPaginatorService: MatPaginatorIntl) { }
 
 	ngOnInit() {
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
-		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.previousPageLabel = "Previous Page"
-		this._matPaginatorService.nextPageLabel = "Next Page";
-		this._matPaginatorService.lastPageLabel = "Last Page";
+		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
+		this._matPaginatorService.firstPageLabel = 'First Page';
+		this._matPaginatorService.previousPageLabel = 'Previous Page';
+		this._matPaginatorService.nextPageLabel = 'Next Page';
+		this._matPaginatorService.lastPageLabel = 'Last Page';
 	}
 
 	ngAfterViewInit() {
@@ -56,7 +56,7 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 
 	private refreshPipeline() {
 		this.refreshPipelineSubscription$ = merge(this.sort.sortChange, this.paginator.page).pipe(
-			startWith({}), 
+			startWith({}),
 			switchMap(() => {
 				this.isLoading = true;
 				return this.getListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);

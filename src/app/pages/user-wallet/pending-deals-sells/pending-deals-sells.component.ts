@@ -26,10 +26,10 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 	];
 
 	// Primitives
-	isLoading: boolean = true;
-	totalResults: number = 0;
-	totalSelectedSum: number = 0;
-	tableColumns: string[] = ["Select", 'Listing Name', "Price", "Comission", "Approved By Other Party ?", "Date", "Payment Due", "Cancel", "Approve"];
+	isLoading = true;
+	totalResults = 0;
+	totalSelectedSum = 0;
+	tableColumns: string[] = ['Select', 'Listing Name', 'Price', 'Comission', 'Approved By Other Party ?', 'Date', 'Payment Due', 'Cancel', 'Approve'];
 
 	// Referentials
 	readyToRefreshSubscription$: Subscription = new Subscription();
@@ -47,11 +47,11 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
 	ngOnInit() {
-		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.previousPageLabel = "Previous Page"
-		this._matPaginatorService.nextPageLabel = "Next Page";
-		this._matPaginatorService.lastPageLabel = "Last Page";
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
+		this._matPaginatorService.firstPageLabel = 'First Page';
+		this._matPaginatorService.previousPageLabel = 'Previous Page';
+		this._matPaginatorService.nextPageLabel = 'Next Page';
+		this._matPaginatorService.lastPageLabel = 'Last Page';
+		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
 	}
 
 	ngAfterViewInit(): void {
@@ -79,13 +79,13 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 
 	private fetchPipeline() {
 		this.fetchPipelineSubscription$ = merge<EventEmitter<Sort>, EventEmitter<PageEvent>>(this.paginator.page).pipe(
-			startWith({}), 
+			startWith({}),
 			switchMap(() => {
 				this.totalSelectedSum = 0;
 				this.isLoading = true;
 				return this.getPendingDealsSells(this.paginator.pageIndex, this.paginator.pageSize);
 			}),
-			map((payload: any[] | any) => {			  
+			map((payload: any[] | any) => {
 				this.totalResults = payload.total_count;
 				return payload.items;
 			}),
@@ -116,7 +116,7 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 
 	public masterToggle(): void {
 		if (this.areAllRowsSelected()) {
-			this.selection.clear()
+			this.selection.clear();
 			this.totalSelectedSum = 0;
 		} else {
 			this.totalSelectedSum  = 0;

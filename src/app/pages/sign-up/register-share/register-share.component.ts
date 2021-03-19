@@ -14,7 +14,7 @@ import { SharedService } from 'src/app/services/shared.service';
 export class RegisterShareComponent implements OnInit {
 
 	queryParameters: Params = {};
-	phoneNumber: string = "";
+	phoneNumber = '';
 
 	formData: FormData = new FormData();
 
@@ -30,7 +30,13 @@ export class RegisterShareComponent implements OnInit {
 		acknowledgedPaymentLiabilityTowardsQuica: new FormControl(null, Validators.required)
 	});
 
-	constructor(private _httpClientService: HttpClient, private _activatedRouteService: ActivatedRoute, private _routerService: Router, private _sharedService: SharedService, private _snackBar: MatSnackBar) {}
+	constructor(
+		private _httpClientService: HttpClient,
+		private _activatedRouteService: ActivatedRoute,
+		private _routerService: Router,
+		private _sharedService: SharedService,
+		private _snackBar: MatSnackBar
+	) {}
 
 	@ViewChild('STEPPER')
 	stepper!: MatStepper;
@@ -45,11 +51,14 @@ export class RegisterShareComponent implements OnInit {
 			this.formData.append(key, this.basicInformation.controls[key].value);
 		});
 
-		this.formData.append("acceptedTermsAndConditions", this.GDPRConsent.controls["acceptedTermsAndConditions"].value);
-		this.formData.append("acknowledgedPaymentLiabilityTowardsQuica", this.GDPRConsent.controls["acknowledgedPaymentLiabilityTowardsQuica"].value);
+		this.formData.append('acceptedTermsAndConditions', this.GDPRConsent.controls.acceptedTermsAndConditions.value);
+		this.formData.append(
+			'acknowledgedPaymentLiabilityTowardsQuica',
+			this.GDPRConsent.controls.acknowledgedPaymentLiabilityTowardsQuica.value
+		);
 
-		this._httpClientService.post("https://jsonplaceholder.typicode.com/posts", this.formData).subscribe(
-			() => this._routerService.navigate(["/verification-email"], { queryParams: { ...this.queryParameters, Registration: 'Done' } }),
+		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.formData).subscribe(
+			() => this._routerService.navigate(['/verification-email'], { queryParams: { ...this.queryParameters, Registration: 'Done' } }),
 			() => {},
 			() => {}
 		);

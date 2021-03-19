@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService } from "../../services/user.service";
-import { LoginService } from "../../services/login.service";
+import { UserService } from '../../services/user.service';
+import { LoginService } from '../../services/login.service';
 
 @Component({
 	selector: 'quica-header',
@@ -12,7 +12,7 @@ import { LoginService } from "../../services/login.service";
 export class HeaderComponent implements OnInit {
 
 	public isUserLoggedIn: boolean | null = false;
-	public userProfilePicture: string | ArrayBuffer | null = "";
+	public userProfilePicture: string | ArrayBuffer | null = '';
 
 	constructor(private _userService: UserService, private _loginService: LoginService, private _routerService: Router) { }
 

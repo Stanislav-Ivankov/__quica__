@@ -7,7 +7,10 @@ export class AuthenticateGuard implements CanActivate {
 
 	constructor(private _routerService: Router) { }
 
-	canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+	canActivate(
+		next: ActivatedRouteSnapshot,
+		state: RouterStateSnapshot
+	): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 		if (localStorage.getItem('Username') === 'Test_User') {
 			return true;
 		} else {

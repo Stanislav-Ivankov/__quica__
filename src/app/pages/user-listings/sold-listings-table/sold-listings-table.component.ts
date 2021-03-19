@@ -11,7 +11,7 @@ import { map, startWith, switchMap, catchError } from 'rxjs/operators';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 
-import { SharedService } from "../../../services/shared.service";
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
 	selector: 'quica-sold-listings-table',
@@ -26,9 +26,9 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 		{ comission: 3, listingName: 'Lithium', price: 6.941, status: 'Li', timesShared: 12 }
 	];
 
-	isLoading: boolean = true;
-	totalResults: number = 0;
-	tableColumns: string[] = ['Listing Name', 'Price', 'Comission', 'Times Shared', "Use As Template"];
+	isLoading = true;
+	totalResults = 0;
+	tableColumns: string[] = ['Listing Name', 'Price', 'Comission', 'Times Shared', 'Use As Template'];
 
 	refreshPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
@@ -40,16 +40,16 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
 
-	soldListingsColumns: string[] = ["Listing Name", "Price", "Comission", "Times Shared", "Use As Template"];
+	soldListingsColumns: string[] = ['Listing Name', 'Price', 'Comission', 'Times Shared', 'Use As Template'];
 
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
 	ngOnInit() {
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
-		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.previousPageLabel = "Previous Page"
-		this._matPaginatorService.nextPageLabel = "Next Page";
-		this._matPaginatorService.lastPageLabel = "Last Page";
+		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
+		this._matPaginatorService.firstPageLabel = 'First Page';
+		this._matPaginatorService.previousPageLabel = 'Previous Page';
+		this._matPaginatorService.nextPageLabel = 'Next Page';
+		this._matPaginatorService.lastPageLabel = 'Last Page';
 	}
 
 	ngAfterViewInit() {

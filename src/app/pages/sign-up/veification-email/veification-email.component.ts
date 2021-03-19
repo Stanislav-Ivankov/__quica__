@@ -10,42 +10,51 @@ import { HttpClient } from '@angular/common/http';
 })
 export class VeificationEmailComponent implements OnInit {
 
-	isLoading: boolean = false;
+	isLoading = false;
 	queryParameters: Params = {};
 
-	constructor(private _httpService: HttpClient, private _activatedRoute: ActivatedRoute, private _router: Router, private _snackbar: MatSnackBar) { }
+	constructor(
+		private _httpService: HttpClient,
+		private _activatedRoute: ActivatedRoute,
+		private _router: Router,
+		private _snackbar: MatSnackBar
+	) { }
 
 	ngOnInit() {
 		this.queryParameters = this._activatedRoute.snapshot.queryParams;
 	}
 
 	public resendEmail(): void {
-		let link: string = "";
+		let link = '';
 
-		if (this.queryParameters.Process === "Buy") {
+		if (this.queryParameters.Process === 'Buy') {
 			link = `localhost:4200/checkout/${ this.queryParameters.id }?Process=${ this.queryParameters.Process }&Registration=${ this.queryParameters.Registration }`;
-		} else if (this.queryParameters.Process === "Share") {
+		} else if (this.queryParameters.Process === 'Share') {
 			link = `localhost:4200/share/${ this.queryParameters.id }?Process=${ this.queryParameters.Process }&Registration=${ this.queryParameters.Registration }`;
 		}
 
-		this._httpService.post("https://jsonplaceholder.typicode.com/posts", {}).subscribe(
+		this._httpService.post('https://jsonplaceholder.typicode.com/posts', {}).subscribe(
 			() => console.log(link),
 			() => console.log(link),
 			() => {},
 		);
 
-		this._snackbar.open("Email Sent", "DISMISS", { duration: 5000, panelClass: "Success" });
+		this._snackbar.open('Email Sent', 'DISMISS', { duration: 5000, panelClass: 'Success' });
 	}
 
 	public imitiateClick(): void {
-		if (this.queryParameters.Process === "Buy") {
-			this._router.navigate(["/checkout", this.queryParameters.id], { queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration } });
-		} else if (this.queryParameters.Process === "Share") {
-			this._router.navigate(["/share", this.queryParameters.id], { queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration } });
+		if (this.queryParameters.Process === 'Buy') {
+			this._router.navigate(['/checkout', this.queryParameters.id], {
+				queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration }
+			});
+		} else if (this.queryParameters.Process === 'Share') {
+			this._router.navigate(['/share', this.queryParameters.id], {
+				queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration }
+			});
 		}
 	}
 
 	public goToLogin(): void {
-		this._router.navigate(["/"]);
+		this._router.navigate(['/']);
 	}
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
@@ -13,13 +13,13 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class RegisterBuyComponent implements OnInit {
 
-	isIDScanLoading: boolean = false;
-	isOTPVerifyLoading: boolean = false;
+	isIDScanLoading = false;
+	isOTPVerifyLoading = false;
 	queryParameters: Params = {};
 
-	phoneNumber: string = "";
-	IDScan: string | ArrayBuffer | null = "";
-	OTPStatus: boolean = false;
+	phoneNumber = '';
+	IDScan: string | ArrayBuffer | null = '';
+	OTPStatus = false;
 
 	formData: FormData = new FormData();
 
@@ -61,7 +61,13 @@ export class RegisterBuyComponent implements OnInit {
 		street: new FormControl({ value: null, disabled: true }, Validators.required)
 	});
 
-	constructor(private _httpClientService: HttpClient, private _activatedRouteService: ActivatedRoute, private _routerService: Router, private _sharedService: SharedService, private _snackBar: MatSnackBar) {}
+	constructor(
+		private _httpClientService: HttpClient,
+		private _activatedRouteService: ActivatedRoute,
+		private _routerService: Router,
+		private _sharedService: SharedService,
+		private _snackBar: MatSnackBar
+	) {}
 
 	@ViewChild('STEPPER')
 	stepper!: MatStepper;
@@ -83,31 +89,31 @@ export class RegisterBuyComponent implements OnInit {
 
 		this.isIDScanLoading = true;
 
-		this.formData.append("IDScan", inputElement.files[0], inputElement.files[0].name);
+		this.formData.append('IDScan', inputElement.files[0], inputElement.files[0].name);
 		fileReader.readAsDataURL(inputElement.files[0]);
 
 		fileReader.onload = () => {
 			this.IDScan = fileReader.result;
 			this.isIDScanLoading = false;
-		}
+		};
 	}
 
 	public removeIDScan(): void {
-		this.IDScan = "";
-		this.formData.delete("IDScan");
+		this.IDScan = '';
+		this.formData.delete('IDScan');
 	}
 
 	public connectOTPSimple(): void {
 		this.isOTPVerifyLoading = true;
-		this._httpClientService.post("https://jsonplaceholder.typicode.com/posts", { phoneNumber: this.phoneNumber }).subscribe(
+		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', { phoneNumber: this.phoneNumber }).subscribe(
 			() => {
-				this.paymentOptions.setValue({ "isOTPConnected": true });
+				this.paymentOptions.setValue({ isOTPConnected: true });
 				this.OTPStatus = true;
-				this._snackBar.open("OTP Simple Connected", "DISMISS", { duration: 5000, panelClass: "Success" });
+				this._snackBar.open('OTP Simple Connected', 'DISMISS', { duration: 5000, panelClass: 'Success' });
 				this.isOTPVerifyLoading = false;
 			},
 			() => {
-				this.paymentOptions.setValue({ "isOTPConnected": false });
+				this.paymentOptions.setValue({ isOTPConnected: false });
 				this.OTPStatus = false;
 				this.isOTPVerifyLoading = false;
 			},
@@ -120,13 +126,16 @@ export class RegisterBuyComponent implements OnInit {
 			this.formData.append(key, this.generalInformation.controls[key].value);
 		});
 
-		this.formData.append("typeOfID", this.IDType.controls["typeOfID"].value);
-		this.formData.append("isOTPConnected", this.paymentOptions.controls['isOTPConnected'].value);
-		this.formData.append("acceptedTermsAndConditions", this.GDPRConsent.controls['acceptedTermsAndConditions'].value);
-		this.formData.append("acknowledgedPaymentLiabilityTowardsQuica", this.GDPRConsent.controls['acknowledgedPaymentLiabilityTowardsQuica'].value);
+		this.formData.append('typeOfID', this.IDType.controls.typeOfID.value);
+		this.formData.append('isOTPConnected', this.paymentOptions.controls.isOTPConnected.value);
+		this.formData.append('acceptedTermsAndConditions', this.GDPRConsent.controls.acceptedTermsAndConditions.value);
+		this.formData.append(
+			'acknowledgedPaymentLiabilityTowardsQuica',
+			this.GDPRConsent.controls.acknowledgedPaymentLiabilityTowardsQuica.value
+		);
 
-		this._httpClientService.post("https://jsonplaceholder.typicode.com/posts", this.formData).subscribe(
-			() => this._routerService.navigate(["/verification-email"], { queryParams: { ...this.queryParameters, Registration: 'Done' } }),
+		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.formData).subscribe(
+			() => this._routerService.navigate(['/verification-email'], { queryParams: { ...this.queryParameters, Registration: 'Done' } }),
 			() => {},
 			() => {}
 		);

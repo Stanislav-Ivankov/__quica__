@@ -11,7 +11,7 @@ import { map, startWith, switchMap, catchError } from 'rxjs/operators';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 
-import { SharedService } from "../../../services/shared.service";
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
 	selector: 'quica-items-waiting-to-be-sold-table',
@@ -28,9 +28,9 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 	];
 
 	// Primitives
-	isLoading: boolean = true;
-	totalResults: number = 0;
-	tableColumns: string[] = ["ID", "Listing Name", "Price", "Possible Max Comission", "Date"];
+	isLoading = true;
+	totalResults = 0;
+	tableColumns: string[] = ['ID', 'Listing Name', 'Price', 'Possible Max Comission', 'Date'];
 
 	// Referentials
 	fetchPipelineSubscription$: Subscription = new Subscription();
@@ -47,11 +47,11 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
 
 	ngOnInit(): void {
-		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.previousPageLabel = "Previous Page"
-		this._matPaginatorService.nextPageLabel = "Next Page";
-		this._matPaginatorService.lastPageLabel = "Last Page";
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
+		this._matPaginatorService.firstPageLabel = 'First Page';
+		this._matPaginatorService.previousPageLabel = 'Previous Page';
+		this._matPaginatorService.nextPageLabel = 'Next Page';
+		this._matPaginatorService.lastPageLabel = 'Last Page';
+		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
 	}
 
 	ngAfterViewInit(): void {
@@ -61,7 +61,11 @@ export class ItemsWaitingToBeSoldTableComponent implements OnInit, AfterViewInit
 		this._sharedService.refreshNotification.subscribe(() => {
 			this.isLoading = true;
 
-			this.getItemsWaitingToBeSold(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: any[]) => {
+			this.getItemsWaitingToBeSold(
+				this.sort.active, this.sort.direction,
+				this.paginator.pageIndex,
+				this.paginator.pageSize
+			).subscribe((data: any[]) => {
 				this.tableData = new MatTableDataSource<any>(data);
 				this.selection = new SelectionModel<any>(true, []);
 				this.isLoading = false;

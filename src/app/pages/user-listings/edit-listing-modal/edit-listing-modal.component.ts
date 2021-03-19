@@ -13,7 +13,11 @@ export class EditListingModalComponent implements OnInit {
 	isLoading: boolean | null = null;
 	editSubscription$: Subscription = new Subscription();
 
-	constructor(private _httpService: HttpClient, public modalReference: MatDialogRef<EditListingModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+	constructor(
+		private _httpService: HttpClient,
+		public modalReference: MatDialogRef<EditListingModalComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: any
+	) { }
 
 	ngOnInit() {}
 
