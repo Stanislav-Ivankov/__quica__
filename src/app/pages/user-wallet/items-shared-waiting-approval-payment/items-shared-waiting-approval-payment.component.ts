@@ -1,16 +1,13 @@
 import { AfterViewInit, Component, ViewChild, OnDestroy, OnInit, EventEmitter } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
-
 import { merge, Observable, EMPTY, Subscription } from 'rxjs';
 import { map, startWith, switchMap, catchError } from 'rxjs/operators';
-
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { SharedService } from 'src/app/services/shared.service';
+import { ItemsISharedWaitingForApprovalAndPayment } from "../../../helpers/enums";
 
 @Component({
 	selector: 'quica-items-shared-waiting-approval-payment-table',
@@ -19,16 +16,18 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	ELEMENT_DATA: any[] = [
-		{ comission: 1, listingName: 'Hydrogen', price: 1000, status: 'H', timesShared: 12 },
-		{ comission: 2, listingName: 'JAVA', price: 1250, status: 'M', timesShared: 14 },
-		{ comission: 5, listingName: 'ME', price: 3000, status: 'TRR', timesShared: 1234 },
+	public sampleData = [
+		{ productImage: "../../../../assets/Laptop.svg", listingName: "Lenovo", id: 458745, howManyBetweenMeAndBuyer: 2, price: 3500, comission: 1234, date: new Date(), deal: "Sold", flag: 2, status: "Waiting For Payment" },
+		{ productImage: "../../../../assets/Console.svg", listingName: "Playstation 5", id: 458746, howManyBetweenMeAndBuyer: 5, price: 1599, comission: 1234, date: new Date(), deal: "Bought", flag: 1, status: "Can Be Credited" },
+		{ productImage: "../../../../assets/Glasses.svg", listingName: "Ray-Ban", id: 458747, howManyBetweenMeAndBuyer: 1, price: 3200, comission: 1234, date: new Date(), deal: "Shared", flag: 1, status: "Can Be Credited" }
 	];
 
 	isLoading = true;
 	totalResults = 0;
 	totalSelectedSum = 0;
 	tableColumns: string[] = ['Select', 'Listing Name', 'How Many Between Me And The Buyer ?', 'Price', 'Comission', 'Date', 'Status'];
+
+	ItemsISharedWaitingForApprovalAndPayment: typeof ItemsISharedWaitingForApprovalAndPayment = ItemsISharedWaitingForApprovalAndPayment;
 
 	readyToRefreshSubscription$: Subscription = new Subscription();
 	requestPipelineSubscription$: Subscription = new Subscription();
@@ -41,7 +40,7 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
 
-	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
+	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient) { }
 
 	ngOnInit() {
 		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
@@ -53,16 +52,6 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 
 	ngAfterViewInit() {
 		this.requestPipeline();
-
-		this._sharedService.refreshNotification.subscribe(() => {
-			this.isLoading = true;
-			this.getListings(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: any[]) => {
-				this.tableData = new MatTableDataSource<any>(data);
-				this.selection = new SelectionModel<any>(true, []);
-				this.totalSelectedSum = 0;
-				this.isLoading = false;
-			});
-		});
 	}
 
 	ngOnDestroy() {
@@ -94,8 +83,6 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 			this.tableData = new MatTableDataSource<any>(payload);
 			this.selection = new SelectionModel<any>(true, []);
 			this.isLoading = false;
-
-			this._sharedService.readyToRefresh.emit(true);
 		});
 	}
 
@@ -108,7 +95,7 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 	}
 
 	public areAllRowsSelected(): boolean {
-		return this.selection.selected.length === this.ELEMENT_DATA.length;
+		return this.selection.selected.length === this.sampleData.length;
 	}
 
 	public masterToggle(): void {
@@ -117,7 +104,7 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 			this.totalSelectedSum = 0;
 		} else {
 			this.totalSelectedSum  = 0;
-			this.ELEMENT_DATA.forEach((row: any) => {
+			this.sampleData.forEach((row: any) => {
 				this.selection.select(row);
 				this.totalSelectedSum += row.price;
 			});
@@ -132,10 +119,5 @@ export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, After
 
 		this.requestPipelineSubscription$.unsubscribe();
 		this.requestPipeline();
-
-		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
-			this._sharedService.refreshNotification.next();
-			this.readyToRefreshSubscription$.unsubscribe();
-		});
 	}
 }

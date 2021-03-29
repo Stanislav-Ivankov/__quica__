@@ -1,38 +1,39 @@
 <h3>Items Waiting To Be Sold</h3>
 
-<p>These Are The Listings That You Shared. As Soon As The Deal Is Made ( Product Is Sold ), They Will Go To The Table Below.</p>
+<p>Here Are The Products You Shared. If You Buy It And Are Eligible For A Commission, You Will Be Listed Below</p>
 
-<section class="Table-Loader">
+<aside class="Loader">
 	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
-</section>
+</aside>
 
-<table mat-table [dataSource]="ELEMENT_DATA" matSort matSortActive="ID" matSortDirection="asc">
+<table mat-table [dataSource]="sampleData" matSort matSortActive="Price" matSortDirection="asc">
 	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
 	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
 
-	<ng-container matColumnDef="ID">
-		<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>ID</th>
-		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
-	</ng-container>
-
 	<ng-container matColumnDef="Listing Name">
 		<th mat-header-cell *matHeaderCellDef>Listing Name</th>
-		<td mat-cell *matCellDef="let row">{{ row.listingName }}</td>
+		<td mat-cell *matCellDef="let row" class="Product-Image-Name">
+			<img [src]="row.productImage" alt="Product Image" draggable="false">
+			<section>
+				<aside>{{ row.listingName | titlecase }}</aside>
+				<aside># {{ row.id }}</aside>
+			</section>
+		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Price">
-		<th mat-header-cell *matHeaderCellDef>Price</th>
-		<td mat-cell *matCellDef="let row">{{ row.price }}</td>
+		<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Price</th>
+		<td mat-cell *matCellDef="let row">{{ row.price }} Ft</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Possible Max Comission">
 		<th mat-header-cell *matHeaderCellDef>Possible Max Comission</th>
-		<td mat-cell *matCellDef="let row">{{ row.status }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.maxPossibleComission }} Ft</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Date">
 		<th mat-header-cell *matHeaderCellDef>Date</th>
-		<td mat-cell *matCellDef="let row">{{ row.timesShared | date }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.date | date }}</td>
 	</ng-container>
 </table>
 

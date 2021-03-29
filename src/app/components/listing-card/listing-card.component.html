@@ -1,0 +1,17 @@
+<mat-card class="example-card">
+	<mat-card-header style="margin-bottom: 6.25px;">
+		<img src="../../../assets/isSaved.svg">
+		<img src="../../../assets/numberOfPictures.svg">
+	</mat-card-header>
+
+	<img mat-card-image [src]="listingData.imageURL" draggable="false">
+
+	<mat-card-content>
+		<p style="background-color: #F3F4F8; color: #003463;">Price: {{ listingData.price }} Ft</p>
+		<p style="background-color: #F3F4F8; color: #FF0099">Comission: {{ listingData.comission }} Fr</p>
+	</mat-card-content>
+
+	<mat-card-actions>
+		<p style="margin: 0px; text-align: center;">{{ listingData.title }}</p>
+	</mat-card-actions>
+</mat-card>

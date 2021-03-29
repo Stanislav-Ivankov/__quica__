@@ -3,10 +3,22 @@ main {
 	background-color: #F5F8F1;
 
 	h1 {
-		width: 50%;
 		margin: 0 auto 50px auto;
 		text-align: center;
-		font-size: 42px;
+		font-size: 36px;
+	}
+
+	h3 {
+		margin: 0 auto 50px auto;
+		text-align: center;
+		font-size: 28px;
+	}
+
+	h5 {
+		width: 75%;
+		margin: 0 auto 50px auto;
+		text-align: justify;
+		font-size: 16px;
 	}
 
 	video {
@@ -15,7 +27,7 @@ main {
 		margin: 0 auto 100px auto;
 	}
 
-	.Quica-Information {
+	section {
 		width: 75%;
 		margin: 0 auto;
 
@@ -41,13 +53,12 @@ main {
 				img {
 					width: inherit;
 					height: inherit;
-					border-radius: 100%;
 				}
 			}
 		}
 	}
 
-	.FAQ {
+	aside {
 		width: 50%;
 		margin: 0 auto;
 
@@ -59,11 +70,10 @@ main {
 
 		.Question {
 			font-size: 16px;
-			font-weight: 500;
 		}
 
 		.Answer {
-			font-size: 16px;
+			font-size: 14px;
 		}
 
 		mat-expansion-panel {

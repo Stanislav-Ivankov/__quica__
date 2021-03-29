@@ -17,15 +17,30 @@ import { RegisterShareComponent } from './pages/sign-up/register-share/register-
 import { RegisterComponent } from './pages/sign-up/register/register.component';
 import { VeificationEmailComponent } from './pages/sign-up/veification-email/veification-email.component';
 import { SuccessSimilarListingsComponent } from './pages/success-similar-listings/success-similar-listings.component';
+import { ListingSummaryComponent } from './pages/listing-summary/listing-summary.component';
+import { ListingDetailsComponent } from './pages/listing-details/listing-details.component';
+import { NewListingComponent } from './pages/new-listing/new-listing.component';
 import { ShareComponent } from './pages/share/share.component';
 
 import { AuthenticateGuard } from './guards/authenticate.guard';
-import { RegistrationGuard } from './guards/registration.guard';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: MainPageComponent
+	},
+	{
+		path: 'listing-details/:id',
+		component: ListingDetailsComponent
+	},
+	{
+		path: 'listing-summary',
+		component: ListingSummaryComponent,
+		canActivate: [AuthenticateGuard]
+	},
+	{
+		path: 'new-listing',
+		component: NewListingComponent
 	},
 	{
 		path: 'success',

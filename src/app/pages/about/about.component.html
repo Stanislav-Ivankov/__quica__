@@ -1,12 +1,21 @@
 <main>
 
-	<h1>About Quica</h1>
+	<h1>What Is Quica And How Does It Work ?</h1>
+
+	<h3>Community Sales</h3>
+
+	<h5>Commission For Sharing !
+		An Acquaintance Shared A Product With You For Sale Because They Think You Care.
+		If You Are Right, You Can Buy It Here And Now.
+		And If You Don’t Need It, But You Know Someone You Think You’re Interested In, You Can Share With It And Make Money With It !
+		Because If You Tell The Buyer First, You Get A Commission !
+		Check Out How Quica Works In This Two-Minute Video :</h5>
 
 	<video controls preload="metadata">
 		<source src="../../assets/Sample Video.mp4" type="video/mp4">
 	</video>
 
-	<section *ngFor="let payload of QUICAInformation; index as _Index" class="Quica-Information">
+	<section *ngFor="let payload of generalInformation; index as _Index">
 		<h3>{{ payload.title | titlecase }}</h3>
 
 		<mat-list>
@@ -28,16 +37,16 @@
 		</mat-list>
 	</section>
 
-	<section class="FAQ">
-		<h3>FAQ</h3>
+	<aside>
+		<h3>Frequently Asked Questions</h3>
 
 		<mat-expansion-panel *ngFor="let payload of FAQs" (opened)="panelState = true" (closed)="panelState = false">
 			<mat-expansion-panel-header>
-				<mat-panel-title class="Question">Q: {{ payload.question | titlecase }}</mat-panel-title>
+				<mat-panel-title class="Question">{{ payload.question | titlecase }}</mat-panel-title>
 			</mat-expansion-panel-header>
 
-			<p class="Answer">A: {{ payload.answer | titlecase }}</p>
+			<p class="Answer">{{ payload.answer | titlecase }}</p>
 		</mat-expansion-panel>
-	</section>
+	</aside>
 
 </main>

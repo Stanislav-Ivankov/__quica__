@@ -3,17 +3,20 @@ main {
 	background-color: #F5F8F1;
 
 	h1 {
-		width: 50%;
 		margin: 0 auto 50px auto;
 		text-align: center;
 		font-size: 42px;
 	}
 
 	h3 {
-		width: 50%;
 		margin: 0 auto 50px auto;
 		text-align: center;
 		font-size: 24px;
+	}
+
+	h5 {
+		text-align: justify;
+		font-size: 18px;
 	}
 
 	form {
@@ -22,21 +25,10 @@ main {
 		text-align: center;
 		font-size: 18px;
 
-		section {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-bottom: 25px;
-
-			button {
-				width: 200px;
-				margin: 0px 12.5px;
-			}
-
-			div {
-				width: 36px;
-				height: 36px;
-			}
+		mat-form-field {
+			display: block;
+			width: 50%;
+			margin-bottom: 50px;
 		}
 
 		mat-checkbox {
@@ -45,19 +37,27 @@ main {
 			text-align: justify;
 
 			&:last-of-type {
+				display: block;
 				margin-bottom: 50px;
+				text-align: justify;
 			}
 		}
 	}
 
 	section {
+		width: 50%;
+		margin: 0 auto;
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
+
+		&:first-of-type {
+			margin-bottom: 25px;
+		}
 
 		button {
 			width: 200px;
-			margin: 0px 12.5px;
+			margin-right: 12.5px;
 		}
 
 		div {

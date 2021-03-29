@@ -8,8 +8,9 @@
 		<img src="../../../assets/Success.svg" alt="Success" draggable="false">
 	</section>
 
+	<h4>Check These Listings And Share Them To Earn Money</h4>
 	<aside>
-		<h4>Check These Listings And Share Them To Earn Money</h4>
+		<quica-listing-card *ngFor="let listingData of listingData" [routerLink]="['/listing-details', listingData.id]" [listingData]="listingData"></quica-listing-card>
 	</aside>
 
 </main>

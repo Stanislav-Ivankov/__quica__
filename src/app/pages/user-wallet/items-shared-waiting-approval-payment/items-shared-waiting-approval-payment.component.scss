@@ -12,11 +12,47 @@ table, mat-paginator {
 	margin: 0 auto;
 	box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 24%), 0px 4px 5px 0px rgb(0 0 0 / 16%), 0px 1px 10px 0px rgb(0 0 0 / 16%);
 
-	th, td {
+	th {
+		background-color: #F5F8FA;
+		text-align: center;
+	}
 
-		&:not(:first-of-type) {
-			text-align: center;
+	tr {
+		&:nth-of-type(even) {
+			background-color: #F2F8FC;
 		}
+	}
+
+	th, td {
+		padding: 12.5px 25px;
+
+		img {
+			width: 48px;
+			height: 48px;
+			margin-right: 12.5px;
+		}
+
+		button {
+			width: 100px;
+		}
+	}
+
+	.Product-Image-Name {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	.Can-Be-Credited {
+		padding: 12.5px;
+		background-color: #D1FFF1;
+		border-radius: 25px;
+	}
+
+	.Waiting-For-Payment-From-Seller {
+		padding: 12.5px;
+		background-color: #FFF5D1;
+		border-radius: 25px;
 	}
 }
 
@@ -29,7 +65,7 @@ mat-paginator {
 	justify-content: flex-end;
 	align-items: center;
 
-	.Amount {
+	&__Amount {
 		margin: 0px 25px;
 		font-weight: 500;
 	}

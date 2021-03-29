@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 import { UserService } from '../../services/user.service';
 import { normalizePhoneNumber } from '../../utilities/utilities';
@@ -27,6 +26,7 @@ export class UserProfileComponent implements OnInit {
 	IDScan: string | ArrayBuffer | null = '';
 
 	formData: FormData = new FormData();
+
 	profileForm: FormGroup = new FormGroup({
 		firstName: new FormControl(null, Validators.required),
 		lastName: new FormControl(null),
@@ -44,7 +44,7 @@ export class UserProfileComponent implements OnInit {
 		taxNumber: new FormControl(null)
 	});
 
-	constructor(private _httpClientService: HttpClient, private _routerService: Router, private _userService: UserService) { }
+	constructor(private _httpClientService: HttpClient, private _userService: UserService) { }
 
 	ngOnInit() {
 		this.profileForm.setValue({
@@ -155,13 +155,13 @@ export class UserProfileComponent implements OnInit {
 	}
 
 	public saveProfile(): void {
-		Object.keys(this.profileForm.controls).forEach(key => {
-			if ('phoneNumber' === key) {
-				this.formData.append(key, normalizePhoneNumber(this.profileForm.controls[key].value));
-			} else {
-				this.formData.append(key, this.profileForm.controls[key].value);
-			}
-		});
+		// Object.keys(this.profileForm.controls).forEach(key => {
+		// 	if ('phoneNumber' === key) {
+		// 		this.formData.append(key, normalizePhoneNumber(this.profileForm.controls[key].value));
+		// 	} else {
+		// 		this.formData.append(key, this.profileForm.controls[key].value);
+		// 	}
+		// });
 
 		this.isProfileSaving = true;
 		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.formData).subscribe(

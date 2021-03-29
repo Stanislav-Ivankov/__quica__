@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { VerifyNumberModalComponent } from './verify-number-modal/verify-number-modal.component';
 
@@ -11,39 +11,40 @@ import { VerifyNumberModalComponent } from './verify-number-modal/verify-number-
 })
 export class SignUpComponent implements OnInit {
 
-	queryParameters: Params = {};
+	public queryParameters: Params = {};
 
-	phoneNumberForm: FormGroup = new FormGroup({
-		phoneNumber: new FormControl(null, Validators.compose([Validators.required, Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g)]))
+	public phoneNumberForm: FormGroup = new FormGroup({
+		phoneNumber: new FormControl(null, Validators.compose([Validators.required, Validators.pattern(/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/g)]))
 	});
 
-	constructor(private _activatedRouteService: ActivatedRoute, private _routeService: Router, public modal: MatDialog) { }
+	constructor(private _activatedRouteService: ActivatedRoute, public modal: MatDialog, private _routerService: Router) { }
 
 	ngOnInit() {
 		this.queryParameters = this._activatedRouteService.snapshot.queryParams;
 	}
 
-	openModal() {
-		const modalReference = this.modal.open(VerifyNumberModalComponent, {
-			width: '375px', data: { phoneNumber: this.phoneNumberForm.value.phoneNumber }
+	public openModal(): void {
+		const modalReference: MatDialogRef<VerifyNumberModalComponent> = this.modal.open(VerifyNumberModalComponent, {
+			width: '375px',
+			data: { ...this.phoneNumberForm.value }
 		});
 
 		modalReference.afterClosed().subscribe(() => {
 			switch (this.queryParameters.Process) {
 				case 'Buy':
-					this._routeService.navigate(['/sign-up/register-buy'],
+					this._routerService.navigate(['/sign-up/register-buy'],
 						{ state: { phoneNumber: this.phoneNumberForm.value.phoneNumber },
 							queryParams: this._activatedRouteService.snapshot.queryParams });
 					break;
 
 				case 'Share':
-					this._routeService.navigate(['/sign-up/register-share'],
+					this._routerService.navigate(['/sign-up/register-share'],
 						{ state: { phoneNumber: this.phoneNumberForm.value.phoneNumber },
 							queryParams: this._activatedRouteService.snapshot.queryParams });
 					break;
 
 				default:
-					this._routeService.navigate(['/sign-up/register'],
+					this._routerService.navigate(['/sign-up/register'],
 						{ state: { phoneNumber: this.phoneNumberForm.value.phoneNumber },
 							queryParams: this._activatedRouteService.snapshot.queryParams });
 					break;

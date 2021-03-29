@@ -1,0 +1,32 @@
+main {
+	padding: 0px 50px 50px;
+	background-color: #F5F8F1;
+
+	.Filters {
+		width: 50%;
+		margin: 0 auto 25px auto;
+	}
+
+	div {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		flex-wrap: wrap;
+
+		.Categories {
+			width: 250px;
+			margin-bottom: 50px;
+			min-width: 250px;
+		}
+	
+		.Listings {
+			width: calc(100% - 300px);
+			min-width: 500px;
+			margin-bottom: 50px;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+	}
+}

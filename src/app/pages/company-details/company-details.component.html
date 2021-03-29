@@ -1,34 +1,42 @@
 <main>
 
-	<h1>About Quica</h1>
-
-	<h3>Company Details</h3>
+	<h1>Imprint</h1>
 
 	<mat-list>
 
-		<mat-list-item>
+		<mat-list-item matTooltip="Click To Send Mail" matTooltipPosition="left">
 			<mat-icon mat-list-icon>email</mat-icon>
-			<span mat-line>{{ companyDetails.email }}</span>
+			<span mat-line class="Label">Contacts:
+				<a [href]="'mailto:' + companyDetails.contacts" class="Content">{{ companyDetails.contacts }}</a>
+			</span>
 		</mat-list-item>
 
 		<mat-list-item>
 			<mat-icon mat-list-icon>room</mat-icon>
-			<span mat-line>{{ companyDetails.address }}</span>
+			<span mat-line class="Label">Headquarters:
+				<span class="Content">{{ companyDetails.headquarters }}</span>
+			</span>
 		</mat-list-item>
 
 		<mat-list-item>
 			<mat-icon mat-list-icon>pin</mat-icon>
-			<span mat-line>{{ companyDetails.taxNumber }}</span>
+			<span mat-line class="Label">Tax Number:
+				<span class="Content">{{ companyDetails.taxNumber }}</span>
+			</span>
 		</mat-list-item>
 
 		<mat-list-item>
 			<mat-icon mat-list-icon>dialpad</mat-icon>
-			<span mat-line>{{ companyDetails.companyRegistryNumber }}</span>
+			<span mat-line class="Label">Registration Number:
+				<span class="Content">{{ companyDetails.registrationNumber }}</span>
+			</span>
 		</mat-list-item>
 
-		<mat-list-item *ngFor="let payload of companyDetails.additionalInformation">
+		<mat-list-item *ngFor="let payload of companyDetails.importantCompanyInformation">
 			<mat-icon mat-list-icon>info</mat-icon>
-			<span mat-line>{{ payload }}</span>
+			<span mat-line class="Label">Important Company Content:
+				<span class="Content">{{ payload }}</span>
+			</span>
 		</mat-list-item>
 
 	</mat-list>

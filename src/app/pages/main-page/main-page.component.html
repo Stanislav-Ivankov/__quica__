@@ -1,2 +1,68 @@
-<button [routerLink]="['/checkout', 1]" [queryParams]="{ Process: 'Buy' }" color="primary">Buy Product 1</button>
-<button [routerLink]="['/share', 2]" [queryParams]="{ Process: 'Share' }" color="primary">Share Product 2</button>
+<main>
+
+	<div class="Filters">
+		<mat-chip-list aria-label="Fish selection">
+			<mat-chip>House</mat-chip>
+			<mat-chip>Apartment</mat-chip>
+			<mat-chip>Plot</mat-chip>
+			<mat-chip>Office</mat-chip>
+		</mat-chip-list>
+
+		<aside class="Dropdown-Filters">
+			<button mat-button [matMenuTriggerFor]="menu">Sort By</button>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item>
+					<mat-icon>north</mat-icon>
+					<span>Price</span>
+				</button>
+
+				<button mat-menu-item>
+					<mat-icon>south</mat-icon>
+					<span>Price</span>
+				</button>
+
+				<button mat-menu-item>
+					<mat-icon>north</mat-icon>
+					<span>Comission</span>
+				</button>
+
+				<button mat-menu-item>
+					<mat-icon>south</mat-icon>
+					<span>Comission</span>
+				</button>
+
+				<button mat-menu-item>
+					<mat-icon>new_label</mat-icon>
+					<span>Newest</span>
+				</button>
+
+				<button mat-menu-item>
+					<mat-icon>model_training</mat-icon>
+					<span>Oldest</span>
+				</button>
+			</mat-menu>
+		</aside>
+	</div>
+
+	<div class="Container">
+		<section class="Categories">
+			<mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+				<mat-chip color="accent">All Listings</mat-chip>
+				<mat-chip color="accent">Real Estate</mat-chip>
+				<mat-chip color="accent">Vehicle</mat-chip>
+				<mat-chip color="accent">Furniture</mat-chip>
+				<mat-chip color="accent">Jewellery</mat-chip>
+				<mat-chip color="accent">Clothes</mat-chip>
+				<mat-chip color="accent">Technical Products</mat-chip>
+				<mat-chip color="accent">Games</mat-chip>
+				<mat-chip color="accent">Services</mat-chip>
+				<mat-chip color="accent">Other</mat-chip>
+			</mat-chip-list>
+		</section>
+	
+		<section class="Listings">
+			<quica-listing-card *ngFor="let listingData of listingData" [routerLink]="['/listing-details', listingData.id]" [listingData]="listingData"></quica-listing-card>
+		</section>
+	</div>
+
+</main>

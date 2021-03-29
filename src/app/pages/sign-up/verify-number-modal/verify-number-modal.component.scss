@@ -14,8 +14,12 @@ main {
 	mat-form-field {
 		display: flex;
 		justify-content: center;
-		width: 150px;
+		align-items: center;
 		margin: 0px auto 25px auto;
+
+		input {
+			text-align: center;
+		}
 	}
 
 	button {

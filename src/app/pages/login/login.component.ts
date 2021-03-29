@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import { LoginService } from '../../services/login.service';
+import { LoginService } from "../../services/login.service";
 
 @Component({
 	selector: 'quica-login',
@@ -12,36 +12,31 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent implements OnInit {
 
-	isLoading: boolean | null = null;
-	queryParameters: Params = {};
+	public isLoading: boolean = false;
+	public queryParameters: Params = {};
 
-	loginForm: FormGroup = new FormGroup({
+	public loginForm: FormGroup = new FormGroup({
 		email: new FormControl(null, Validators.required),
 		password: new FormControl(null, Validators.required)
 	});
 
-	constructor(
-		private _activatedRouteServce: ActivatedRoute,
-		private _routeService: Router,
-		private _httpClientService: HttpClient,
-		private _loginService: LoginService
-	) { }
+	constructor(private _activatedRouteServce: ActivatedRoute, private _routeService: Router, private _httpClientService: HttpClient, private loginService: LoginService) { }
 
 	ngOnInit() {
 		this.queryParameters = this._activatedRouteServce.snapshot.queryParams;
 	}
 
-	login() {
+	public login(): void {
 		this.isLoading  = true;
 		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.loginForm.value).subscribe(
 			() => this.isLoading = false,
 			() => this.isLoading = false,
-			() => {}
+			() => this.isLoading = false
 		);
 
-		if (this.loginForm.controls.email.value === 'test@test.com' && this.loginForm.controls.password.value === 12345) {
-			localStorage.setItem('Username', 'Test_User');
-			this._loginService.loggedStatus.emit(true);
+		if (this.loginForm.controls.email.value == "test@test.com" && this.loginForm.controls.password.value == 12345) {
+			localStorage.setItem("Username", "Test_User");
+			this.loginService.loggedStatus.emit(true);
 
 			switch (this.queryParameters.Process) {
 				case 'Buy':
@@ -59,7 +54,7 @@ export class LoginComponent implements OnInit {
 				default:
 					this._routeService.navigate(['/']);
 					break;
-			}
+			}			
 		}
 	}
 }

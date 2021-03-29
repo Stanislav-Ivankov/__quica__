@@ -11,7 +11,7 @@ import { LoginService } from '../../services/login.service';
 })
 export class HeaderComponent implements OnInit {
 
-	public isUserLoggedIn: boolean | null = false;
+	public isUserLoggedIn: boolean | null = true;
 	public userProfilePicture: string | ArrayBuffer | null = '';
 
 	constructor(private _userService: UserService, private _loginService: LoginService, private _routerService: Router) { }

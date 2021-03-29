@@ -4,7 +4,7 @@ main {
 	align-items: flex-start;
 	flex-wrap: wrap;
 	background-color: #F5F8F1;
-	padding-bottom: 50px;
+	padding-bottom: 85px;
 
 	form {
 		display: flex;
@@ -19,8 +19,8 @@ main {
 		}
 
 		mat-form-field {
-			width: 350px;
-			margin-bottom: 12.5px;
+			width: 400px;
+			margin-bottom: 25px;
 		}
 
 		button {
@@ -33,7 +33,7 @@ main {
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		width: 50%;
+		width: 40%;
 		margin-bottom: 25px;
 
 		h3 {

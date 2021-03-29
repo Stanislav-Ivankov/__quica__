@@ -9,54 +9,56 @@ export class AboutComponent implements OnInit {
 
 	public panelState = false;
 
-	public QUICAInformation = [
+	public generalInformation = [
 		{
-			title: 'how it works for sellers ?',
-			summary: [
-				'information...',
-				'information... information...',
-				'information... information... information... information...',
-			],
-			imageURL: '../../assets/Leaf.jpg'
+			title: "what do we offer if you sell something ?",
+			summary: ["first step", "second step", "third step"],
+			imageURL: "../../assets/Undraw Transfer Money.svg"
 		},
 		{
-			title: 'how it works for buyers ?',
-			summary: [
-				'information...',
-				'information... information...',
-				'information... information... information...',
-				'information... information... information... information...',
-			],
-			imageURL: '../../assets/Paper.jpg'
+			title: "how can you buy ?",
+			summary: ["first step", "second step", "third step"],
+			imageURL: "../../assets/Undraw Credit Card Payment.svg"
 		},
 		{
-			title: 'how it works for people for share ?',
-			summary: [
-				'information...',
-				'information... information...',
-				'information... information... information...',
-				'information... information... information... information...'
-			],
-			imageURL: '../../assets/Woman.jpg'
+			title: "how can you make money by sharing ?",
+			summary: ["first step", "second step", "third step"],
+			imageURL: "../../assets/Undraw Online Shopping.svg"
 		}
 	];
 
 	public FAQs = [
 		{
-			question: 'sample question ?',
-			answer: 'sample asnwer.'
+			question: "how does quica work ?",
+			answer: `commission for sharing !
+				an acquaintance shared a product with you for sale because they think you care.
+				if you are right, you can buy it here and now.
+				and if you don’t need it, but you know someone you think you’re interested in, you can share with it and make money with it !
+				because if you tell the buyer first, you get a commission !`
 		},
 		{
-			question: 'another sample question ?',
-			answer: 'another sample asnwer.'
+			question: "how do i get paid ?",
+			answer: `commission for sharing !
+				an acquaintance shared a product with you for sale because they think you care.
+				if you are right, you can buy it here and now.
+				and if you don’t need it, but you know someone you think you’re interested in, you can share with it and make money with it !
+				because if you tell the buyer first, you get a commission !`
 		},
 		{
-			question: 'third sample question ?',
-			answer: 'third asnwer.'
+			question: "is quica safe ?",
+			answer: `commission for sharing !
+				an acquaintance shared a product with you for sale because they think you care.
+				if you are right, you can buy it here and now.
+				and if you don’t need it, but you know someone you think you’re interested in, you can share with it and make money with it !
+				because if you tell the buyer first, you get a commission !`
 		},
 		{
-			question: 'forth sample question ?',
-			answer: 'forth sample asnwer.'
+			question: "what happens if the business fails due to some external factor ?",
+			answer: `commission for sharing !
+				an acquaintance shared a product with you for sale because they think you care.
+				if you are right, you can buy it here and now.
+				and if you don’t need it, but you know someone you think you’re interested in, you can share with it and make money with it !
+				because if you tell the buyer first, you get a commission !`
 		}
 	];
 

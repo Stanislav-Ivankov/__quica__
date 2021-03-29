@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { NewListingComponent } from './pages/new-listing/new-listing.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CompanyDetailsComponent } from './pages/company-details/company-details.component';
@@ -32,6 +33,12 @@ import { RegisterShareComponent } from './pages/sign-up/register-share/register-
 import { RegisterComponent } from './pages/sign-up/register/register.component';
 import { VeificationEmailComponent } from './pages/sign-up/veification-email/veification-email.component';
 import { SuccessSimilarListingsComponent } from './pages/success-similar-listings/success-similar-listings.component';
+import { ShareComponent } from './pages/share/share.component';
+import { EditListingModalComponent } from './pages/user-listings/active-listings-table/edit-listing-modal/edit-listing-modal.component';
+import { BalanceComponent } from './components/balance/balance.component';
+import { ListingCardComponent } from './components/listing-card/listing-card.component';
+import { ListingSummaryComponent } from './pages/listing-summary/listing-summary.component';
+import { ListingDetailsComponent } from "./pages/listing-details/listing-details.component";
 
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -58,8 +65,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
-import { ShareComponent } from './pages/share/share.component';
-import { EditListingModalComponent } from './pages/user-listings/edit-listing-modal/edit-listing-modal.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
 	declarations: [
@@ -92,7 +101,12 @@ import { EditListingModalComponent } from './pages/user-listings/edit-listing-mo
 		VeificationEmailComponent,
 		SuccessSimilarListingsComponent,
 		ShareComponent,
-		EditListingModalComponent
+		EditListingModalComponent,
+		BalanceComponent,
+		ListingCardComponent,
+		NewListingComponent,
+		ListingSummaryComponent,
+		ListingDetailsComponent
 	],
 	imports: [
 		BrowserModule,
@@ -123,7 +137,11 @@ import { EditListingModalComponent } from './pages/user-listings/edit-listing-mo
 		MatDialogModule,
 		MatStepperModule,
 		MatSnackBarModule,
-		MatDividerModule
+		MatDividerModule,
+		MatTooltipModule,
+		MatSliderModule,
+		MatCardModule,
+		CarouselModule.forRoot()
 	],
 	providers: [],
 	bootstrap: [AppComponent]

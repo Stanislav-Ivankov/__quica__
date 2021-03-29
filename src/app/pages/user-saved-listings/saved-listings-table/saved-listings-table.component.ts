@@ -17,13 +17,14 @@ import { MatSort } from '@angular/material/sort';
 })
 export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	isLoading = true;
-	totalResults = 0;
-	tableColumns: string[] = ['Select', 'Status', 'Price', 'Comission', 'Times Shared', 'Remove All'];
+	public isLoading = true;
+	public totalResults = 0;
+	public tableColumns: string[] = ["Select", "Status", "Price", "Comission", "Times Shared", "Remove"];
 
-	refreshPipelineSubscription$: Subscription = new Subscription();
-	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
-	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
+	public tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+	public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
+
+	private refreshPipelineSubscription$: Subscription = new Subscription();
 
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
@@ -34,11 +35,11 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 	constructor(private _httpService: HttpClient, private _matPaginatorService: MatPaginatorIntl) { }
 
 	ngOnInit() {
-		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
-		this._matPaginatorService.firstPageLabel = 'First Page';
-		this._matPaginatorService.previousPageLabel = 'Previous Page';
-		this._matPaginatorService.nextPageLabel = 'Next Page';
-		this._matPaginatorService.lastPageLabel = 'Last Page';
+		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
+		this._matPaginatorService.firstPageLabel = "First Page";
+		this._matPaginatorService.previousPageLabel = "Previous Page";
+		this._matPaginatorService.nextPageLabel = "Next Page";
+		this._matPaginatorService.lastPageLabel = "Last Page";
 	}
 
 	ngAfterViewInit() {
@@ -46,20 +47,16 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 		this.refreshPipeline();
 	}
 
-	ngOnDestroy() {
-		this.refreshPipelineSubscription$.unsubscribe();
+	private getSavedListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any> {
+		return this._httpService.get<any>("https://jsonplaceholder.typicode.com/todos/1");
 	}
 
-	private getListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any> {
-		return this._httpService.get<any>(`https://api.github.com/search/issues?q=repo:angular/components&sortBy=${ sortBy }&sortOrder=${ orderBy }&page=${ page + 1 }&pageSize=${ pageSize }`);
-	}
-
-	private refreshPipeline() {
+	private refreshPipeline(): void {
 		this.refreshPipelineSubscription$ = merge(this.sort.sortChange, this.paginator.page).pipe(
 			startWith({}),
 			switchMap(() => {
 				this.isLoading = true;
-				return this.getListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+				return this.getSavedListings(this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
 			}),
 			map((payload: any) => {
 				this.totalResults = payload.total_count;
@@ -69,33 +66,24 @@ export class SavedListingsTableComponent implements OnInit, AfterViewInit, OnDes
 				this.isLoading = false;
 				return EMPTY;
 			})).subscribe((payload: any) => {
-				this.tableData =  new MatTableDataSource<any>(payload);
+				this.tableData =  new MatTableDataSource<any>([
+					{ productImage: "../../../../assets/Laptop.svg", listingName: "Microsoft surface 2 laptop", id: 458745, status: "active", price: 350000, comission: 32020, timesShared: 51 },
+					{ productImage: "../../../../assets/Console.svg", listingName: "Playstation 5", id: 458746, status: "sold", price: 159990, comission: 7000, timesShared: 2 },
+					{ productImage: "../../../../assets/Glasses.svg", listingName: "Ray-Ban", id: 458747, status: "active", price: 32000, comission: 251, timesShared: 19 },
+					{ productImage: "../../../../assets/Laptop.svg", listingName: "Microsoft surface 2 laptop", id: 458748, status: "active", price: 350000, comission: 32020, timesShared: 51 },
+					{ productImage: "../../../../assets/Console.svg", listingName: "Playstation 5", id: 458749, status: "sold", price: 159990, comission: 7000, timesShared: 1 }
+				]);
 				this.selection = new SelectionModel<any>(true, []);
 				this.isLoading = false;
 			});
 	}
 
-	public areAllRowsSelected(): boolean {
-		return this.selection.selected.length === this.tableData.data.length;
-	}
-
-	public masterToggle(): void {
-		this.areAllRowsSelected() ? this.selection.clear() : this.tableData.data.forEach((row: any) => this.selection.select(row));
-	}
-
 	public removeListing(row: any): void {
-		// TODO - Single DELETE Request !!!
 		this.refreshPipelineSubscription$.unsubscribe();
 		this.refreshPipeline();
 	}
 
-	public removeSelectedListings(): void {
-		if (0 === this.selection.selected.length) {
-			return;
-		}
-
-		// TODO - Batch DELETE Request !!!
+	ngOnDestroy() {
 		this.refreshPipelineSubscription$.unsubscribe();
-		this.refreshPipeline();
 	}
 }

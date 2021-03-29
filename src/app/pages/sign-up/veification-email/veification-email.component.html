@@ -10,7 +10,7 @@
 
 	<button (click)="resendEmail()" mat-raised-button color="accent">Resend Email</button>
 
-	<button (click)="imitiateClick()" mat-raised-button color="warn">Imitate Email Link</button>
+	<button *ngIf="queryParameters.Process !== 'Sell'" (click)="imitiateClick()" mat-raised-button color="warn">Imitate Email Link</button>
 
 	<button (click)="goToLogin()" mat-raised-button color="primary">Return To Main Page</button>
 

@@ -1,0 +1,70 @@
+<main>
+
+	<h1>New Listing</h1>
+
+	<form [formGroup]="newLisingForm">
+		<mat-form-field appearance="outline">
+			<mat-label>Choose A Category</mat-label>
+			<mat-select formControlName="category">
+				<mat-option value="laptops">Laptops</mat-option>
+				<mat-option value="pc">PC</mat-option>
+				<mat-option value="clothes">Clothes</mat-option>
+				<mat-option value="cars">Cars</mat-option>
+				<mat-option value="office-equipment">Office Equipment</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Listing Name</mat-label>
+			<input formControlName="listingName" matInput type="text">
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Condition</mat-label>
+			<input formControlName="condition" matInput type="text">
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Description</mat-label>
+			<textarea formControlName="description" #autosize="cdkTextareaAutosize" matInput cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10"></textarea>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Price</mat-label>
+			<input formControlName="price" matInput type="text">
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Comission</mat-label>
+			<input formControlName="comission" matInput type="text">
+		</mat-form-field>
+
+		<mat-slider thumbLabel value="5" tickInterval="1" min="1" max="10"></mat-slider>
+
+		<mat-form-field appearance="outline">
+			<mat-label>Shipping Options</mat-label>
+			<input formControlName="shippingOptions" matInput type="text">
+		</mat-form-field>
+	</form>
+
+	<h3 style="text-align: center;">Product Location</h3>
+	<section class="Map" #MAP></section>
+
+	<section (click)="INPUT_ID_SCAN.click()" class="ID-Scan">
+		<p>Upload Images</p>
+		<input #INPUT_ID_SCAN (change)="uploadImages($event)" [hidden]="true" type="file" accept="image/*">
+	</section>
+
+	<div class="Images">
+		<img src="../../../assets//Slide 1.png" draggable="false">
+		<img src="../../../assets//Slide 2.png" draggable="false">
+		<img src="../../../assets//Slide 3.png" draggable="false">
+		<img src="../../../assets//Slide 4.png" draggable="false">
+		<img src="../../../assets//Slide 5.png" draggable="false">
+	</div>
+
+	<section class="Next-Button">
+		<button routerLink="/listing-summary" [queryParams]="{ Process: 'Sell' }" mat-raised-button color="primary">NEXT</button>
+	</section>
+
+</main>

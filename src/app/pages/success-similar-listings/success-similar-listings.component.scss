@@ -2,7 +2,7 @@ main {
 	padding-bottom: 50px;
 	background-color: #F5F8F1;
 
-	h1 {
+	h1, h3 {
 		width: 75%;
 		margin: 0 auto 50px auto;
 		text-align: center;
@@ -16,15 +16,31 @@ main {
 	}
 
 	section {
-		width: 200px;
+		width: 500px;
 		margin: 0 auto 100px auto;
+		text-align: center;
+
+		img {
+			margin-bottom: 50px;
+		}
+
+		button {
+			width: 200px;
+		}
 	}
 
 	h4 {
 		width: 75%;
-		margin: 0 auto;
+		margin: 0 auto 25px auto;
 		text-align: center;
 		font-size: 24px;
 		font-weight: 500;
+	}
+
+	aside {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		flex-wrap: wrap;
 	}
 }

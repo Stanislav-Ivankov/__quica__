@@ -4,24 +4,32 @@
 
 	<h3>I Would Like To Receive Email Notifications For :</h3>
 
-	<form [formGroup]="userSettingsForms" (ngSubmit)="saveUserSettings()">
+	<form [formGroup]="userSettingsForms">
 		<mat-checkbox formControlName="newSharesOfMyListings" color="primary">New Shares Of My Listings</mat-checkbox>
-		<mat-checkbox formControlName="marketingEmails" color="primary">Marketing Emails</mat-checkbox>
-		<mat-checkbox formControlName="generalNewsAndProductAnnouncements" color="primary">General News And Product Announcements</mat-checkbox>
-		<mat-checkbox formControlName="newListingInAChosenCategory" color="primary">New Listing ( In A Chosen Category )</mat-checkbox>
+		<mat-checkbox formControlName="usefulMarketingEmails" color="primary">Useful Marketing Emails</mat-checkbox>
+		<mat-checkbox formControlName="productAnnouncements" color="primary">Product Announcements</mat-checkbox>
+		<mat-checkbox formControlName="newListingsThatInterestMe" color="primary">New Listings That Interest Me</mat-checkbox>
 
-		<section>
-			<button type="submit" mat-raised-button color="primary">Save Settings</button>
-
-			<div class="Loader">
-				<mat-spinner *ngIf="isSavingChanges" diameter="36" color="primary"></mat-spinner>
-			</div>
-		</section>
-
+		<h5>Change Language :</h5>
+		<mat-form-field appearance="outline">
+			<mat-label>Language</mat-label>
+			<mat-select formControlName="language">
+				<mat-option value="hungarian">Hungarian</mat-option>
+				<mat-option value="english">English</mat-option>
+			</mat-select>
+		</mat-form-field>
 	</form>
 
 	<section>
-		<button (click)="deleteUserAccount()" mat-raised-button color="warn">DELETE MY ACCOUNT</button>
+		<button (click)="saveUserSettings()" type="submit" mat-raised-button color="primary">Save Settings</button>
+
+		<div class="Loader">
+			<mat-spinner *ngIf="isSavingChanges" diameter="36" color="primary"></mat-spinner>
+		</div>
+	</section>
+
+	<section>
+		<button (click)="deleteUserAccount()" type="button" mat-button color="warn">Delete My Account</button>
 
 		<div class="Loader">
 			<mat-spinner *ngIf="isDeletingAccount" diameter="36" color="warn"></mat-spinner>

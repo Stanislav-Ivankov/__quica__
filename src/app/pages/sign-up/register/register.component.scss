@@ -1,0 +1,138 @@
+main {
+	padding-bottom: 50px;
+	background-color: #F5F8F1;
+
+	h3 {
+		font-size: 28px;
+		text-align: center;
+	}
+
+	mat-horizontal-stepper {
+		max-width: 75%;
+		margin: 0 auto;
+		background-color: #F5F8F1;
+
+		aside {
+			margin: 25px 0px;
+
+			button {
+				width: 100px;
+				margin-right: 12.5px;
+			}
+
+			.Complete-Sign-Up-Button {
+				width: 150px;
+			}
+		}
+
+		form {
+			margin-top: 25px;
+
+			mat-form-field {
+				display: block;
+				width: 50%;
+				margin: 0 auto 12.5px auto;
+			}
+
+			.ID-Scan-Field {
+				margin-bottom: 50px;
+			}
+		}
+
+		mat-checkbox {
+			display: block;
+			margin-bottom: 12.5px;
+			font-size: 18px;
+		}
+
+		mat-spinner {
+			margin: 0px 12.5px;
+		}
+
+		.Payment-Options {
+			display: flex;
+			align-items: center;
+			margin-bottom: 6.25px;
+
+			button {
+				width: 175px;
+			}
+
+			.OTP-Connected {
+				color: green;
+			}
+
+			.OTP-Not-Connected {
+				color: red;
+			}
+		}
+	}
+
+	.ID-Scan {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 512px;
+		height: 256px;
+		margin: 0 auto 50px auto;
+		cursor: pointer;
+		position: relative;
+
+		h4 {
+			font-size: 24px;
+		}
+
+		img {
+			width: inherit;
+			height: inherit;
+			object-fit: scale-down;
+		}
+
+		mat-icon {
+			position: absolute;
+			top: -12.5px;
+			right: -12.5px;
+			color: #363738;
+			cursor: pointer;
+		}
+	}
+
+	.GDPR-Content {
+		margin-bottom: 25px;
+		text-align: justify;
+		font-size: 16px;
+	}
+
+	h5 {
+		margin-bottom: 25px;
+		font-size: 24px;
+		text-align: center;
+	}
+
+	.Passport-Option-Status, .Payment-Option-Status, .Terms-And-Conditions, .Payment-Liability {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 25%;
+		margin: 0 auto !important;
+		font-weight: 600;
+
+		mat-icon {
+			color: green;
+		}
+
+		.Connected {
+			color: green;
+		}
+
+		.Not-Connected {
+			color: red;
+		}
+	}
+}
+
+::ng-deep snack-bar-container.Success {
+	background-color: #F5F8F1;
+	color: #000;
+}

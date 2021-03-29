@@ -10,47 +10,7 @@ main {
 		font-size: 42px;
 	}
 
-	.Waiting-To-Be-Sold-Table {
-		width: 75%;
-		margin: 0 auto;
-		padding-bottom: 50px;
-
-		&:last-of-type {
-			padding-bottom: 0px;
-		}
-	}
-
-	.Shared-Waiting-Approval-Payment-Table {
-		width: 75%;
-		margin: 0 auto;
-		padding-bottom: 50px;
-
-		&:last-of-type {
-			padding-bottom: 0px;
-		}
-	}
-
-	.Pending-Deals-Sells-Table {
-		width: 75%;
-		margin: 0 auto;
-		padding-bottom: 50px;
-
-		&:last-of-type {
-			padding-bottom: 0px;
-		}
-	}
-
-	.Pending-Deals-Buys-Table {
-		width: 75%;
-		margin: 0 auto;
-		padding-bottom: 50px;
-
-		&:last-of-type {
-			padding-bottom: 0px;
-		}
-	}
-
-	.Payment-History-Table {
+	section {
 		width: 75%;
 		margin: 0 auto;
 		padding-bottom: 50px;

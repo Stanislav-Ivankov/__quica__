@@ -10,8 +10,13 @@ main {
 	}
 
 	section {
-		width: 200px;
+		width: 500px;
 		margin: 0 auto 50px auto;
+
+		img {
+			display: block;
+			margin: 0 auto;
+		}
 	}
 
 	p {

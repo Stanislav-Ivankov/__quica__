@@ -1,9 +1,74 @@
-<main class="Listing-Details">
+<main class="Details">
 
-	<button mat-raised-button color="primary" class="Listing-Details--Back-Button">BACK</button>
+	<section class="Details__Information">
+		<h1>Microsoft Surface 2 Laptop</h1>
+		<aside class="Saved-Status">
+			<img src="../../../assets//Hearth.svg" draggable="false">
+			<span>Saved</span>
+		</aside>
 
-	<section class="Listing-Details__Product-Carousel">
+		<h3>Offer Details</h3>
 
+		<h4>Product Category</h4>
+		<p>Technical Products / Computer</p>
+
+		<h4>Item Name</h4>
+		<p>Microsoft Surface 2 Laptop</p>
+
+		<h4>Condition</h4>
+		<p>New</p>
+
+		<h4>Description</h4>
+		<p style="text-align: justify;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus magni beatae voluptas vel minima sint itaque rerum ad recusandae qui! Vel ut impedit repellendus. Praesentium, iusto aperiam pariatur soluta atque eaque facere quasi asperiores rem neque optio, earum accusantium odit quibusdam ducimus veniam doloribus incidunt repellendus. Nesciunt sed magnam iste qui! In animi quaerat quae ut iste sit sequi incidunt. Placeat ut earum sint minus eveniet soluta, repellat voluptas vitae velit quae ducimus reiciendis, illum ullam quia aperiam possimus sed ea, ipsam doloribus deleniti maxime odio aliquid molestiae. Consequuntur nesciunt ipsa quos repellat tenetur! Voluptate in placeat fugiat distinctio odit!</p>
+
+		<h4>Price</h4>
+		<p>200 000 Ft</p>
+
+		<h4>Comission</h4>
+		<p>20 000 Ft</p>
+
+		<h4>Product Location</h4>
+		<p>22 Avenue, NY</p>
+
+		<h3>Product Location</h3>
+		<div class="Map" #MAP></div>
+
+		<h4>Delivery Options</h4>
+		<p>Post, DHL</p>
+	</section>
+
+	<section class="Details__Actions">
+		<div style="margin-bottom: 50px;">
+			<div class="Container">
+				<div class="Share">
+					<h4>Max Possible Comission</h4>
+					<p style="color: #FF0099;">15 0000 Ft</p>
+				</div>
+		
+				<div class="Times_Shared" style="text-align: center;">
+					<h4>Shared</h4>
+					<p>10x</p>
+				</div>
+			</div>
+
+			<button [routerLink]="['/share', id]" mat-raised-button color="primary">Share</button>
+		</div>
+
+		<div>
+			<div class="Container">
+				<div class="Share">
+					<h4>Price</h4>
+					<p style="color: #3FA9F5;">15 0000 Ft</p>
+				</div>
+
+				<div class="Times_Shared" style="text-align: center; background-color: #FFF5D1">
+					<h4>Reliable Seller</h4>
+					<p style="font-size: 12px;">72 Successful Deals</p>
+				</div>
+			</div>
+
+			<button  [routerLink]="['/checkout', id]" mat-raised-button color="primary">Buy</button>
+		</div>
 	</section>
 
 </main>

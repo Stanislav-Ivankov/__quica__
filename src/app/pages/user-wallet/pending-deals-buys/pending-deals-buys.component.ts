@@ -1,16 +1,11 @@
 import { AfterViewInit, Component, ViewChild, OnDestroy, OnInit, EventEmitter } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
-
 import { merge, Observable, EMPTY, Subscription } from 'rxjs';
 import { map, startWith, switchMap, catchError } from 'rxjs/operators';
-
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-
-import { SharedService } from '../../../services/shared.service';
 
 @Component({
 	selector: 'quica-pending-deals-buys-table',
@@ -19,11 +14,10 @@ import { SharedService } from '../../../services/shared.service';
 })
 export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	ELEMENT_DATA: any[] = [
-		{ comission: 1, listingName: 'Hydrogen', price: 10000, status: 'H', timesShared: 12 },
-		{ comission: 1, listingName: 'Hydrogen', price: 120000, status: 'H', timesShared: 13 },
-		{ comission: 1, listingName: 'Hydrogen', price: 1500, status: 'H', timesShared: 14 },
-		{ comission: 1, listingName: 'Hydrogen', price: 12000, status: 'H', timesShared: 15 },
+	public sampleData = [
+		{ productImage: "../../../../assets/Laptop.svg", listingName: "Microsoft surface 2 laptop", id: 458745, approvedByOtherParty: "no", price: 350000, date: new Date(), deal: "Sold", status: "Sold" },
+		{ productImage: "../../../../assets/Console.svg", listingName: "Playstation 5", id: 458746, price: 159990, approvedByOtherParty: "yes", date: new Date(), deal: "Bought", status: "Selling" },
+		{ productImage: "../../../../assets/Glasses.svg", listingName: "Ray-Ban", id: 458747, price: 32000, approvedByOtherParty: "no", date: new Date(), deal: "Shared", status: "Awaiting Comission" }
 	];
 
 	// Primitives
@@ -45,7 +39,7 @@ export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestr
 	@ViewChild(MatPaginator)
 	paginator!: MatPaginator;
 
-	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient, private _sharedService: SharedService) { }
+	constructor(private _matPaginatorService: MatPaginatorIntl, private _httpService: HttpClient) { }
 
 	ngOnInit(): void {
 		this._matPaginatorService.firstPageLabel = 'First Page';
@@ -57,25 +51,14 @@ export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestr
 
 	ngAfterViewInit(): void {
 		this.fetchPipeline();
-
-		this._sharedService.refreshNotification.subscribe(() => {
-			this.isLoading = true;
-			this.totalSelectedSum = 0;
-			this.getPendingDealsBuys(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: any[]) => {
-				this.tableData = new MatTableDataSource<any>(data);
-				this.selection = new SelectionModel<any>(true, []);
-				this.isLoading = false;
-			});
-		});
 	}
 
 	ngOnDestroy(): void {
 		this.fetchPipelineSubscription$.unsubscribe();
-		this.readyToRefreshSubscription$.unsubscribe();
 	}
 
 	private getPendingDealsBuys(page: number, pageSize: number): Observable<any[]> {
-		return this._httpService.get<any[]>(`https://jsonplaceholder.typicode.com/todos/1?q=repo:angular/components&page=${ page + 1 }&pageSize=${ pageSize }`);
+		return this._httpService.get<any[]>("https://jsonplaceholder.typicode.com/todos/1");
 	}
 
 	private fetchPipeline(): void {
@@ -98,8 +81,6 @@ export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestr
 			this.tableData = new MatTableDataSource<any>(payload);
 			this.selection = new SelectionModel<any>(true, []);
 			this.isLoading = false;
-
-			this._sharedService.readyToRefresh.emit(true);
 		});
 	}
 
@@ -112,42 +93,19 @@ export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestr
 	}
 
 	public areAllRowsSelected(): boolean {
-		return this.selection.selected.length === this.ELEMENT_DATA.length;
-	}
-
-	public masterToggle(): void {
-		if (this.areAllRowsSelected()) {
-			this.selection.clear();
-			this.totalSelectedSum = 0;
-		} else {
-			this.totalSelectedSum  = 0;
-			this.ELEMENT_DATA.forEach((row: any) => {
-				this.selection.select(row);
-				this.totalSelectedSum += row.price;
-			});
-		}
+		return this.selection.selected.length === this.sampleData.length;
 	}
 
 	public cancel(row: any) {
 		console.log(row);
 		this.fetchPipelineSubscription$.unsubscribe();
 		this.fetchPipeline();
-
-		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
-			this._sharedService.refreshNotification.next();
-			this.readyToRefreshSubscription$.unsubscribe();
-		});
 	}
 
 	public approve(row: any) {
 		console.log(row);
 		this.fetchPipelineSubscription$.unsubscribe();
 		this.fetchPipeline();
-
-		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
-			this._sharedService.refreshNotification.next();
-			this.readyToRefreshSubscription$.unsubscribe();
-		});
 	}
 
 	public payForSelected(): void {
@@ -157,10 +115,5 @@ export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestr
 
 		this.fetchPipelineSubscription$.unsubscribe();
 		this.fetchPipeline();
-
-		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
-			this._sharedService.refreshNotification.next();
-			this.readyToRefreshSubscription$.unsubscribe();
-		});
 	}
 }

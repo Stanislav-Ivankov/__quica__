@@ -51,6 +51,10 @@ export class VeificationEmailComponent implements OnInit {
 			this._router.navigate(['/share', this.queryParameters.id], {
 				queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration }
 			});
+		} else {
+			this._router.navigate(['/', this.queryParameters.id], {
+				queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration }
+			});
 		}
 	}
 

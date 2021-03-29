@@ -1,16 +1,17 @@
 <main>
 
 	<mat-icon (click)="closeModal()">highlight_off</mat-icon>
+
 	<h3>Please, Verify Your Phone Number</h3>
 
-	<form [formGroup]="OTPForm">
+	<form [formGroup]="verifyNumberForm">
 		<mat-form-field appearance="outline">
 			<mat-icon matPrefix>vpn_key</mat-icon>
-			<input formControlName="verificationCode" type="text" matInput>
-			<mat-hint>Required</mat-hint>
+			<input formControlName="verificationCode" type="text" placeholder="Verification Code" matInput>
+			<mat-hint>Required Field</mat-hint>
 		</mat-form-field>
 
-		<button (click)="verifyCode()" [disabled]="'INVALID' === OTPForm.status || true === isLoading" mat-raised-button color="primary">Verify Code</button>
+		<button (click)="verifyCode()" [disabled]="'INVALID' === verifyNumberForm.status || true === isLoading" mat-raised-button color="primary">Verify Code</button>
 		<button (click)="resendCode()" [disabled]="true === isLoading" mat-raised-button color="accent">Resend Code</button>
 
 		<div class="Loader">

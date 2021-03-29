@@ -19,25 +19,22 @@ import { SharedService } from '../../../services/shared.service';
 })
 export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDestroy {
 
-	ELEMENT_DATA: any[] = [
-		{ comission: 12000, listingName: 'Hydrogen', price: 1.0079, status: 'H', timesShared: 12 },
-		{ comission: 5000, listingName: 'Sun', price: 1.0079, status: 'H', timesShared: 12 },
-		{ comission: 100000, listingName: 'REAH', price: 1.0079, status: 'H', timesShared: 12 }
+	sampleData = [
+		{ productImage: "../../../../assets/Laptop.svg", listingName: "Microsoft surface 2 laptop", id: 458745, approvedByOtherParty: "no", price: 350000, comission: 3422, date: new Date(), paymentDue: "1 Day" },
+		{ productImage: "../../../../assets/Console.svg", listingName: "Playstation 5", id: 458746, price: 159990, approvedByOtherParty: "yes", comission: 3422, date: new Date(), paymentDue: "2 Day" },
+		{ productImage: "../../../../assets/Glasses.svg", listingName: "Ray-Ban", id: 458747, price: 32000, approvedByOtherParty: "no", comission: 3422, date: new Date(), paymentDue: "3 Day" }
 	];
 
-	// Primitives
 	isLoading = true;
 	totalResults = 0;
 	totalSelectedSum = 0;
-	tableColumns: string[] = ['Select', 'Listing Name', 'Price', 'Comission', 'Approved By Other Party ?', 'Date', 'Payment Due', 'Cancel', 'Approve'];
+	tableColumns: string[] = ['Select', 'Listing Name', 'Price', 'Comission', 'Approved By Other Party ?', 'Date', 'Payment Due', 'Cancel'];
 
-	// Referentials
 	readyToRefreshSubscription$: Subscription = new Subscription();
 	fetchPipelineSubscription$: Subscription = new Subscription();
 	tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
 	selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
-	// Decorators
 	@ViewChild(MatSort)
 	sort!: MatSort;
 
@@ -56,25 +53,10 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 
 	ngAfterViewInit(): void {
 		this.fetchPipeline();
-
-		this._sharedService.refreshNotification.subscribe(() => {
-			this.isLoading = true;
-			this.totalSelectedSum = 0;
-			this.getPendingDealsSells(this.paginator.pageIndex, this.paginator.pageSize).subscribe((data: any[]) => {
-				this.tableData = new MatTableDataSource<any>(data);
-				this.selection = new SelectionModel<any>(true, []);
-				this.isLoading = false;
-			});
-		});
-	}
-
-	ngOnDestroy(): void {
-		this.fetchPipelineSubscription$.unsubscribe();
-		this.readyToRefreshSubscription$.unsubscribe();
 	}
 
 	private getPendingDealsSells(page: number, pageSize: number): Observable<any[]> {
-		return this._httpService.get<any[]>(`https://jsonplaceholder.typicode.com/todos/1?q=repo:angular/components&page=${ page + 1 }&pageSize=${ pageSize }`);
+		return this._httpService.get<any[]>("https://jsonplaceholder.typicode.com/todos/1");
 	}
 
 	private fetchPipeline() {
@@ -97,8 +79,6 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 			this.tableData = new MatTableDataSource<any>(payload);
 			this.selection = new SelectionModel<any>(true, []);
 			this.isLoading = false;
-
-			this._sharedService.readyToRefresh.emit(true);
 		});
 	}
 
@@ -111,7 +91,7 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 	}
 
 	public areAllRowsSelected(): boolean {
-		return this.selection.selected.length === this.ELEMENT_DATA.length;
+		return this.selection.selected.length === this.sampleData.length;
 	}
 
 	public masterToggle(): void {
@@ -120,7 +100,7 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 			this.totalSelectedSum = 0;
 		} else {
 			this.totalSelectedSum  = 0;
-			this.ELEMENT_DATA.forEach((row: any) => {
+			this.sampleData.forEach((row: any) => {
 				this.selection.select(row);
 				this.totalSelectedSum += row.comission;
 			});
@@ -128,25 +108,13 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 	}
 
 	public cancel(row: any) {
-		console.log(row);
 		this.fetchPipelineSubscription$.unsubscribe();
 		this.fetchPipeline();
-
-		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
-			this._sharedService.refreshNotification.next();
-			this.readyToRefreshSubscription$.unsubscribe();
-		});
 	}
 
 	public approveAndPayComission(row: any) {
-		console.log(row);
 		this.fetchPipelineSubscription$.unsubscribe();
 		this.fetchPipeline();
-
-		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
-			this._sharedService.refreshNotification.next();
-			this.readyToRefreshSubscription$.unsubscribe();
-		});
 	}
 
 	public askForPaymentForSelected(): void {
@@ -156,10 +124,10 @@ export class PendingDealsSellsComponent implements OnInit, AfterViewInit, OnDest
 
 		this.fetchPipelineSubscription$.unsubscribe();
 		this.fetchPipeline();
+	}
 
-		this.readyToRefreshSubscription$ = this._sharedService.readyToRefresh.subscribe(() => {
-			this._sharedService.refreshNotification.next();
-			this.readyToRefreshSubscription$.unsubscribe();
-		});
+	ngOnDestroy(): void {
+		this.fetchPipelineSubscription$.unsubscribe();
+		this.readyToRefreshSubscription$.unsubscribe();
 	}
 }

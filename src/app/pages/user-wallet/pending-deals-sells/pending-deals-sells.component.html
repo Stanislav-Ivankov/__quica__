@@ -1,17 +1,14 @@
 <h3>Pending Deals Of My Sells</h3>
 
-<p>These Are The Listings That You Sold. You Need To Approve Every Deal And You Have To Pay The Comission.</p>
+<p>These Are The Listings That You Sold. You Need To Approve Every Deal And You Have To Pay The Comission</p>
 
-<section class="Table-Loader">
+<aside class="Loader">
 	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
-</section>
+</aside>
 
-<table mat-table [dataSource]="ELEMENT_DATA">
-
+<table mat-table [dataSource]="sampleData">
 	<ng-container matColumnDef="Select">
-		<th mat-header-cell *matHeaderCellDef>
-			<mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && areAllRowsSelected()" [indeterminate]="selection.hasValue() && !areAllRowsSelected()" color="primary">ID</mat-checkbox>
-		</th>
+		<th mat-header-cell *matHeaderCellDef></th>
 
 		<td mat-cell *matCellDef="let row">
 			<mat-checkbox (change)="$event ? selection.toggle(row) : null" (click)="getSelectedRow(row)" (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)" color="primary">{{ row.created_at | date }}</mat-checkbox>
@@ -20,7 +17,13 @@
 
 	<ng-container matColumnDef="Listing Name">
 		<th mat-header-cell *matHeaderCellDef>Listing Name</th>
-		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
+		<td mat-cell *matCellDef="let row" class="Product-Image-Name">
+			<img [src]="row.productImage" alt="Product Image" draggable="false">
+			<section>
+				<aside>{{ row.listingName | titlecase }}</aside>
+				<aside># {{ row.id }}</aside>
+			</section>
+		</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Price">
@@ -35,39 +38,28 @@
 
 	<ng-container matColumnDef="Approved By Other Party ?">
 		<th mat-header-cell *matHeaderCellDef>Approved By Other Party ?</th>
-		<td mat-cell *matCellDef="let row">{{ row.status }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.approvedByOtherParty | titlecase }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Date">
 		<th mat-header-cell *matHeaderCellDef>Date</th>
-		<td mat-cell *matCellDef="let row">{{ row.comission }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.date | date}}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Payment Due">
 		<th mat-header-cell *matHeaderCellDef>Payment Due</th>
-		<td mat-cell *matCellDef="let row">{{ row.price }}</td>
+		<td mat-cell *matCellDef="let row">{{ row.paymentDue }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Cancel">
 		<th mat-header-cell *matHeaderCellDef></th>
 		<td mat-cell *matCellDef="let row">
-			<button (click)="cancel(row)" mat-raised-button color="warn">Cancel</button>
-		</td>
-	</ng-container>
-
-	<ng-container matColumnDef="Approve">
-		<th mat-header-cell *matHeaderCellDef></th>
-		<td mat-cell *matCellDef="let row">
-			<button (click)="approveAndPayComission(row)" mat-raised-button color="primary">
-				<span>Approve And Pay Comission</span>
-				<mat-icon class="Label">error_outline</mat-icon>
-			</button>
+			<button (click)="cancel(row)" mat-button color="warn">Cancel</button>
 		</td>
 	</ng-container>
 
 	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
 	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
-
 </table>
 
 <mat-paginator [length]="totalResults" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons="true"></mat-paginator>

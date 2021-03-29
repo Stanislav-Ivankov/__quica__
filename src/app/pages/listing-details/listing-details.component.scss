@@ -1,11 +1,71 @@
-.Listing-Details {
+.Details {
 	padding: 0px 100px 50px;
 	background-color: #F5F8F1;
 
-	&--Back-Button {
-		width: 100px;
-		margin-bottom: 50px;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	flex-wrap: wrap;
+
+	&__Information {
+		width: calc(100% - 500px);
+		min-width: 500px;
+		
+		p {
+			color: #67696B;
+
+			&:not(:last-of-type) {
+				margin-bottom: 50px;
+			}
+		}
 	}
 
-	&__Product-Carousel { }
+	&__Actions {
+		background-color: #FFF;
+		width: 350px;
+		padding: 12.5px;
+		border-radius: 6.25px;
+		box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 24%), 0px 4px 5px 0px rgb(0 0 0 / 16%), 0px 1px 10px 0px rgb(0 0 0 / 16%);
+
+		.Container {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.Share, .Times_Shared {
+
+			h4, p {
+				margin: 0px;
+			}
+		}
+
+		button {
+			width: 100%;
+			margin-top: 25px;
+		}
+	}
+
+	.Times_Shared {
+		width: auto;
+		padding: 12.5px 30px;
+		border-radius: 25px;
+		background-color: #FFE5F5;
+		color: #AA0066;
+	}
+
+	.Saved-Status {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+
+		img {
+			cursor: pointer;
+		}
+	}
+
+	.Map {
+		height: 500px;
+		margin: 0 auto 50px auto;
+	}
 }

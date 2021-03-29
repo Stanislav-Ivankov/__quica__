@@ -1,1 +1,35 @@
-<p>share works!</p>
+<main>
+
+	<h1>Share</h1>
+
+	<section class="Share-Link">
+		<p>Message</p>
+
+		<aside>Share @ <span (click)="copy()" id="text" class="Link">{{ shareLink }}</span></aside>
+
+		<div style="display: flex; align-items: center; justify-content: center;">
+			<button mat-button color="primary">Copy To Clipboard</button>
+			<button mat-button color="primary">Send Email</button>
+		</div>
+
+	</section>
+
+	<section class="Share-Link">
+		<p>Choose Platform To Share On :</p>
+
+		<div style="display: flex; align-items: center; justify-content: center; cursor: pointer;">
+			<mat-chip-list>
+				<mat-chip matTooltip="Facebook" color="primary" selected>FB</mat-chip>
+				<mat-chip matTooltip="VK" color="warn" selected>VK</mat-chip>
+				<mat-chip matTooltip="Twitter" color="accent" selected>TW</mat-chip>
+				<mat-chip matTooltip="Viber" color="primary">VB</mat-chip>
+			</mat-chip-list>
+		</div>
+
+	</section>
+
+	<div>
+		<button (click)="goToSucessPage()" mat-raised-button color="primary">Share</button>
+	</div>
+
+</main>

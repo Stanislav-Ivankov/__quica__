@@ -1,0 +1,29 @@
+<main>
+
+	<mat-icon (click)="closeModal()">highlight_off</mat-icon>
+
+	<h3>Edit Active Listing</h3>
+
+	<form>
+		<img [src]="productPicture ? productPicture : '../../../../../assets/Product Image Placeholder.png'" alt="Product Image" draggable="false">
+
+		<section>
+			<input [hidden]="true" #FILE type="file" (change)="uploadProductPicture($event)">
+			<button *ngIf="!productPicture" (click)="FILE.click()" mat-button color="primary">Upload Picture</button>
+			<button *ngIf="productPicture" (click)="removeProductPicture($event)" mat-button color="warn">Remove Picture</button>
+		</section>
+
+		<mat-form-field appearance="outline">
+			<mat-icon matPrefix>sell</mat-icon>
+			<input [(ngModel)]="data.price" name="price" type="text" placeholder="Price" matInput>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline">
+			<mat-icon matPrefix>euro_symbol</mat-icon>
+			<input [(ngModel)]="data.comission" name="comission" type="text" placeholder="Comission" matInput>
+		</mat-form-field>
+
+		<button (click)="saveChanges()" mat-raised-button color="primary">Save Changes</button>
+	</form>
+
+</main>

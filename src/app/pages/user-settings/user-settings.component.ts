@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -10,15 +9,16 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserSettingsComponent implements OnInit {
 
-	userSettingsForms: FormGroup = new FormGroup({
-		newSharesOfMyListings: new FormControl(null),
-		marketingEmails: new FormControl(null),
-		generalNewsAndProductAnnouncements: new FormControl(null),
-		newListingInAChosenCategory: new FormControl(null)
-	});
+	public isSavingChanges: boolean = false;
+	public isDeletingAccount: boolean = false;
 
-	isSavingChanges: boolean | null = null;
-	isDeletingAccount: boolean | null = null;
+	public userSettingsForms: FormGroup = new FormGroup({
+		newSharesOfMyListings: new FormControl(null),
+		usefulMarketingEmails: new FormControl(null),
+		productAnnouncements: new FormControl(null),
+		newListingsThatInterestMe: new FormControl(null),
+		language: new FormControl(null)
+	});
 
 	constructor(private _httpClientService: HttpClient) { }
 
@@ -27,9 +27,10 @@ export class UserSettingsComponent implements OnInit {
 			() => {
 				this.userSettingsForms.setValue({
 					newSharesOfMyListings: true,
-					marketingEmails: false,
-					generalNewsAndProductAnnouncements: true,
-					newListingInAChosenCategory: false
+					usefulMarketingEmails: false,
+					productAnnouncements: true,
+					newListingsThatInterestMe: false,
+					language: "english"
 				}, { onlySelf: true });
 			},
 			() => {},
@@ -37,7 +38,7 @@ export class UserSettingsComponent implements OnInit {
 		);
 	}
 
-	saveUserSettings(): void {
+	public saveUserSettings(): void {
 		this.isSavingChanges = true;
 		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.userSettingsForms.value).subscribe(
 			() => this.isSavingChanges = false,
@@ -46,7 +47,7 @@ export class UserSettingsComponent implements OnInit {
 		);
 	}
 
-	deleteUserAccount(): void {
+	public deleteUserAccount(): void {
 		this.isDeletingAccount = true;
 		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.userSettingsForms.value).subscribe(
 			() => this.isDeletingAccount = false,

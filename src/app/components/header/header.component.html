@@ -14,7 +14,7 @@
 
 	<section class="Log-In">
 		<button routerLink="/about" mat-raised-button color="primary">About</button>
-		<button mat-raised-button color="primary">Sell</button>
+		<button routerLink="/new-listing" mat-raised-button color="primary">Sell</button>
 		<button routerLink="/login" *ngIf="!isUserLoggedIn; else LOGGED_IN_TEMPLATE" mat-raised-button color="primary">Log In</button>
 	</section>
 
