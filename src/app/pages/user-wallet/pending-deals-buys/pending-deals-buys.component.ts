@@ -15,9 +15,36 @@ import { MatSort, Sort } from '@angular/material/sort';
 export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	public sampleData = [
-		{ productImage: "../../../../assets/Laptop.svg", listingName: "Microsoft surface 2 laptop", id: 458745, approvedByOtherParty: "no", price: 350000, date: new Date(), deal: "Sold", status: "Sold" },
-		{ productImage: "../../../../assets/Console.svg", listingName: "Playstation 5", id: 458746, price: 159990, approvedByOtherParty: "yes", date: new Date(), deal: "Bought", status: "Selling" },
-		{ productImage: "../../../../assets/Glasses.svg", listingName: "Ray-Ban", id: 458747, price: 32000, approvedByOtherParty: "no", date: new Date(), deal: "Shared", status: "Awaiting Comission" }
+		{
+			productImage: '../../../../assets/Laptop.svg',
+			listingName: 'Microsoft surface 2 laptop',
+			id: 458745,
+			approvedByOtherParty: 'no',
+			price: 350000,
+			date: new Date(),
+			deal: 'Sold',
+			status: 'Sold'
+		},
+		{
+			productImage: '../../../../assets/Console.svg',
+			listingName: 'Playstation 5',
+			id: 458746,
+			price: 159990,
+			approvedByOtherParty: 'yes',
+			date: new Date(),
+			deal: 'Bought',
+			status: 'Selling'
+		},
+		{
+			productImage: '../../../../assets/Glasses.svg',
+			listingName: 'Ray-Ban',
+			id: 458747,
+			price: 32000,
+			approvedByOtherParty: 'no',
+			date: new Date(),
+			deal: 'Shared',
+			status: 'Awaiting Comission'
+		}
 	];
 
 	// Primitives
@@ -58,7 +85,7 @@ export class PendingDealsBuysComponent implements OnInit, AfterViewInit, OnDestr
 	}
 
 	private getPendingDealsBuys(page: number, pageSize: number): Observable<any[]> {
-		return this._httpService.get<any[]>("https://jsonplaceholder.typicode.com/todos/1");
+		return this._httpService.get<any[]>('https://jsonplaceholder.typicode.com/todos/1');
 	}
 
 	private fetchPipeline(): void {

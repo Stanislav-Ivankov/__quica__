@@ -38,7 +38,7 @@ import { EditListingModalComponent } from './pages/user-listings/active-listings
 import { BalanceComponent } from './components/balance/balance.component';
 import { ListingCardComponent } from './components/listing-card/listing-card.component';
 import { ListingSummaryComponent } from './pages/listing-summary/listing-summary.component';
-import { ListingDetailsComponent } from "./pages/listing-details/listing-details.component";
+import { ListingDetailsComponent } from './pages/listing-details/listing-details.component';
 
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';

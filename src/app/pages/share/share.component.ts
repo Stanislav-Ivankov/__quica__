@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { LoginService } from "../../services/login.service";
+import { LoginService } from '../../services/login.service';
 
 @Component({
 	selector: 'quica-share',
@@ -12,9 +12,14 @@ export class ShareComponent implements OnInit {
 
 	id: Params = {};
 	queryParameters: Params = {};
-	shareLink: string = "";
+	shareLink = '';
 
-	constructor(private loginService: LoginService, private _activateRouteService: ActivatedRoute, private _httpClient: HttpClient, private _router: Router) { }
+	constructor(
+		private loginService: LoginService,
+		private _activateRouteService: ActivatedRoute,
+		private _httpClient: HttpClient,
+		private _router: Router
+	) { }
 
 	ngOnInit() {
 		this._activateRouteService.params.subscribe(id => this.id = id.id);

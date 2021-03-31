@@ -9,8 +9,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserSettingsComponent implements OnInit {
 
-	public isSavingChanges: boolean = false;
-	public isDeletingAccount: boolean = false;
+	public isSavingChanges = false;
+	public isDeletingAccount = false;
 
 	public userSettingsForms: FormGroup = new FormGroup({
 		newSharesOfMyListings: new FormControl(null),
@@ -30,7 +30,7 @@ export class UserSettingsComponent implements OnInit {
 					usefulMarketingEmails: false,
 					productAnnouncements: true,
 					newListingsThatInterestMe: false,
-					language: "english"
+					language: 'english'
 				}, { onlySelf: true });
 			},
 			() => {},

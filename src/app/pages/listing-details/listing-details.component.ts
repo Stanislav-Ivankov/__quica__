@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 	templateUrl: './listing-details.component.html',
 	styleUrls: ['./listing-details.component.scss']
 })
-export class ListingDetailsComponent implements OnInit {
+export class ListingDetailsComponent implements OnInit, AfterViewInit {
 
 	id = '';
 	queryParameters: Params = {};

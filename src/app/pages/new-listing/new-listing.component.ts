@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { } from 'googlemaps';
@@ -9,21 +9,21 @@ import { } from 'googlemaps';
 	templateUrl: './new-listing.component.html',
 	styleUrls: ['./new-listing.component.scss']
 })
-export class NewListingComponent implements OnInit {
+export class NewListingComponent implements OnInit, AfterViewInit {
 
 	public newLisingForm: FormGroup = new FormGroup({
-		category: new FormControl("laptops", Validators.required),
-		listingName: new FormControl("MacBook Pro", Validators.required),
-		condition: new FormControl("Brand New", Validators.required),
-		description: new FormControl("Brand new laptops", Validators.required),
-		price: new FormControl("20 000", Validators.required),
-		comission: new FormControl("3000", Validators.required),
-		shippingOptions: new FormControl("Delivery", Validators.required)
+		category: new FormControl('laptops', Validators.required),
+		listingName: new FormControl('MacBook Pro', Validators.required),
+		condition: new FormControl('Brand New', Validators.required),
+		description: new FormControl('Brand new laptops', Validators.required),
+		price: new FormControl('20 000', Validators.required),
+		comission: new FormControl('3000', Validators.required),
+		shippingOptions: new FormControl('Delivery', Validators.required)
 	});
 
 	id = '';
 	queryParameters: Params = {};
-	defaultSelected: string = "laptops"
+	defaultSelected = 'laptops';
 	map!: google.maps.Map;
 
 	@ViewChild('MAP')

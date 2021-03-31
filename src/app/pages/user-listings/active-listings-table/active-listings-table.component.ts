@@ -8,8 +8,8 @@ import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/pag
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 
-import { EditListingModalComponent } from "./edit-listing-modal/edit-listing-modal.component";
-import { ActiveListingsAction } from "../../../helpers/enums";
+import { EditListingModalComponent } from './edit-listing-modal/edit-listing-modal.component';
+import { ActiveListingsAction } from '../../../helpers/enums';
 
 @Component({
 	selector: 'quica-active-listings-table',
@@ -20,13 +20,37 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 
 	public isLoading = true;
 	public totalResults = 0;
-	public tableColumns: string[] = ["Select", "Price", "Comission", "Times Shared", "Action", "Edit Listing", "Remove"];
+	public tableColumns: string[] = ['Select', 'Price', 'Comission', 'Times Shared', 'Action', 'Edit Listing', 'Remove'];
 	public ActiveListingsAction: typeof ActiveListingsAction = ActiveListingsAction;
 
 	public sampleData = [
-		{ productImage: "../../../../assets/Laptop.svg", listingName: "Microsoft surface 2 laptop", id: 458745, price: 350000, comission: 32020, timesShared: 51, action: ActiveListingsAction.PayComissingIdAdvance },
-		{ productImage: "../../../../assets/Console.svg", listingName: "Playstation 5", id: 458746, price: 159990, comission: 7000, timesShared: 1, action: ActiveListingsAction.RefundComission },
-		{ productImage: "../../../../assets/Glasses.svg", listingName: "Ray-Ban", id: 458747, price: 32000, comission: 251, timesShared: 19, action: ActiveListingsAction.PayComissingIdAdvance }
+		{
+			productImage: '../../../../assets/Laptop.svg',
+			listingName: 'Microsoft surface 2 laptop',
+			id: 458745,
+			price: 350000,
+			comission: 32020,
+			timesShared: 51,
+			action: ActiveListingsAction.PayComissingIdAdvance
+		},
+		{
+			productImage: '../../../../assets/Console.svg',
+			listingName: 'Playstation 5',
+			id: 458746,
+			price: 159990,
+			comission: 7000,
+			timesShared: 1,
+			action: ActiveListingsAction.RefundComission
+		},
+		{
+			productImage: '../../../../assets/Glasses.svg',
+			listingName: 'Ray-Ban',
+			id: 458747,
+			price: 32000,
+			comission: 251,
+			timesShared: 19,
+			action: ActiveListingsAction.PayComissingIdAdvance
+		}
 	];
 
 	public tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
@@ -44,11 +68,11 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	constructor(private _httpService: HttpClient, public modal: MatDialog, private _matPaginatorService: MatPaginatorIntl) { }
 
 	ngOnInit() {
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
-		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.previousPageLabel = "Previous Page";
-		this._matPaginatorService.nextPageLabel = "Next Page";
-		this._matPaginatorService.lastPageLabel = "Last Page";
+		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
+		this._matPaginatorService.firstPageLabel = 'First Page';
+		this._matPaginatorService.previousPageLabel = 'Previous Page';
+		this._matPaginatorService.nextPageLabel = 'Next Page';
+		this._matPaginatorService.lastPageLabel = 'Last Page';
 	}
 
 	ngAfterViewInit() {
@@ -57,7 +81,7 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	}
 
 	private getActiveListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any[]> {
-		return this._httpService.get<any[]>("https://jsonplaceholder.typicode.com/todos/1");
+		return this._httpService.get<any[]>('https://jsonplaceholder.typicode.com/todos/1');
 	}
 
 	private refreshPipeline(): void {
@@ -88,7 +112,7 @@ export class ActiveListingsTableComponent implements OnInit, AfterViewInit, OnDe
 	}
 
 	public editListing(row: any): void {
-		this.modal.open(EditListingModalComponent, { width: "500px", data: { ...row } }).afterClosed().subscribe(
+		this.modal.open(EditListingModalComponent, { width: '500px', data: { ...row } }).afterClosed().subscribe(
 			(data: any) => {
 				this.refreshPipelineSubscription$.unsubscribe();
 				this.refreshPipeline();

@@ -15,14 +15,35 @@ import { MatSort, Sort } from '@angular/material/sort';
 export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	public sampleData = [
-		{ productImage: "../../../../assets/Laptop.svg", listingName: "Microsoft surface 2 laptop", id: 458745, price: 350000, comission: 32020, timesShared: 51},
-		{ productImage: "../../../../assets/Console.svg", listingName: "Playstation 5", id: 458746, price: 159990, comission: 7000, timesShared: 1 },
-		{ productImage: "../../../../assets/Glasses.svg", listingName: "Ray-Ban", id: 458747, price: 32000, comission: 251, timesShared: 19 }
+		{
+			productImage: '../../../../assets/Laptop.svg',
+			listingName: 'Microsoft surface 2 laptop',
+			id: 458745,
+			price: 350000,
+			comission: 32020,
+			timesShared: 51
+		},
+		{
+			productImage: '../../../../assets/Console.svg',
+			listingName: 'Playstation 5',
+			id: 458746,
+			price: 159990,
+			comission: 7000,
+			timesShared: 1
+		},
+		{
+			productImage: '../../../../assets/Glasses.svg',
+			listingName: 'Ray-Ban',
+			id: 458747,
+			price: 32000,
+			comission: 251,
+			timesShared: 19
+		}
 	];
 
 	public isLoading = true;
 	public totalResults = 0;
-	public tableColumns: string[] = ["Listing Name", "Price", "Comission", "Times Shared"];
+	public tableColumns: string[] = ['Listing Name', 'Price', 'Comission', 'Times Shared'];
 
 	public tableData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
 	public selection: SelectionModel<any> = new SelectionModel<any>(true, []);
@@ -38,11 +59,11 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	constructor(private _httpService: HttpClient, private _matPaginatorService: MatPaginatorIntl) { }
 
 	ngOnInit() {
-		this._matPaginatorService.itemsPerPageLabel = "Items Per Page";
-		this._matPaginatorService.firstPageLabel = "First Page";
-		this._matPaginatorService.previousPageLabel = "Previous Page";
-		this._matPaginatorService.nextPageLabel = "Next Page";
-		this._matPaginatorService.lastPageLabel = "Last Page";
+		this._matPaginatorService.itemsPerPageLabel = 'Items Per Page';
+		this._matPaginatorService.firstPageLabel = 'First Page';
+		this._matPaginatorService.previousPageLabel = 'Previous Page';
+		this._matPaginatorService.nextPageLabel = 'Next Page';
+		this._matPaginatorService.lastPageLabel = 'Last Page';
 	}
 
 	ngAfterViewInit() {
@@ -51,7 +72,7 @@ export class SoldListingsTableComponent implements OnInit, AfterViewInit, OnDest
 	}
 
 	private getSoldListings(sortBy: string, orderBy: string, page: number, pageSize: number): Observable<any[]> {
-		return this._httpService.get<any[]>("https://jsonplaceholder.typicode.com/todos/1");
+		return this._httpService.get<any[]>('https://jsonplaceholder.typicode.com/todos/1');
 	}
 
 	private refreshPipeline(): void {

@@ -8,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class CompanyDetailsComponent implements OnInit {
 
 	public companyDetails = {
-		contacts: "info@quica.io",
-		headquarters: "János Pál Pápa Tér 7, H-1081 Budapest",
-		taxNumber: "000000-0-00",
-		registrationNumber: "000000-0-00",
-		importantCompanyInformation: ["000000-0-00", "000000-0-00", "000000-0-00"]
+		contacts: 'info@quica.io',
+		headquarters: 'János Pál Pápa Tér 7, H-1081 Budapest',
+		taxNumber: '000000-0-00',
+		registrationNumber: '000000-0-00',
+		importantCompanyInformation: ['000000-0-00', '000000-0-00', '000000-0-00']
 	};
 
 	constructor() { }
