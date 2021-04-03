@@ -11,14 +11,18 @@ import { Subscription } from 'rxjs';
 })
 export class VerifyNumberModalComponent implements OnInit, OnDestroy {
 
-	public isLoading: boolean = false;
+	public isLoading = false;
 	public verifySubscription$: Subscription = new Subscription();
 
 	public verifyNumberForm: FormGroup = new FormGroup({
 		verificationCode: new FormControl(null, Validators.required)
 	});
 
-	constructor(private _httpService: HttpClient, public modalReference: MatDialogRef<VerifyNumberModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+	constructor(
+		private _httpService: HttpClient,
+		public modalReference: MatDialogRef<VerifyNumberModalComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: any
+	) { }
 
 	ngOnInit() {
 		this.isLoading = true;
@@ -32,7 +36,9 @@ export class VerifyNumberModalComponent implements OnInit, OnDestroy {
 
 	public verifyCode(): void {
 		this.isLoading = true;
-		this.verifySubscription$ = this._httpService.post('https://jsonplaceholder.typicode.com/posts', { ...this.data, ...this.verifyNumberForm.value }).subscribe(
+		this.verifySubscription$ = this._httpService.post('https://jsonplaceholder.typicode.com/posts', {
+			...this.data, ...this.verifyNumberForm.value
+		}).subscribe(
 			() => {
 				this.isLoading = false;
 				this.modalReference.close();

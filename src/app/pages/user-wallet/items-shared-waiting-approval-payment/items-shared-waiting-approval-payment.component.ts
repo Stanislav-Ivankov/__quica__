@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { ItemsISharedWaitingForApprovalAndPayment } from "../../../helpers/enums";
+import { ItemsISharedWaitingForApprovalAndPayment } from '../../../helpers/enums';
 
 @Component({
 	selector: 'quica-items-shared-waiting-approval-payment-table',
@@ -17,9 +17,42 @@ import { ItemsISharedWaitingForApprovalAndPayment } from "../../../helpers/enums
 export class ItemsSharedWaitingApprovalPaymentComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	public sampleData = [
-		{ productImage: "../../../../assets/Laptop.svg", listingName: "Lenovo", id: 458745, howManyBetweenMeAndBuyer: 2, price: 3500, comission: 1234, date: new Date(), deal: "Sold", flag: 2, status: "Waiting For Payment" },
-		{ productImage: "../../../../assets/Console.svg", listingName: "Playstation 5", id: 458746, howManyBetweenMeAndBuyer: 5, price: 1599, comission: 1234, date: new Date(), deal: "Bought", flag: 1, status: "Can Be Credited" },
-		{ productImage: "../../../../assets/Glasses.svg", listingName: "Ray-Ban", id: 458747, howManyBetweenMeAndBuyer: 1, price: 3200, comission: 1234, date: new Date(), deal: "Shared", flag: 1, status: "Can Be Credited" }
+		{
+			productImage: '../../../../assets/Laptop.svg',
+			listingName: 'Lenovo',
+			id: 458745,
+			howManyBetweenMeAndBuyer: 2,
+			price: 3500,
+			comission: 1234,
+			date: new Date(),
+			deal: 'Sold',
+			flag: 2,
+			status: 'Waiting For Payment'
+		},
+		{
+			productImage: '../../../../assets/Console.svg',
+			listingName: 'Playstation 5',
+			id: 458746,
+			howManyBetweenMeAndBuyer: 5,
+			price: 1599,
+			comission: 1234,
+			date: new Date(),
+			deal: 'Bought',
+			flag: 1,
+			status: 'Can Be Credited'
+		},
+		{
+			productImage: '../../../../assets/Glasses.svg',
+			listingName: 'Ray-Ban',
+			id: 458747,
+			howManyBetweenMeAndBuyer: 1,
+			price: 3200,
+			comission: 1234,
+			date: new Date(),
+			deal: 'Shared',
+			flag: 1,
+			status: 'Can Be Credited'
+		}
 	];
 
 	isLoading = true;

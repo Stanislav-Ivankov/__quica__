@@ -10,7 +10,7 @@ export class ListingCardComponent implements OnInit {
 	constructor() { }
 
 	@Input()
-	listingData: any
+	listingData: any;
 
 	ngOnInit() {}
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { LoginService } from "../../services/login.service";
+import { LoginService } from '../../services/login.service';
 import { } from 'googlemaps';
 
 @Component({
@@ -9,7 +9,7 @@ import { } from 'googlemaps';
 	templateUrl: './listing-summary.component.html',
 	styleUrls: ['./listing-summary.component.scss']
 })
-export class ListingSummaryComponent implements OnInit {
+export class ListingSummaryComponent implements OnInit, AfterViewInit {
 
 	id = '';
 	queryParameters: Params = {};
@@ -18,7 +18,12 @@ export class ListingSummaryComponent implements OnInit {
 	@ViewChild('MAP')
 	mapElement!: ElementRef;
 
-	constructor(private loginService: LoginService, private _router: Router, private _httpClient: HttpClient, private _activatedRoute: ActivatedRoute) { }
+	constructor(
+		private loginService: LoginService,
+		private _router: Router,
+		private _httpClient: HttpClient,
+		private _activatedRoute: ActivatedRoute
+	) { }
 
 	ngOnInit() {
 		this._activatedRoute.params.subscribe(id => this.id = id.id);

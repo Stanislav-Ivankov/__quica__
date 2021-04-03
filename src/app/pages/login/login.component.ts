@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import { LoginService } from "../../services/login.service";
+import { LoginService } from '../../services/login.service';
 
 @Component({
 	selector: 'quica-login',
@@ -12,7 +12,7 @@ import { LoginService } from "../../services/login.service";
 })
 export class LoginComponent implements OnInit {
 
-	public isLoading: boolean = false;
+	public isLoading = false;
 	public queryParameters: Params = {};
 
 	public loginForm: FormGroup = new FormGroup({
@@ -20,7 +20,12 @@ export class LoginComponent implements OnInit {
 		password: new FormControl(null, Validators.required)
 	});
 
-	constructor(private _activatedRouteServce: ActivatedRoute, private _routeService: Router, private _httpClientService: HttpClient, private loginService: LoginService) { }
+	constructor(
+		private _activatedRouteServce: ActivatedRoute,
+		private _routeService: Router,
+		private _httpClientService: HttpClient,
+		private loginService: LoginService
+	) { }
 
 	ngOnInit() {
 		this.queryParameters = this._activatedRouteServce.snapshot.queryParams;
@@ -33,9 +38,9 @@ export class LoginComponent implements OnInit {
 			() => this.isLoading = false,
 			() => this.isLoading = false
 		);
-
-		if (this.loginForm.controls.email.value == "test@test.com" && this.loginForm.controls.password.value == 12345) {
-			localStorage.setItem("Username", "Test_User");
+		// TODO: Remove it once we are ready with API integration
+		if (this.loginForm.controls.email.value === 'test@test.com' && this.loginForm.controls.password.value === 12345) {
+			localStorage.setItem('Username', 'Test_User');
 			this.loginService.loggedStatus.emit(true);
 
 			switch (this.queryParameters.Process) {
@@ -54,7 +59,7 @@ export class LoginComponent implements OnInit {
 				default:
 					this._routeService.navigate(['/']);
 					break;
-			}			
+			}
 		}
 	}
 }

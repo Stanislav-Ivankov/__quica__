@@ -12,7 +12,7 @@ export class EditListingModalComponent implements OnInit {
 		productImage: null,
 		price: null,
 		comission: null
-	}
+	};
 
 	public productPicture: string | ArrayBuffer | null = null;
 
@@ -49,7 +49,7 @@ export class EditListingModalComponent implements OnInit {
 
 	public removeProductPicture(event: Event): void {
 		this.productPicture = null;
-		this.formData.delete("productImage");
+		this.formData.delete('productImage');
 	}
 
 	public saveChanges(): void {
