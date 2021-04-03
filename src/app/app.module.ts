@@ -66,7 +66,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
 
@@ -140,8 +139,7 @@ import { MatCardModule } from '@angular/material/card';
 		MatDividerModule,
 		MatTooltipModule,
 		MatSliderModule,
-		MatCardModule,
-		CarouselModule.forRoot()
+		MatCardModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
