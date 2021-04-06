@@ -149,7 +149,8 @@ export class UserProfileComponent implements OnInit {
 		};
 	}
 
-	public removeIDScan(): void {
+	public removeIDScan(event: Event): void {
+		event.stopPropagation();
 		this.IDScan = '';
 		this.formData.delete('IDScan');
 	}

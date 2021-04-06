@@ -23,9 +23,7 @@ export class LoginComponent implements OnInit {
 	constructor(
 		private _activatedRouteServce: ActivatedRoute,
 		private _routeService: Router,
-		private _httpClientService: HttpClient,
-		private loginService: LoginService
-	) { }
+		private _httpClientService: HttpClient, private loginService: LoginService) { }
 
 	ngOnInit() {
 		this.queryParameters = this._activatedRouteServce.snapshot.queryParams;
@@ -34,32 +32,31 @@ export class LoginComponent implements OnInit {
 	public login(): void {
 		this.isLoading  = true;
 		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.loginForm.value).subscribe(
-			() => this.isLoading = false,
+			() => {
+				if (this.loginForm.controls.email.value === 'test@test.com' && this.loginForm.controls.password.value === '12345') {
+					localStorage.setItem('Username', 'Test_User');
+
+					switch (this.queryParameters.Process) {
+						case 'Buy':
+							this._routeService.navigate(['/checkout', this.queryParameters.id],
+								{ queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration } });
+							break;
+
+						case 'Share':
+							this._routeService.navigate(['/share', this.queryParameters.id],
+								{ queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration } });
+							break;
+
+						default:
+							this._routeService.navigate(['/']);
+							break;
+					}
+				}
+
+				this.isLoading = false;
+			},
 			() => this.isLoading = false,
 			() => this.isLoading = false
 		);
-		// TODO: Remove it once we are ready with API integration
-		if (this.loginForm.controls.email.value === 'test@test.com' && this.loginForm.controls.password.value === 12345) {
-			localStorage.setItem('Username', 'Test_User');
-			this.loginService.loggedStatus.emit(true);
-
-			switch (this.queryParameters.Process) {
-				case 'Buy':
-					this._routeService.navigate(['/checkout', this.queryParameters.id], {
-						queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration }
-					});
-					break;
-
-				case 'Share':
-					this._routeService.navigate(['/share', this._activatedRouteServce.snapshot.queryParams.id], {
-						queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration }
-					});
-					break;
-
-				default:
-					this._routeService.navigate(['/']);
-					break;
-			}
-		}
 	}
 }

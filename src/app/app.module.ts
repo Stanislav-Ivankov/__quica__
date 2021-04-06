@@ -68,6 +68,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
 	declarations: [
@@ -139,7 +140,8 @@ import { MatCardModule } from '@angular/material/card';
 		MatDividerModule,
 		MatTooltipModule,
 		MatSliderModule,
-		MatCardModule
+		MatCardModule,
+		MatSlideToggleModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

@@ -6,8 +6,8 @@
 		<mat-form-field appearance="outline">
 			<mat-label>Phone Number</mat-label>
 			<mat-icon matPrefix>settings_cell</mat-icon>
+			<input formControlName="phoneNumber" type="text" matInput>
 			<mat-hint>A Confirmation Code Will Be Send To The Number Via SMS</mat-hint>
-			<input formControlName="phoneNumber" type="text" placeholder="+36201234220" matInput>
 		</mat-form-field>
 
 		<button (click)="openModal()" [disabled]="'INVALID' === phoneNumberForm.status" mat-raised-button color="primary">Continue</button>
@@ -17,8 +17,8 @@
 		<h3>Why Do We Ask For Your Phone Number ?</h3>
 
 		<p>First, We Need To Make Sure It’s Really You.
-			By Verifying Your Phone Bumber, We Ensure That All Sellers, Distributors, Buyers And Merchandise Are Genuine,
-			So You Can Feel Free To Give And Take Quican, Trusting That Everything Will Be Un The Greatest Order.</p>
+		By Verifying Your Phone Bumber, We Ensure That All Sellers, Distributors, Buyers And Merchandise Are Genuine,
+		So You Can Feel Free To Give And Take Quican, Trusting That Everything Will Be Un The Greatest Order.</p>
 	</aside>
 
 </main>

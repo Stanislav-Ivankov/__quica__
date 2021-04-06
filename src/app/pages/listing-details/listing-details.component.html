@@ -51,7 +51,7 @@
 				</div>
 			</div>
 
-			<button [routerLink]="['/share', id]" mat-raised-button color="primary">Share</button>
+			<button [routerLink]="['/share', id]" [queryParams]="{ Process: 'Share' }" mat-raised-button color="primary">Share</button>
 		</div>
 
 		<div>
@@ -67,7 +67,7 @@
 				</div>
 			</div>
 
-			<button  [routerLink]="['/checkout', id]" mat-raised-button color="primary">Buy</button>
+			<button [routerLink]="['/checkout', id]" [queryParams]="{ Process: 'Buy' }" mat-raised-button color="primary">Buy</button>
 		</div>
 	</section>
 

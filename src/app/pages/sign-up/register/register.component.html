@@ -4,6 +4,10 @@
 
 	<mat-horizontal-stepper #STEPPER linear>
 
+		<ng-template matStepperIcon="edit">
+			<mat-icon>done</mat-icon>
+		</ng-template>
+
 		<mat-step [stepControl]="generalInformation" label="General Information" [editable]="true">
 
 			<form [formGroup]="generalInformation">
@@ -15,37 +19,39 @@
 				<h5>General Information</h5>
 
 				<mat-form-field appearance="outline">
-					<mat-label>First Name *</mat-label>
+					<mat-label>First Name</mat-label>
 					<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
-					<input #FirstNameRef formControlName="firstName" matInput type="text">
+					<input formControlName="firstName" [value]="generalInformation.controls['firstName'].value" matInput type="text">
 					<mat-hint>Required</mat-hint>
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>Last Name</mat-label>
 					<mat-icon matPrefix>drive_file_rename_outline</mat-icon>
-					<input #LastNameRef formControlName="lastname" matInput type="text">
+					<input formControlName="lastName" [value]="generalInformation.controls['lastName'].value" matInput type="text">
 					<mat-hint>Required</mat-hint>
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
-					<mat-label>Email *</mat-label>
+					<mat-label>Email</mat-label>
 					<mat-icon matPrefix>alternate_email</mat-icon>
-					<input #EmailRef formControlName="email" matInput type="email">
+					<input formControlName="email" [value]="generalInformation.controls['email'].value" matInput type="email">
 					<mat-hint>Required</mat-hint>
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
-					<mat-label>Password *</mat-label>
+					<mat-label>Password</mat-label>
 					<mat-icon matPrefix>password</mat-icon>
-					<input #PasswordRef formControlName="password" matInput autocomplete type="password">
+					<mat-icon *ngIf="!passwordVisible" (click)="passwordVisible = !passwordVisible" class="Password-Toggle" matSuffix>visibility</mat-icon>
+					<mat-icon *ngIf="passwordVisible" (click)="passwordVisible = !passwordVisible" class="Password-Toggle" matSuffix>visibility_off</mat-icon>
+					<input formControlName="password" [value]="generalInformation.controls['password'].value" matInput autocomplete [type]="passwordVisible ? 'text' : 'password'">
 					<mat-hint>Required</mat-hint>
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
-					<mat-label>Date Of Birth *</mat-label>
+					<mat-label>Date Of Birth</mat-label>
 					<mat-icon matPrefix>event</mat-icon>
-					<input #DateOfBirthRef formControlName="dateOfBirth" matInput [matDatepicker]="Picker">
+					<input formControlName="dateOfBirth" [value]="generalInformation.controls['dateOfBirth'].value" matInput [matDatepicker]="Picker">
 					<mat-datepicker-toggle matSuffix [for]="Picker"></mat-datepicker-toggle>
 					<mat-datepicker #Picker></mat-datepicker>
 					<mat-hint>Required</mat-hint>
@@ -54,14 +60,13 @@
 				<mat-form-field appearance="outline">
 					<mat-label>Place Of Birth</mat-label>
 					<mat-icon matPrefix>home</mat-icon>
-					<input #PlaceOfBirthRef formControlName="placeOfBirth" matInput type="text">
-					<mat-hint>Required</mat-hint>
+					<input formControlName="placeOfBirth" [value]="generalInformation.controls['placeOfBirth'].value" matInput type="text">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>Gender</mat-label>
 					<mat-icon matPrefix>female</mat-icon>
-					<mat-select formControlName="gender">
+					<mat-select formControlName="gender" [value]="generalInformation.controls['gender'].value">
 						<mat-option value="male">Male</mat-option>
 						<mat-option value="female">Female</mat-option>
 					</mat-select>
@@ -70,26 +75,25 @@
 				<mat-form-field appearance="outline">
 					<mat-label>ZIP Code</mat-label>
 					<mat-icon matPrefix>source</mat-icon>
-					<input formControlName="zipCode" matInput type="text">
+					<input formControlName="zipCode" [value]="generalInformation.controls['zipCode'].value" matInput type="text">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>City</mat-label>
 					<mat-icon matPrefix>location_city</mat-icon>
-					<input formControlName="city" matInput type="text">
+					<input formControlName="city" [value]="generalInformation.controls['city'].value" matInput type="text">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>Street</mat-label>
 					<mat-icon matPrefix>add_road</mat-icon>
-					<input #StreetRef formControlName="street" matInput type="text">
-					<mat-hint>Required</mat-hint>
+					<input formControlName="street" [value]="generalInformation.controls['street'].value" matInput type="text">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>House Number</mat-label>
 					<mat-icon matPrefix>maps_home_work</mat-icon>
-					<input formControlName="houseNumber" matInput type="text">
+					<input formControlName="houseNumber" [value]="generalInformation.controls['houseNumber'].value" matInput type="text">
 				</mat-form-field>
 			</form>
 
@@ -108,7 +112,7 @@
 				<mat-form-field appearance="outline" class="ID-Scan-Field">
 					<mat-label>Please, Choose Your ID Type</mat-label>
 					<mat-icon matPrefix>assignment_ind</mat-icon>
-					<mat-select #IDRef formControlName="typeOfID">
+					<mat-select formControlName="typeOfID" [value]="IDType.controls['typeOfID'].value">
 						<mat-option value="passport">Passport</mat-option>
 						<mat-option value="driver's License">Driver's License</mat-option>
 					</mat-select>
@@ -118,10 +122,10 @@
 
 			<section (click)="INPUT_ID_SCAN.click()" class="ID-Scan">
 				<h4>ID Scan</h4>
-				<mat-icon *ngIf="IDScan" (click)="removeIDScan()">highlight_off</mat-icon>
+				<mat-icon *ngIf="IDScan" (click)="removeIDScan($event)">highlight_off</mat-icon>
 				<img *ngIf="!isIDScanLoading" [src]="IDScan ? IDScan : '../../../assets/Default ID Scan.png'" alt="ID Scan" draggable="false">
 				<mat-spinner *ngIf="isIDScanLoading" diameter="48"></mat-spinner>
-				<input required #INPUT_ID_SCAN (change)="uploadIDScan($event)" [hidden]="true" type="file" accept="image/*">
+				<input #INPUT_ID_SCAN (change)="uploadIDScan($event)" [hidden]="true" type="file" accept="image/*">
 			</section>
 
 		</mat-step>
@@ -136,12 +140,12 @@
 
 				<h5>Payment Option</h5>
 
-				<input hidden="true" formControlName="isOTPConnected" type="checkbox">
+				<input hidden="true" formControlName="isStripeConnected" type="checkbox">
 				<aside class="Payment-Options">
-					<button (click)="connectOTPSimple()" [disabled]="OTPStatus" mat-raised-button color="primary" class="Paymeny-Option-Button">{{ OTPStatus ? "OTP Simple Connected" : "Connect OTP Simple" }}</button>
-					<mat-icon *ngIf="paymentOptions.controls['isOTPConnected'].value" class="OTP-Connected">verified</mat-icon>
-					<mat-icon *ngIf="!paymentOptions.controls['isOTPConnected'].value" class="OTP-Not-Connected">gpp_bad</mat-icon>
-					<mat-spinner *ngIf="isOTPVerifyLoading" diameter="24" color="primary"></mat-spinner>
+					<button (click)="connectStripe()" [disabled]="StripeStatus" mat-raised-button color="primary" class="Paymeny-Option-Button">{{ StripeStatus ? "Stripe Connected" : "Connect Stripe" }}</button>
+					<mat-icon *ngIf="paymentOptions.controls['isStripeConnected'].value" class="OTP-Connected">verified</mat-icon>
+					<mat-icon *ngIf="!paymentOptions.controls['isStripeConnected'].value" class="OTP-Not-Connected">gpp_bad</mat-icon>
+					<mat-spinner *ngIf="isStripeVerifyLoading" diameter="24" color="primary"></mat-spinner>
 				</aside>
 				<mat-hint>We Will Deduct A Non-Refundable 99 Ft For Verification Purposes</mat-hint>
 			</form>
@@ -161,7 +165,6 @@
 				<p class="GDPR-Content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique nobis totam dolore, assumenda molestias sed numquam est illum! In omnis sequi dolore veritatis unde facere voluptates obcaecati magni. Distinctio cumque temporibus eveniet earum repudiandae pariatur harum autem magni quibusdam. Autem provident esse, optio amet iste aliquid necessitatibus perferendis voluptatem saepe veritatis vero nemo ut tenetur, et officiis beatae nisi non commodi cumque quidem dolorem odit ipsum eligendi! Nulla aspernatur dignissimos laudantium, qui saepe necessitatibus perferendis! Atque suscipit debitis adipisci neque aliquid? Placeat sequi incidunt dolor eveniet hic dolores soluta, eaque illum atque odit facilis tenetur dignissimos at consequatur accusantium iure consectetur illo quasi culpa. Sunt consequatur qui, incidunt illo voluptas nostrum quibusdam! Itaque omnis sint perspiciatis nobis numquam quia hic accusamus minima, veniam fuga tempora distinctio corrupti ut a fugiat! A aspernatur nostrum, quidem iusto facere quaerat ea assumenda possimus repellat dolores recusandae libero suscipit atque, in voluptate odio vitae repellendus quas voluptates quia aperiam aut. Rem quasi nisi iure nulla, possimus incidunt repellendus ex ipsam nesciunt delectus ea deserunt magni distinctio laudantium enim eius facilis a consequuntur perspiciatis sequi. Est nisi molestias suscipit! Iste perspiciatis dolore, velit dolores quam provident numquam sequi libero nihil, corporis in hic tempore natus, et fugit laudantium obcaecati optio. Nobis autem dicta perferendis reprehenderit repellat in a animi quisquam facilis libero quam quibusdam officia magnam aspernatur, facere quasi, vitae architecto veniam voluptate voluptatum quod optio asperiores ad! Consequuntur laborum minus quas commodi. Reiciendis, aliquid est. Officiis voluptate animi consectetur. Tempora, hic. Officiis modi eaque hic expedita ullam, doloribus animi quasi praesentium? Praesentium ducimus beatae molestias consequatur dolor. Et sequi minus laborum eaque iste doloremque commodi ab dicta eligendi inventore molestias, maxime labore earum nobis debitis autem ad deleniti. Tenetur in soluta omnis qui quo suscipit fugit rem esse sequi dolores vero, mollitia officia non.</p>
 
 				<mat-checkbox formControlName="acceptedTermsAndConditions" color="primary">I Accept The Above Terms And Conditions</mat-checkbox>
-				<mat-checkbox formControlName="acknowledgedPaymentLiabilityTowardsQuica" color="primary">I Aknowledge My Payment Liability Towards Quica</mat-checkbox>
 			</form>
 
 		</mat-step>
@@ -173,83 +176,85 @@
 				<button type="button" (click)="sendVerificationEmail()" mat-raised-button color="primary" class="Complete-Sign-Up-Button">Complete Sign Up</button>
 			</aside>
 
-			<h5>Check Everything One Last Time</h5>
+			<div style="clear: both;">
+				<mat-slide-toggle (change)="toggleChanged()" [matTooltip]="isChecked ? 'Disable Edit' : 'Enable Edit'" class="Toggle" [(ngModel)]="isChecked" color="primary"></mat-slide-toggle>
+				<h5>Check Everything One Last Time</h5>
+			</div>
 
-			<form>
+			<form [formGroup]="summaryForm">
 				<mat-form-field appearance="outline">
 					<mat-label>Phone Number</mat-label>
 					<mat-icon matPrefix>settings_cell</mat-icon>
-					<input matInput disabled type="text" [value]="phoneNumber">
+					<input matInput type="text" [disabled]="!isChecked" [value]="phoneNumber">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>First Name</mat-label>
 					<mat-icon matPrefix>assignment_ind</mat-icon>
-					<input matInput disabled type="text" [value]="FirstNameRef.value">
+					<input [disabled]="!isChecked" [value]="generalInformation.controls['firstName'].value" matInput type="text">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>Last Name</mat-label>
 					<mat-icon matPrefix>assignment_ind</mat-icon>
-					<input matInput disabled type="text" [value]="LastNameRef.value">
+					<input [disabled]="!isChecked" [value]="generalInformation.controls['lastName'].value" matInput type="text">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>Email</mat-label>
 					<mat-icon matPrefix>alternate_email</mat-icon>
-					<input matInput disabled type="text" [value]="EmailRef.value">
+					<input [disabled]="!isChecked" [value]="generalInformation.controls['email'].value" matInput type="text">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>Password</mat-label>
 					<mat-icon matPrefix>password</mat-icon>
-					<input matInput disabled type="text" [value]="PasswordRef.value">
-				</mat-form-field>
-
-				<mat-form-field appearance="outline">
-					<mat-label>Date Of Birth</mat-label>
-					<mat-icon matPrefix>event</mat-icon>
-					<input matInput disabled type="text" [value]="DateOfBirthRef.value">
+					<input [disabled]="!isChecked" [value]="generalInformation.controls['password'].value" matInput type="text">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>Place Of Birth</mat-label>
 					<mat-icon matPrefix>home</mat-icon>
-					<input matInput disabled type="text" [value]="PlaceOfBirthRef.value">
+					<input [disabled]="!isChecked" [value]="generalInformation.controls['placeOfBirth'].value" matInput type="text">
 				</mat-form-field>
 
 				<mat-form-field appearance="outline">
 					<mat-label>Street</mat-label>
 					<mat-icon matPrefix>add_road</mat-icon>
-					<input matInput disabled type="text" [value]="StreetRef.value">
+					<input [disabled]="!isChecked" [value]="generalInformation.controls['street'].value" matInput type="text">
 				</mat-form-field>
 
-				<mat-form-field appearance="outline">
-					<mat-label>ID</mat-label>
+				<mat-form-field appearance="outline" class="ID-Scan-Field">
+					<mat-label>ID Type</mat-label>
 					<mat-icon matPrefix>assignment_ind</mat-icon>
-					<input matInput disabled type="text" [value]="IDRef.value | titlecase">
+					<mat-select [disabled]="!isChecked" [value]="IDType.controls['typeOfID'].value" formControlName="typeOfID">
+						<mat-option value="passport">Passport</mat-option>
+						<mat-option value="driver's License">Driver's License</mat-option>
+					</mat-select>
 				</mat-form-field>
+
+				<section (click)="INPUT_ID_SCAN.click()" class="ID-Scan">
+					<mat-icon *ngIf="IDScan" (click)="removeIDScan($event)">highlight_off</mat-icon>
+					<img *ngIf="!isIDScanLoading" [src]="IDScan ? IDScan : '../../../assets/Default ID Scan.png'" alt="ID Scan" draggable="false">
+					<mat-spinner *ngIf="isIDScanLoading" diameter="48"></mat-spinner>
+					<input #INPUT_ID_SCAN (change)="uploadIDScan($event)" [hidden]="true" type="file" accept="image/*">
+				</section>
 
 				<aside class="Passport-Option-Status">
 					<mat-label>Passport</mat-label>
 					<mat-icon *ngIf="IDType.controls['typeOfID'].value" matPrefix class="Connected">verified</mat-icon>
-					<mat-icon *ngIf="!OTPStatus" matPrefix class="Not-Connected">gpp_bad</mat-icon>
+					<mat-icon *ngIf="!StripeStatus" matPrefix class="Not-Connected">gpp_bad</mat-icon>
 				</aside>
 
 				<aside class="Payment-Option-Status">
 					<mat-label>Payment Option</mat-label>
-					<mat-icon *ngIf="OTPStatus" matPrefix class="Connected">verified</mat-icon>
-					<mat-icon *ngIf="!OTPStatus" matPrefix class="Not-Connected">gpp_bad</mat-icon>
+					<mat-icon *ngIf="StripeStatus" matPrefix class="Connected">verified</mat-icon>
+					<mat-icon *ngIf="!StripeStatus" matPrefix class="Not-Connected">gpp_bad</mat-icon>
 				</aside>
 
 				<aside class="Terms-And-Conditions">
 					<mat-label>Terms And Conditions</mat-label>
 					<mat-icon *ngIf="GDPRConsent.controls['acceptedTermsAndConditions'].value" matPrefix>verified</mat-icon>
-				</aside>
-
-				<aside class="Payment-Liability">
-					<mat-label>Payment Liabilty</mat-label>
-					<mat-icon *ngIf="GDPRConsent.controls['acknowledgedPaymentLiabilityTowardsQuica'].value" matPrefix>verified</mat-icon>
 				</aside>
 			</form>
 

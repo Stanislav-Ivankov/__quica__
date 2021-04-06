@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { LoginService } from '../../services/login.service';
+
 @Component({
 	selector: 'quica-listing-details',
 	templateUrl: './listing-details.component.html',

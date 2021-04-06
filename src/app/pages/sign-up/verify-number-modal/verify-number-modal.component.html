@@ -7,8 +7,7 @@
 	<form [formGroup]="verifyNumberForm">
 		<mat-form-field appearance="outline">
 			<mat-icon matPrefix>vpn_key</mat-icon>
-			<input formControlName="verificationCode" type="text" placeholder="Verification Code" matInput>
-			<mat-hint>Required Field</mat-hint>
+			<input formControlName="verificationCode" type="text" matInput>
 		</mat-form-field>
 
 		<button (click)="verifyCode()" [disabled]="'INVALID' === verifyNumberForm.status || true === isLoading" mat-raised-button color="primary">Verify Code</button>

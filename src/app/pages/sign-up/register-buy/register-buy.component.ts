@@ -14,26 +14,28 @@ import { SharedService } from 'src/app/services/shared.service';
 export class RegisterBuyComponent implements OnInit {
 
 	isIDScanLoading = false;
-	isOTPVerifyLoading = false;
+	isStripeVerifyLoading = false;
 	queryParameters: Params = {};
+	isChecked = false;
+	passwordVisible = false;
 
 	phoneNumber = '';
 	IDScan: string | ArrayBuffer | null = '';
-	OTPStatus = false;
+	StripeStatus = false;
 
 	formData: FormData = new FormData();
 
 	generalInformation: FormGroup = new FormGroup({
 		firstName: new FormControl(null, Validators.required),
-		lastname: new FormControl(null, Validators.required),
+		lastName: new FormControl(null, Validators.required),
 		email: new FormControl(null, Validators.required),
 		password: new FormControl(null, Validators.required),
 		dateOfBirth: new FormControl(null, Validators.required),
-		placeOfBirth: new FormControl(null, Validators.required),
+		placeOfBirth: new FormControl(null),
 		gender: new FormControl(null),
 		zipCode: new FormControl(null),
 		city: new FormControl(null),
-		street: new FormControl(null, Validators.required),
+		street: new FormControl(null),
 		houseNumber: new FormControl(null)
 	});
 
@@ -42,32 +44,30 @@ export class RegisterBuyComponent implements OnInit {
 	});
 
 	paymentOptions: FormGroup = new FormGroup({
-		isOTPConnected: new FormControl(null, Validators.required)
+		isStripeConnected: new FormControl(null, Validators.required)
 	});
 
 	GDPRConsent: FormGroup = new FormGroup({
-		acceptedTermsAndConditions: new FormControl(null, Validators.required),
-		acknowledgedPaymentLiabilityTowardsQuica: new FormControl(null, Validators.required)
+		acceptedTermsAndConditions: new FormControl(null, Validators.required)
 	});
 
 	summaryForm: FormGroup = new FormGroup({
-		phoneNumber: new FormControl({ value: window.history.state.phoneNumber, disabled: true }, Validators.required),
-		firstName: new FormControl({ value: null, disabled: true }, Validators.required),
+		phoneNumber: new FormControl(window.history.state.phoneNumber, Validators.required),
+		firstName: new FormControl(null, Validators.required),
 		lastName: new FormControl({ value: null, disabled: true }, Validators.required),
 		email: new FormControl({ value: null, disabled: true }, Validators.required),
 		password: new FormControl({ value: null, disabled: true }, Validators.required),
 		dateOfBirth: new FormControl({ value: null, disabled: true }, Validators.required),
-		placeOfBirth: new FormControl({ value: null, disabled: true }, Validators.required),
-		street: new FormControl({ value: null, disabled: true }, Validators.required)
+		typeOfID: new FormControl(null, Validators.required),
+		placeOfBirth: new FormControl({ value: null, disabled: true }),
+		street: new FormControl({ value: null, disabled: true })
 	});
 
 	constructor(
 		private _httpClientService: HttpClient,
 		private _activatedRouteService: ActivatedRoute,
 		private _routerService: Router,
-		private _sharedService: SharedService,
-		private _snackBar: MatSnackBar
-	) {}
+		private _sharedService: SharedService, private _snackBar: MatSnackBar) {}
 
 	@ViewChild('STEPPER')
 	stepper!: MatStepper;
@@ -75,7 +75,6 @@ export class RegisterBuyComponent implements OnInit {
 	ngOnInit() {
 		this.phoneNumber = window.history.state.phoneNumber;
 		this.queryParameters = this._activatedRouteService.snapshot.queryParams;
-		console.log(this.queryParameters);
 	}
 
 	public uploadIDScan(event: Event): void {
@@ -98,27 +97,32 @@ export class RegisterBuyComponent implements OnInit {
 		};
 	}
 
-	public removeIDScan(): void {
+	public removeIDScan(event: Event): void {
+		event.stopPropagation();
 		this.IDScan = '';
 		this.formData.delete('IDScan');
 	}
 
-	public connectOTPSimple(): void {
-		this.isOTPVerifyLoading = true;
+	public connectStripe(): void {
+		this.isStripeVerifyLoading = true;
 		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', { phoneNumber: this.phoneNumber }).subscribe(
 			() => {
-				this.paymentOptions.setValue({ isOTPConnected: true });
-				this.OTPStatus = true;
-				this._snackBar.open('OTP Simple Connected', 'DISMISS', { duration: 5000, panelClass: 'Success' });
-				this.isOTPVerifyLoading = false;
+				this.paymentOptions.setValue({ isStripeConnected: true });
+				this.StripeStatus = true;
+				this._snackBar.open('Stripe Connected', 'DISMISS', { duration: 2500, panelClass: 'Success' });
+				this.isStripeVerifyLoading = false;
 			},
 			() => {
-				this.paymentOptions.setValue({ isOTPConnected: false });
-				this.OTPStatus = false;
-				this.isOTPVerifyLoading = false;
+				this.paymentOptions.setValue({ isStripeConnected: false });
+				this.StripeStatus = false;
+				this.isStripeVerifyLoading = false;
 			},
-			() => this.isOTPVerifyLoading = false
+			() => this.isStripeVerifyLoading = false
 		);
+	}
+
+	public toggleChanged(): void {
+		this._snackBar.open(`Edit Mode : ${ this.isChecked ? 'ON' : 'OFF' }`, 'DISMISS', { duration: 2500 });
 	}
 
 	public sendVerificationEmail(): void {
@@ -127,14 +131,10 @@ export class RegisterBuyComponent implements OnInit {
 		});
 
 		this.formData.append('typeOfID', this.IDType.controls.typeOfID.value);
-		this.formData.append('isOTPConnected', this.paymentOptions.controls.isOTPConnected.value);
+		this.formData.append('isStripeConnected', this.paymentOptions.controls.isStripeConnected.value);
 		this.formData.append('acceptedTermsAndConditions', this.GDPRConsent.controls.acceptedTermsAndConditions.value);
-		this.formData.append(
-			'acknowledgedPaymentLiabilityTowardsQuica',
-			this.GDPRConsent.controls.acknowledgedPaymentLiabilityTowardsQuica.value
-		);
 
-		this._httpClientService.post('https://jsonplaceholder.typicode.com/posts', this.formData).subscribe(
+		this._httpClientService.get('https://jsonplaceholder.typicode.com/todos').subscribe(
 			() => this._routerService.navigate(['/verification-email'], { queryParams: { ...this.queryParameters, Registration: 'Done' } }),
 			() => {},
 			() => {}
