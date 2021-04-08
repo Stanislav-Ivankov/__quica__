@@ -52,6 +52,10 @@ const routes: Routes = [
 		component: VeificationEmailComponent
 	},
 	{
+		path: 'user-verified/:token',
+		component: VeificationEmailComponent
+	},
+	{
 		path: 'checkout/:id',
 		component: CheckoutComponent,
 		canActivate: [AuthenticateGuard]
