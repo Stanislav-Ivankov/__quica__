@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SimpleModalModule } from 'ngx-simple-modal';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -8,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NewListingComponent } from './pages/new-listing/new-listing.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 import { CompanyDetailsComponent } from './pages/company-details/company-details.component';
 import { AboutComponent } from './pages/about/about.component';
 import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
@@ -75,6 +77,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 		AppComponent,
 		HeaderComponent,
 		FooterComponent,
+		DialogComponent,
 		CompanyDetailsComponent,
 		AboutComponent,
 		UserSettingsComponent,

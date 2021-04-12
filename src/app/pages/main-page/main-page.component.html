@@ -9,6 +9,7 @@
 		</mat-chip-list>
 
 		<aside class="Dropdown-Filters">
+			<button (click)="showFilterDialog()" mat-button>Filter By</button>
 			<button mat-button [matMenuTriggerFor]="menu">Sort By</button>
 			<mat-menu #menu="matMenu">
 				<button mat-menu-item>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../components/dialog/dialog.component';
 
 @Component({
 	selector: 'quica-main-page',
@@ -94,7 +96,37 @@ export class MainPageComponent implements OnInit {
 		}
 	];
 
-	constructor() { }
+	constructor(public dialog: MatDialog) { }
 
 	ngOnInit() {}
+
+	showFilterDialog() {
+		const dialogRef = this.dialog.open(DialogComponent, {
+			width: '250px',
+			data: {
+				title: 'Filters',
+				filters: [
+					{
+						title: 'Price',
+						min: '25 000 Ft',
+						max: '10mrd Ft'
+					},
+					{
+						title: 'Percent',
+						min: '25 000 Ft',
+						max: '10mrd Ft'
+					},
+					{
+						title: 'Price',
+						min: '25 000 Ft',
+						max: '10mrd Ft'
+					}
+				]
+			}
+		  });
+	  
+		  dialogRef.afterClosed().subscribe(result => {
+			console.log('Result of filtering is: ', result);
+		  });
+	}
 }
