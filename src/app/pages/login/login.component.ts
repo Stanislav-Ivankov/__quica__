@@ -37,6 +37,11 @@ export class LoginComponent implements OnInit {
 					localStorage.setItem('Username', 'Test_User');
 
 					switch (this.queryParameters.Process) {
+						case 'Sell':
+							this._routeService.navigate(['/listing-summary'],
+								{ queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration } });
+							break;
+
 						case 'Buy':
 							this._routeService.navigate(['/checkout', this.queryParameters.id],
 								{ queryParams: { Process: this.queryParameters.Process, Registration: this.queryParameters.Registration } });
