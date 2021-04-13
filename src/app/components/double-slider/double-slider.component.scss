@@ -1,0 +1,15 @@
+::ng-deep {
+	.ngx-slider-ceil {
+		right: 0!important;
+    	top: 10px!important;
+		left: auto!important;
+	}
+	.ngx-slider-floor {
+		left: 0!important;
+    	top: 10px!important;
+		left: auto!important;
+	}
+	.ngx-slider {
+		margin: 35px 0 30px!important;
+	}
+}

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SimpleModalModule } from 'ngx-simple-modal';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -10,6 +10,7 @@ import { NewListingComponent } from './pages/new-listing/new-listing.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { DoubleSliderComponent } from './components/double-slider/double-slider.component';
 import { CompanyDetailsComponent } from './pages/company-details/company-details.component';
 import { AboutComponent } from './pages/about/about.component';
 import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
@@ -78,6 +79,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 		HeaderComponent,
 		FooterComponent,
 		DialogComponent,
+		DoubleSliderComponent,
 		CompanyDetailsComponent,
 		AboutComponent,
 		UserSettingsComponent,
@@ -144,7 +146,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 		MatTooltipModule,
 		MatSliderModule,
 		MatCardModule,
-		MatSlideToggleModule
+		MatSlideToggleModule,
+		NgxSliderModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

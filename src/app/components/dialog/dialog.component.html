@@ -1,12 +1,16 @@
 <h1 mat-dialog-title>{{data.title}}</h1>
 <div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput [(ngModel)]="data.animal">
-  </mat-form-field>
+	<div *ngIf="data.filters">
+		<div *ngFor="let filter of data.filters; index as _Index">
+			<div>{{filter.title}}</div>
+			<div>{{filter.type}}</div>
+			<div>{{filter.min}}</div>
+			<div>{{filter.max}}</div>
+		</div>
+	</div>
+	<quica-double-slider isExponential="true"></quica-double-slider>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancelClick()">No Thanks</button>
-  <button mat-button (click)="onApplyClick()" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button (click)="onApplyClick()" cdkFocusInitial>Filter</button>
 </div>

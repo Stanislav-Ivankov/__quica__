@@ -102,22 +102,25 @@ export class MainPageComponent implements OnInit {
 
 	showFilterDialog() {
 		const dialogRef = this.dialog.open(DialogComponent, {
-			width: '250px',
+			width: '500px',
 			data: {
 				title: 'Filters',
 				filters: [
 					{
 						title: 'Price',
+						type: 'range',
 						min: '25 000 Ft',
 						max: '10mrd Ft'
 					},
 					{
 						title: 'Percent',
+						type: 'range',
 						min: '25 000 Ft',
 						max: '10mrd Ft'
 					},
 					{
 						title: 'Price',
+						type: 'range',
 						min: '25 000 Ft',
 						max: '10mrd Ft'
 					}
